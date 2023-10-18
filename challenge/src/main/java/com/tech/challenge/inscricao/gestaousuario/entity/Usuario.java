@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaousuario.model;
+package com.tech.challenge.inscricao.gestaousuario.entity;
 
 public abstract class Usuario {
 
