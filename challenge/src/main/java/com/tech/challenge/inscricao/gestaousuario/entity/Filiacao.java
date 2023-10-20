@@ -7,7 +7,9 @@ public class Filiacao {
     private String nomeMae;
     private String nomePai;
 
-    public Filiacao() {
+    public Filiacao(String nomeMae, String nomePai) {
+        this.nomeMae = nomeMae;
+        this.nomePai = nomePai;
     }
 
     public String getNomeMae() {

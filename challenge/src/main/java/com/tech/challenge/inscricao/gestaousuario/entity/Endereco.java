@@ -8,6 +8,12 @@ public class Endereco {
     private String numero;
     private String complemento;
 
+    public Endereco(Integer cep, String numero, String complemento) {
+        this.cep = cep;
+        this.numero = numero;
+        this.complemento = complemento;
+    }
+
     public Integer getCep() {
         return cep;
     }

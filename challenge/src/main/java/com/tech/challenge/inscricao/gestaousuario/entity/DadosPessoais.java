@@ -1,5 +1,7 @@
 package com.tech.challenge.inscricao.gestaousuario.entity;
 
+import com.tech.challenge.inscricao.gestaousuario.dto.DadosPessoaisDTO;
+import com.tech.challenge.inscricao.gestaousuario.dto.FiliacaoDTO;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 
@@ -16,6 +18,20 @@ public class DadosPessoais {
     private Filiacao filiacao;
     @Embedded
     private Endereco endereco;
+
+    public DadosPessoais(DadosPessoaisDTO dadosPessoaisDTO){
+        this.estadoCivil = dadosPessoaisDTO.estadoCivil();
+        this.genero = dadosPessoaisDTO.genero();
+        this.dataNascimento = dadosPessoaisDTO. dataNascimento();
+        this.celular = dadosPessoaisDTO.celular();
+        this.naturalidade = dadosPessoaisDTO.naturalidade();
+        this.filiacao = new Filiacao(dadosPessoaisDTO.filiacao().nomeMae(),
+                dadosPessoaisDTO.filiacao().nomePai());
+        this.endereco = new Endereco(dadosPessoaisDTO.endereco().cep(),
+                dadosPessoaisDTO.endereco().numero(),
+                dadosPessoaisDTO.endereco().complemento()
+                );
+    }
 
     public String getEstadoCivil() {
         return estadoCivil;
@@ -56,7 +72,7 @@ public class DadosPessoais {
     public void setNaturalidade(String naturalidade) {
         this.naturalidade = naturalidade;
     }
-/*
+
     public Filiacao getFiliacao() {
         return filiacao;
     }
@@ -71,5 +87,5 @@ public class DadosPessoais {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
-    }*/
+    }
 }
