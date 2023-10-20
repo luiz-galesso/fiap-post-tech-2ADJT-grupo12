@@ -1,5 +1,6 @@
 package com.tech.challenge.inscricao.gestaousuario.entity;
 
+import com.tech.challenge.inscricao.gestaousuario.dto.EnderecoDTO;
 import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,12 @@ public class Endereco {
         this.cep = StringUtils.removeMascara(cep);
         this.numero = numero;
         this.complemento = complemento;
+    }
+
+    public Endereco(EnderecoDTO endereco) {
+        setCep(StringUtils.removeMascara(cep));
+        setNumero(endereco.numero());
+        setComplemento(endereco.complemento());
     }
 
     public String getCep() {
