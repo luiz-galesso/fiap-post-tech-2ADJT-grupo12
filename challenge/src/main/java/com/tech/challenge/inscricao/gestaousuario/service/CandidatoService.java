@@ -35,6 +35,7 @@ public class CandidatoService {
         }
     }
 
+
     public void delete(String id) {
         try {
             candidatoRepository.deleteById(id);
