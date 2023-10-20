@@ -1,29 +1,39 @@
 package com.tech.challenge.inscricao.gestaousuario.entity;
 
 import com.tech.challenge.inscricao.gestaousuario.dto.DadosPessoaisDTO;
-import com.tech.challenge.inscricao.gestaousuario.dto.FiliacaoDTO;
+import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 @Embeddable
 public class DadosPessoais {
+    @NotBlank
     private String estadoCivil;
     private String genero;
+    @NotBlank
     private LocalDate dataNascimento;
-    private Integer celular;
+    @NotBlank
+    @NotNull(message="O celular é obrigatório")
+    private String celular;
     private String naturalidade;
     @Embedded
+    @NotNull
     private Filiacao filiacao;
     @Embedded
+    @NotBlank
     private Endereco endereco;
+
+    public DadosPessoais(){}
 
     public DadosPessoais(DadosPessoaisDTO dadosPessoaisDTO){
         this.estadoCivil = dadosPessoaisDTO.estadoCivil();
         this.genero = dadosPessoaisDTO.genero();
         this.dataNascimento = dadosPessoaisDTO. dataNascimento();
-        this.celular = dadosPessoaisDTO.celular();
+        this.celular = StringUtils.removeMascara(dadosPessoaisDTO.celular());
         this.naturalidade = dadosPessoaisDTO.naturalidade();
         this.filiacao = new Filiacao(dadosPessoaisDTO.filiacao().nomeMae(),
                 dadosPessoaisDTO.filiacao().nomePai());
@@ -57,11 +67,11 @@ public class DadosPessoais {
         this.dataNascimento = dataNascimento;
     }
 
-    public Integer getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(Integer celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 

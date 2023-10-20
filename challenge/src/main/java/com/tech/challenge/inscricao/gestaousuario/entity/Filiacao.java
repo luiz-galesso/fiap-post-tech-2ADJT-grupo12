@@ -1,11 +1,16 @@
 package com.tech.challenge.inscricao.gestaousuario.entity;
 
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 
 @Embeddable
 public class Filiacao {
+
+    @NotNull(message="O nome da mãe é obrigatório")
     private String nomeMae;
     private String nomePai;
+
+    public Filiacao(){}
 
     public Filiacao(String nomeMae, String nomePai) {
         this.nomeMae = nomeMae;

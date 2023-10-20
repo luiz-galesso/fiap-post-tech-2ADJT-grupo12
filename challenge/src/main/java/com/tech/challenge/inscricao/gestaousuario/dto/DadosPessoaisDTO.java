@@ -7,10 +7,11 @@ import jakarta.persistence.Embedded;
 import java.time.LocalDate;
 
 public record DadosPessoaisDTO(
+
         String estadoCivil,
         String genero,
         LocalDate dataNascimento,
-        Integer celular,
+        String celular,
         String naturalidade,
         FiliacaoDTO filiacao,
         EnderecoDTO endereco

@@ -1,24 +1,29 @@
 package com.tech.challenge.inscricao.gestaousuario.entity;
 
+import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 
 @Embeddable
 public class Endereco {
-    private Integer cep;
+    @NotNull(message="O cep é obrigatório")
+    private String cep;
+    @NotNull(message="O numero é obrigatório")
     private String numero;
     private String complemento;
 
-    public Endereco(Integer cep, String numero, String complemento) {
-        this.cep = cep;
+    public Endereco(){}
+    public Endereco(String cep, String numero, String complemento) {
+        this.cep = StringUtils.removeMascara(cep);
         this.numero = numero;
         this.complemento = complemento;
     }
 
-    public Integer getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(Integer cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
