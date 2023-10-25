@@ -8,7 +8,7 @@ import java.util.Date;
 public record EntrevistaDTO(
         Long id,
 
-        Date dataHora,
+        Date dataEntrevista,
 
         String local,
 

@@ -17,7 +17,7 @@ public class Entrevista {
     private Long id;
 
     @NotNull
-    private Date dataHora;
+    private Date dataEntrevista;
 
     @NotNull
     private String local;
@@ -31,9 +31,9 @@ public class Entrevista {
     public Entrevista() {
     }
 
-    public Entrevista(Long id, Date dataHora, String local, Candidato candidato, Usuario entrevistador) {
+    public Entrevista(Long id, Date dataEntrevista, String local, Candidato candidato, Usuario entrevistador) {
         this.id = id;
-        this.dataHora = dataHora;
+        this.dataEntrevista = dataEntrevista;
         this.local = local;
         this.candidato = candidato;
         this.entrevistador = entrevistador;
@@ -59,12 +59,12 @@ public class Entrevista {
         this.entrevistador = entrevistador;
     }
 
-    public Date getDataHora() {
-        return dataHora;
+    public Date getDataEntrevista() {
+        return dataEntrevista;
     }
 
-    public void setDataHora(Date dataHora) {
-        this.dataHora = dataHora;
+    public void setDataEntrevista(Date dataEntrevista) {
+        this.dataEntrevista = dataEntrevista;
     }
 
     public String getLocal() {

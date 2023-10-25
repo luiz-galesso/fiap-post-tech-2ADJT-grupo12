@@ -41,10 +41,10 @@ public class EntrevistaService {
     public EntrevistaDTO update(Long id, EntrevistaDTO entrevistaDTO) {
         try {
             Entrevista entrevista = entrevistaRepository.getReferenceById(id);
-            entrevista.setDataHora(entrevistaDTO.dataHora());
+            entrevista.setDataEntrevista(entrevistaDTO.dataEntrevista());
             entrevista.setLocal(entrevistaDTO.local());
             entrevista.setCandidato(entrevistaDTO.candidato());
-            /*entrevista.setEntrevistador(entrevistaDTO.entrevistador());*/
+            entrevista.setEntrevistador(entrevistaDTO.entrevistador());
             entrevista = entrevistaRepository.save(entrevista);
 
             return toEntrevistaDTO(entrevista);
@@ -59,7 +59,7 @@ public class EntrevistaService {
 
     private EntrevistaDTO toEntrevistaDTO(Entrevista entrevista) {
         return new EntrevistaDTO(entrevista.getId(),
-                entrevista.getDataHora(),
+                entrevista.getDataEntrevista(),
                 entrevista.getLocal(),
                 entrevista.getCandidato(),
                 entrevista.getEntrevistador()
@@ -68,7 +68,7 @@ public class EntrevistaService {
 
     private Entrevista toEntrevista(EntrevistaDTO entrevistaDTO) {
         return new Entrevista(entrevistaDTO.id(),
-                entrevistaDTO.dataHora(),
+                entrevistaDTO.dataEntrevista(),
                 entrevistaDTO.local(),
                 entrevistaDTO.candidato(),
                 entrevistaDTO.entrevistador()
