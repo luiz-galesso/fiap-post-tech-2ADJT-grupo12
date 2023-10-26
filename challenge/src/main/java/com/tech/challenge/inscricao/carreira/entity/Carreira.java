@@ -1,12 +1,12 @@
-package com.tech.challenge.inscricao.gestaoperfil.entity;
+package com.tech.challenge.inscricao.carreira.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="tb_perfil")
-public class Perfil {
+@Table(name="tb_carreira")
+public class Carreira {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +16,10 @@ public class Perfil {
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
 
-    public Perfil() {
+    public Carreira() {
     }
 
-    public Perfil(Long id) {
+    public Carreira(Long id) {
         this.id = id;
     }
 

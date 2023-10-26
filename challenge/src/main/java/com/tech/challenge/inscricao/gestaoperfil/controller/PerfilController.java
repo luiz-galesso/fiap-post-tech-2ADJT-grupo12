@@ -1,10 +1,9 @@
 package com.tech.challenge.inscricao.gestaoperfil.controller;
 
 import com.tech.challenge.inscricao.gestaoperfil.dto.PerfilRequestDTO;
-import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 
 import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
-import com.tech.challenge.inscricao.gestaousuario.dto.UsuarioDTO;
+import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
