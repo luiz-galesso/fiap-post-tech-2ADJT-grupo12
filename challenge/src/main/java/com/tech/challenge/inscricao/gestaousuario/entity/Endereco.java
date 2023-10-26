@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 
 @Embeddable
 public class Endereco {
+    //quando tiver strings, priorize o uso de NotBlank ou NotEmpty ao inves de NotNull pois alem de validar
+    //se nao eh null, eles tambem validam se a string eh vazia ou em branco
     @NotNull(message="O cep é obrigatório")
     private String cep;
     @NotNull(message="O numero é obrigatório")

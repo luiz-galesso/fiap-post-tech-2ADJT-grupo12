@@ -6,7 +6,7 @@ public class LogError {
     private Instant timestamp;
     private Integer status;
     private  String error;
-    private String menssage;
+    private String message;
     private String path;
 
     public LogError() {
@@ -36,12 +36,12 @@ public class LogError {
         this.error = error;
     }
 
-    public String getMenssage() {
-        return menssage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMenssage(String menssage) {
-        this.menssage = menssage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getPath() {
