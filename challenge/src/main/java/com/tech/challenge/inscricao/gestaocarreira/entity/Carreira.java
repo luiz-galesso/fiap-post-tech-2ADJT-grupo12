@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.carreira.entity;
+package com.tech.challenge.inscricao.gestaocarreira.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.carreira.dto;
+package com.tech.challenge.inscricao.gestaocarreira.dto;
 
 public record CarreiraRequestDTO(
 
