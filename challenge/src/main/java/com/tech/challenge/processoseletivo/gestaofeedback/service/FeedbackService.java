@@ -2,7 +2,6 @@ package com.tech.challenge.processoseletivo.gestaofeedback.service;
 
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaousuario.entity.Candidato;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.AtualizarFeedbackDTO;
