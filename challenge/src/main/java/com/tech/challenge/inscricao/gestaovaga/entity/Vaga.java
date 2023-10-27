@@ -1,10 +1,14 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
+import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,9 +22,39 @@ public class Vaga {
     private String titulo;
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
+
 /*    private List<Etapa> etapas;*/
     @NotNull(message="A carreira é obrigatória")
     private String carreira;
-    private String nivel;
-    private LocalDate dataExpiracao;
+
+    @Enumerated(EnumType.STRING)
+    private Nivel nivel;
+
+    @Temporal(TemporalType.DATE)
+    private Date dataExpiracao;
+
+    @Temporal(TemporalType.DATE)
+    private Date dataCriacao;
+
+    @ManyToOne
+    private Usuario criador;
+
+    @OneToOne
+    private SolicitaVaga solicitacao;
+
+    public Vaga() {
+    }
+
+    public Vaga (SolicitaVaga solicitacao)
+    {
+        this.titulo = solicitacao.getTitulo();
+        this.descricao = solicitacao.getDescricao();
+        this.nivel = solicitacao.getNivel();
+        //pensar em regra de expiracao
+        //---
+
+        this.dataCriacao = Calendar.getInstance().getTime();
+        this.criador = solicitacao.getAvaliador();
+        this.solicitacao = solicitacao;
+    }
 }
