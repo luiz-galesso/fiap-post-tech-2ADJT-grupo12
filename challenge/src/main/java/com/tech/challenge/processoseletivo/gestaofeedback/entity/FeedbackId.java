@@ -1,7 +1,7 @@
 package com.tech.challenge.processoseletivo.gestaofeedback.entity;
 
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaousuario.entity.Candidato;
+import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 
 import java.io.Serial;
@@ -12,21 +12,21 @@ public class FeedbackId implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Candidato candidato;
+    private Usuario candidato;
     private Vaga vaga;
     private Etapa etapa;
 
     public FeedbackId() {
     }
 
-    public FeedbackId(Candidato candidato, Vaga vaga, Etapa etapa) {
+    public FeedbackId(Usuario candidato, Vaga vaga, Etapa etapa) {
         this.candidato = candidato;
         this.vaga = vaga;
         this.etapa = etapa;
     }
 
     public FeedbackId(String idCandidato, Long idVaga, Long idEtapa) {
-        Candidato candidato = new Candidato();
+        Usuario candidato = new Usuario();
         candidato.setCpf(idCandidato);
         Vaga vaga = new Vaga();
         vaga.setIdVaga(idVaga);
@@ -37,11 +37,11 @@ public class FeedbackId implements Serializable {
         this.etapa = etapa;
     }
 
-    public Candidato getCandidato() {
+    public Usuario getCandidato() {
         return candidato;
     }
 
-    public void setCandidato(Candidato candidato) {
+    public void setCandidato(Usuario candidato) {
         this.candidato = candidato;
     }
 

@@ -69,7 +69,7 @@ public class FeedbackService {
     }
 
     private FeedbackDTO toFeedbackDTO(Feedback feedback) {
-        return new FeedbackDTO(feedback.getCandidato().getCpf(),
+        return new FeedbackDTO(feedback.getUsuario().getCpf(),
                 feedback.getVaga().getIdVaga(),
                 feedback.getEtapa().getId(),
                 feedback.getConteudoFeedback(),
@@ -79,7 +79,7 @@ public class FeedbackService {
     }
 
     private Feedback toEntity(FeedbackDTO feedbackDTO) {
-        Candidato candidato = new Candidato();
+        Usuario candidato = new Usuario();
         candidato.setCpf(feedbackDTO.idCandidato());
 
         Vaga vaga = new Vaga();
