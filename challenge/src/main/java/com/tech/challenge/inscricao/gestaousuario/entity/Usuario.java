@@ -29,9 +29,13 @@ public class Usuario {
     @Embedded
     private Perfil perfil; // validar como fazer o relacionamento e guardar apenas o id na tabela
 
-    private int ativo;
+    private boolean ativo;
 
     public Usuario (){}
+
+    public Usuario (String id){
+        this.cpf = id;
+    }
 
     public Usuario(String cpf, String nomeUsuario, String nome, DadosPessoais dadosPessoais, Perfil perfil) {
         this.cpf = cpf;
@@ -39,7 +43,7 @@ public class Usuario {
         this.nome = nome;
         this.dadosPessoais = dadosPessoais;
         this.perfil = perfil;
-        this.ativo = 1;
+        this.ativo = true;
     }
 
     public String getCpf() {
@@ -82,11 +86,11 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-    public int getAtivo() {
+    public boolean isAtivo() {
         return ativo;
     }
 
-    public void setAtivo(int ativo) {
+    public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
 }

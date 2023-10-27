@@ -1,6 +1,7 @@
 package com.tech.challenge.inscricao.gestaousuario.service;
 
 
+import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
 import com.tech.challenge.inscricao.gestaousuario.entity.Perfil;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
 import com.tech.challenge.inscricao.gestaousuario.dto.*;
@@ -18,7 +19,15 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PerfilService perfilService;
+
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
+
+        if(perfilService.findById(usuarioDTO.perfil().id()) == null){
+            throw new EntityNotFoundException();
+        }
+
         Usuario usuario = toEntity(usuarioDTO);
         usuario = usuarioRepository.save(usuario);
         return toUsuarioDTO(usuario);
@@ -92,19 +101,6 @@ public class UsuarioService {
                                 usuario.getDadosPessoais().getEndereco().getNumero(),
                                 usuario.getDadosPessoais().getEndereco().getComplemento()))
                 , new PerfilDTO(usuario.getPerfil().getId())
-                , usuario.getAtivo());
-    }
-
-    public UsuarioDTO updateStatus(String id, int status) {
-        try {
-            id = StringUtils.removeMascara(id);
-            Usuario usuario = usuarioRepository.getReferenceById(id);
-            usuario.setAtivo(status);
-            usuario = usuarioRepository.save(usuario);
-
-            return toUsuarioDTO(usuario);
-        } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Usuário não localizado");
-        }
+                , usuario.isAtivo());
     }
 }

@@ -8,6 +8,5 @@ public record UsuarioDTO(
         String nomeCompleto,
         DadosPessoaisDTO dadosPessoais,
         PerfilDTO perfil,
-
-        int status) {
+        boolean status) {
 }

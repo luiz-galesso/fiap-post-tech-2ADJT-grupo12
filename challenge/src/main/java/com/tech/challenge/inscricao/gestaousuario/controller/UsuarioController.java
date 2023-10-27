@@ -41,11 +41,4 @@ public class UsuarioController {
         var usuario = usuarioService.findById(id);
         return ResponseEntity.ok(usuario);
     }
-
-    @PutMapping("/{id}/{status}")
-    public ResponseEntity<UsuarioDTO> updateStatus(@PathVariable String id,@PathVariable int status) {
-        UsuarioDTO candidatoAtualizado = usuarioService.updateStatus(id, status);
-        return ResponseEntity.ok(candidatoAtualizado);
-
-    }
 }
