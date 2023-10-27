@@ -1,0 +1,1 @@
+--INSERT INTO tb_gestor VALUES (1);
