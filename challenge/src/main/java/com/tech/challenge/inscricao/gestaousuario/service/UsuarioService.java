@@ -79,8 +79,8 @@ public class UsuarioService {
 
         return new UsuarioDTO(
                 usuario.getNomeUsuario(),
-                usuario.getNome(),
                 usuario.getCpf().toString(),
+                usuario.getNome(),
                 new DadosPessoaisDTO(usuario.getDadosPessoais().getEstadoCivil(),
                         usuario.getDadosPessoais().getGenero(),
                         usuario.getDadosPessoais().getDataNascimento(),
