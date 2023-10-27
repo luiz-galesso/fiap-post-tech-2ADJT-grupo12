@@ -1,9 +1,8 @@
 package com.tech.challenge.processoseletivo.gestaoentrevista.entity;
 
-import com.tech.challenge.inscricao.gestaousuario.entity.Candidato;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
@@ -16,39 +15,27 @@ public class Entrevista {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private Date dataEntrevista;
 
-    @NotNull
+    @NotBlank(message = "")
     private String local;
 
     @OneToOne
-    private Candidato candidato;
-
-    @OneToOne
+    @NotBlank(message = "")
     private Usuario entrevistador;
 
     public Entrevista() {
     }
 
-    public Entrevista(Long id, Date dataEntrevista, String local, Candidato candidato, Usuario entrevistador) {
+    public Entrevista(Long id, Date dataEntrevista, String local, Usuario entrevistador) {
         this.id = id;
         this.dataEntrevista = dataEntrevista;
         this.local = local;
-        this.candidato = candidato;
         this.entrevistador = entrevistador;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Candidato getCandidato() {
-        return candidato;
-    }
-
-    public void setCandidato(Candidato candidato) {
-        this.candidato = candidato;
     }
 
     public Usuario getEntrevistador() {
