@@ -55,8 +55,8 @@ public class SolicitaVagaService
 
     /**
      * aprova solicitacao
-     * @param idSolicitacao
-     * @param idAprovador
+     * @param idSolicitacao cpf
+     * @param idAprovador cpf
      */
     public Vaga aprovaSolicitacao(Integer idSolicitacao, String idAprovador)
     {
@@ -77,7 +77,7 @@ public class SolicitaVagaService
      * @param idSolicitacao
      * @param idAprovador
      */
-    public boolean reprovaSolicitacao(Integer idSolicitacao, String idAprovador, String mensagem)
+    public void reprovaSolicitacao(Integer idSolicitacao, String idAprovador, String mensagem)
     {
         SolicitaVaga solicitacao = findById(idSolicitacao);
 
@@ -89,7 +89,6 @@ public class SolicitaVagaService
         solicitacao.setAprovado(false);
         solicitacao.setMensagem(mensagem);
         solicitaVagaRepository.save(solicitacao);
-        return true;
     }
 
     /**
@@ -112,6 +111,8 @@ public class SolicitaVagaService
     {
         SolicitaVaga solicitaVaga = new SolicitaVaga(idSolicitante, nivel, idAvaliador, isAprovado);
 
+        //necessario devido pq sempre sao considerados os booleanos
+        //necesse sentido, precis ignora-los qd nao possuirem valor
         if(isAprovado == null)
         {
             ExampleMatcher matcher = ExampleMatcher.matching()
@@ -134,6 +135,11 @@ public class SolicitaVagaService
         return solicitaVagaRepository.findAll(Example.of(solicitaVaga));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public SolicitaVaga findById(Integer id)
     {
         return solicitaVagaRepository.findById(id).orElse(null);
