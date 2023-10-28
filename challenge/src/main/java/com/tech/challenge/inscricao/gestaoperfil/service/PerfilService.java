@@ -1,10 +1,12 @@
 package com.tech.challenge.inscricao.gestaoperfil.service;
 
+import com.tech.challenge.inscricao.gestaoperfil.controller.exception.AuthenticationException;
 import com.tech.challenge.inscricao.gestaoperfil.dto.PerfilRequestDTO;
 import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 import com.tech.challenge.inscricao.gestaoperfil.repository.PerfilRepository;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
 
+import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +84,23 @@ public class PerfilService {
                perfil.getDescricao()
         );
     }
+
+    public boolean verificaPerfil(Usuario usuario, String perfil){
+
+     Perfil perfilLocal = findById(usuario.getPerfil().getId());
+        if(perfilLocal.getDescricao().equals(perfil)){
+            return true;
+        }
+        return false;
+    }
+
+    public void autorizaPerfil(Usuario usuario, String perfil){
+        if(!verificaPerfil(usuario, perfil)){
+            throw new AuthenticationException("Perfil não autorizado");
+        }
+    }
+
+
 
 
 }
