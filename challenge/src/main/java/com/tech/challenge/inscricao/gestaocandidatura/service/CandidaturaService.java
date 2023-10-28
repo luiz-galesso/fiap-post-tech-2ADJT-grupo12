@@ -26,7 +26,7 @@ public class CandidaturaService {
     VagaService vagaService;
 
 
-   /* public CandidaturaRequestDTO save (CandidaturaRequestDTO candidaturaRequestDTO){
+    public CandidaturaRequestDTO save (CandidaturaRequestDTO candidaturaRequestDTO){
         Usuario usuario = usuarioService.findById(candidaturaRequestDTO.cpfCandidato());
         perfilService.autorizaPerfil(usuario, "CANDIDATO");
          //Precisa do service da vaga service da vaga ainda não foi mergeado
@@ -34,7 +34,7 @@ public class CandidaturaService {
         Candidatura candidatura = toEntity(candidaturaRequestDTO);
         candidaturaRepository.save(candidatura);
        return toCandidaturaRequestDTO(candidatura);
-    }*/
+    }
 
 
     public void aprova(Usuario candidato, Vaga vaga){
@@ -45,13 +45,12 @@ public class CandidaturaService {
     }
 
 
-  /*  private Candidatura toEntity(CandidaturaRequestDTO candidaturaRequestDTO) {
+    private Candidatura toEntity(CandidaturaRequestDTO candidaturaRequestDTO) {
         return new Candidatura(
                 new Vaga(candidaturaRequestDTO.idVaga()),
                 new Usuario(candidaturaRequestDTO.cpfCandidato())
         );
     }
-*/
 
     private CandidaturaRequestDTO toCandidaturaRequestDTO(Candidatura candidatura) {
         return new CandidaturaRequestDTO(
