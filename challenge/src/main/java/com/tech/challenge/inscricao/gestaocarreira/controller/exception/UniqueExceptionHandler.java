@@ -21,8 +21,8 @@ public class UniqueExceptionHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         logError.setTimestamp(Instant.now());
         logError.setStatus(status.value());
-        logError.setError("Entidade já cadastrada");
-        //logError.setMessage(e.getMessage());
+        logError.setError("Já cadastrada");
+        logError.setMessage(e.getMessage());
         logError.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(this.logError);
     }
