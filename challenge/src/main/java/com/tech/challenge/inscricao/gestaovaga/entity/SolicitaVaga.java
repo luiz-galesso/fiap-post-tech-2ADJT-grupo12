@@ -35,18 +35,32 @@ public class SolicitaVaga
     @Enumerated(EnumType.STRING)
     private Nivel nivel;
 
+    private Boolean aprovado;
+
     public boolean isAprovado() {
-        return aprovado;
+        return Boolean.TRUE.equals(this.aprovado);
     }
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
     }
 
-    private boolean aprovado;
-
-
     public SolicitaVaga() {
+    }
+
+    public SolicitaVaga(String idSolicitante, Nivel nivel, String idAvaliador, boolean isAprovado)
+    {
+        if(idSolicitante != null)
+            this.solicitante = new Usuario(idSolicitante);
+
+        if(nivel != null)
+            this.nivel = nivel;
+
+        if(idAvaliador != null)
+            this.avaliador = new Usuario(idAvaliador);
+
+        if(isAprovado)
+            this.aprovado = isAprovado;
     }
 
     public SolicitaVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel) {
@@ -129,4 +143,5 @@ public class SolicitaVaga
     public void setDataAvaliado(Date dataAvaliado) {
         this.dataAvaliado = dataAvaliado;
     }
+
 }

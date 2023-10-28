@@ -11,11 +11,11 @@ import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import com.tech.challenge.inscricao.gestaovaga.repository.SolicitaVagaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class SolicitaVagaService
@@ -26,11 +26,17 @@ public class SolicitaVagaService
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
     private PerfilService perfilService;
     
     @Autowired
     private VagaService vagaService;
 
+    /**
+     *
+     * @param solicitacaoDTO
+     * @return
+     */
     public SolicitaVaga solicitaVaga(SolicitaVagaDTO solicitacaoDTO)
     {
         SolicitaVaga solicitacao = toEntity(solicitacaoDTO);
@@ -60,6 +66,7 @@ public class SolicitaVagaService
         //aprova e cria vaga
         solicitacao.setAvaliador(new Usuario(idAprovador));
         solicitacao.setDataAvaliado(new Date());
+        solicitacao.setAprovado(true);
         return vagaService.criarVaga(new Vaga(solicitacao));
     }
 
@@ -69,7 +76,7 @@ public class SolicitaVagaService
      * @param idSolicitacao
      * @param idAprovador
      */
-    public void reprovaSolicitacao(Integer idSolicitacao, String idAprovador)
+    public boolean reprovaSolicitacao(Integer idSolicitacao, String idAprovador)
     {
         SolicitaVaga solicitacao = findById(idSolicitacao);
 
@@ -79,7 +86,31 @@ public class SolicitaVagaService
         solicitacao.setAvaliador(new Usuario(idAprovador));
         solicitacao.setDataAvaliado(new Date());
         solicitacao.setAprovado(false);
-        
+        solicitaVagaRepository.save(solicitacao);
+        return true;
+    }
+
+    /**
+     * todos
+     * @return
+     */
+    public List<SolicitaVaga> findAll()
+    {
+        return solicitaVagaRepository.findAll();
+    }
+
+    /**
+     *
+     * @param idSolicitante
+     * @param nivel
+     * @param idAvaliador
+     * @return
+     */
+    public List<SolicitaVaga> findByExample(String idSolicitante, Nivel nivel, String idAvaliador, boolean isAprovado)
+    {
+        SolicitaVaga solicitaVaga = new SolicitaVaga(idSolicitante, nivel, idAvaliador, isAprovado);
+        System.out.println(solicitaVaga.toString());
+        return solicitaVagaRepository.findAll(Example.of(solicitaVaga));
     }
 
     public SolicitaVaga findById(Integer id)

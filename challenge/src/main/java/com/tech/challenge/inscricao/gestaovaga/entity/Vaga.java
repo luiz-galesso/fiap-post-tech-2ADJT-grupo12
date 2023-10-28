@@ -1,15 +1,12 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="tb_vaga")
@@ -17,7 +14,7 @@ public class Vaga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @NotNull(message="O título é obrigatório")
     private String titulo;
     @NotNull(message="A descrição é obrigatória")
@@ -56,5 +53,7 @@ public class Vaga {
         this.dataCriacao = Calendar.getInstance().getTime();
         this.criador = solicitacao.getAvaliador();
         this.solicitacao = solicitacao;
+        //alterar
+        this.carreira = solicitacao.getTitulo();
     }
 }
