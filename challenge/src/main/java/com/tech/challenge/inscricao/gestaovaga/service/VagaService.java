@@ -9,7 +9,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,6 +48,14 @@ public class VagaService {
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Vaga não localizada");
         }
+    }
+
+    public boolean validarVagaExpirada(Long idVaga) {
+        Vaga vaga = findById(idVaga);
+        if(vaga.getDataExpiracao().after(new Date().from(Instant.now()))) {
+            return true;
+        }
+        return false;
     }
 
 }
