@@ -71,5 +71,11 @@ public class VagaController {
         return ResponseEntity.ok(vaga);
     }
 
+    @GetMapping
+    public ResponseEntity<?> listaVagasDisponiveis()
+    {
+        return ResponseEntity.ok(vagaService.listaVagasDisponiveis());
+    }
+
 
 }

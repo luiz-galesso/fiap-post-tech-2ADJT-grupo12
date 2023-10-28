@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VagaService {
@@ -56,6 +57,11 @@ public class VagaService {
             return true;
         }
         return false;
+    }
+
+    public Optional<List<Vaga>> listaVagasDisponiveis()
+    {
+        return vagaRepository.listaVagasDisponiveis();
     }
 
 }
