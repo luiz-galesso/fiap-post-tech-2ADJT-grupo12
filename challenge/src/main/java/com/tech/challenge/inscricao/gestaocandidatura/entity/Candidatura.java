@@ -19,7 +19,7 @@ public class Candidatura {
     @ManyToOne
     private Usuario candidato;
 
-    private boolean ativo;
+    private Long etapaAtual;
 
     public Candidatura(){
     }
@@ -27,6 +27,7 @@ public class Candidatura {
     public Candidatura(Vaga vaga, Usuario usuario){
         setVaga(vaga);
         setUsuario(usuario);
+        setEtapaAtual(1l);
     }
 
     public Vaga getVaga(){
@@ -45,13 +46,11 @@ public class Candidatura {
         this.candidato = candidato;
     }
 
-    public boolean getAtivo(){
-        return this.ativo;
+    public Long getEtapaAtual() {
+        return etapaAtual;
     }
 
-    public void setAtivo(boolean ativo){
-        this.ativo = ativo;
+    public void setEtapaAtual(Long etapaAtual) {
+        this.etapaAtual = etapaAtual;
     }
-
-
 }

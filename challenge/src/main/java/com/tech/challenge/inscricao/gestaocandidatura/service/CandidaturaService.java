@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
 
 import com.tech.challenge.inscricao.gestaocandidatura.dto.CandidaturaRequestDTO;
-import com.tech.challenge.inscricao.gestaoperfil.controller.exception.AuthenticationException;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 
 public class CandidaturaService {
@@ -26,23 +25,33 @@ public class CandidaturaService {
     @Autowired
     VagaService vagaService;
 
-    public CandidaturaRequestDTO save (CandidaturaRequestDTO candidaturaRequestDTO){
+
+   /* public CandidaturaRequestDTO save (CandidaturaRequestDTO candidaturaRequestDTO){
         Usuario usuario = usuarioService.findById(candidaturaRequestDTO.cpfCandidato());
         perfilService.autorizaPerfil(usuario, "CANDIDATO");
+         //Precisa do service da vaga service da vaga ainda não foi mergeado
         vagaService.validarVagaExpirada(candidaturaRequestDTO.idVaga());
         Candidatura candidatura = toEntity(candidaturaRequestDTO);
         candidaturaRepository.save(candidatura);
        return toCandidaturaRequestDTO(candidatura);
+    }*/
+
+
+    public void aprova(Usuario candidato, Vaga vaga){
+        //fazer um find na tabela de candidatura por vaga e candidato e somar + 1
+    }
+    public void reprova(Usuario candidato, Vaga vaga){
+        // fazer um find na tabela de candidatura por vaga e candidato e zerar a posição do candidato
     }
 
 
-    private Candidatura toEntity(CandidaturaRequestDTO candidaturaRequestDTO) {
+  /*  private Candidatura toEntity(CandidaturaRequestDTO candidaturaRequestDTO) {
         return new Candidatura(
                 new Vaga(candidaturaRequestDTO.idVaga()),
                 new Usuario(candidaturaRequestDTO.cpfCandidato())
         );
     }
-
+*/
 
     private CandidaturaRequestDTO toCandidaturaRequestDTO(Candidatura candidatura) {
         return new CandidaturaRequestDTO(
@@ -50,18 +59,4 @@ public class CandidaturaService {
                 candidatura.getVaga().getId()
         );
     }
-
-
-
-    //    private Candidatura toEntity(CandidaturaRequestDTO candidaturaRequestDTO) {
-//        return new Candidatura(candidaturaRequestDTO.cpfCandidato(),
-//                candidaturaRequestDTO.idVaga());
-//    }
-//
-//    private CandidaturaRequestDTO toCandidaturaRequestDTO(Candidatura candidatura) {
-//        return new CandidaturaRequestDTO(
-//                candidatura.getId(),
-//                candidatura.getDescricao()
-//        );
-//    }
 }
