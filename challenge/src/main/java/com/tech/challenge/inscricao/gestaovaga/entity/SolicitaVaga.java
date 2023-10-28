@@ -3,6 +3,7 @@ package com.tech.challenge.inscricao.gestaovaga.entity;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -25,6 +26,10 @@ public class SolicitaVaga
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAvaliado = null;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dataExpiracao;
 
     @ManyToOne
     private Usuario solicitante;
@@ -65,13 +70,14 @@ public class SolicitaVaga
             this.aprovado = isAprovado;
     }
 
-    public SolicitaVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel) {
+    public SolicitaVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel, Date dataExpiracao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.quantidadeDeVagas = quantidadeDeVagas;
         this.solicitante = new Usuario(idSolicitante);
         this.nivel = nivel;
         this.dataSolicitacao = new Date();
+        this.dataExpiracao = dataExpiracao;
     }
 
     public Integer getId() {
@@ -160,5 +166,13 @@ public class SolicitaVaga
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public Date getDataExpiracao() {
+        return dataExpiracao;
+    }
+
+    public void setDataExpiracao(Date dataExpiracao) {
+        this.dataExpiracao = dataExpiracao;
     }
 }

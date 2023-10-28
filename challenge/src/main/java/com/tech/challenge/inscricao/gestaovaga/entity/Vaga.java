@@ -67,6 +67,7 @@ public class Vaga {
         this.solicitacao = solicitacao;
         //alterar
         this.carreira = solicitacao.getTitulo();
+        this.dataExpiracao = solicitacao.getDataExpiracao();
     }
 
     public Long getId() {

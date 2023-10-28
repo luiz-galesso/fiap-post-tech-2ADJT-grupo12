@@ -157,7 +157,8 @@ public class SolicitaVagaService
                 solicitaVagaDTO.descricao(),
                 solicitaVagaDTO.quantidade(),
                 solicitaVagaDTO.idSolicitante(),
-                Nivel.valueOf(solicitaVagaDTO.nivel())
+                Nivel.valueOf(solicitaVagaDTO.nivel()),
+                solicitaVagaDTO.dataExpiracao()
         );
     }
 
@@ -166,7 +167,8 @@ public class SolicitaVagaService
                 solicitaVaga.getDescricao(),
                 solicitaVaga.getQuantidadeDeVagas(),
                 solicitaVaga.getSolicitante().getCpf(),
-                solicitaVaga.getNivel().toString()
+                solicitaVaga.getNivel().toString(),
+                solicitaVaga.getDataExpiracao()
         );
     }
 }
