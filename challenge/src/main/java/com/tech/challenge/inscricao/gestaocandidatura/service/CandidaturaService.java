@@ -30,7 +30,7 @@ public class CandidaturaService {
         Usuario usuario = usuarioService.findById(candidaturaRequestDTO.cpfCandidato());
         perfilService.autorizaPerfil(usuario, "CANDIDATO");
          //Precisa do service da vaga service da vaga ainda não foi mergeado
-        vagaService.validarVagaExpirada(candidaturaRequestDTO.idVaga());
+        //vagaService.validarVagaExpirada(candidaturaRequestDTO.idVaga());
         Candidatura candidatura = toEntity(candidaturaRequestDTO);
         candidaturaRepository.save(candidatura);
        return toCandidaturaRequestDTO(candidatura);

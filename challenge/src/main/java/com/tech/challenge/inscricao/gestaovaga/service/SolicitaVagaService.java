@@ -12,6 +12,7 @@ import com.tech.challenge.inscricao.gestaovaga.repository.SolicitaVagaRepository
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -107,10 +108,29 @@ public class SolicitaVagaService
      * @param idAvaliador
      * @return
      */
-    public List<SolicitaVaga> findByExample(String idSolicitante, Nivel nivel, String idAvaliador, boolean isAprovado)
+    public List<SolicitaVaga> findByExample(String idSolicitante, Nivel nivel, String idAvaliador, Boolean isAprovado)
     {
         SolicitaVaga solicitaVaga = new SolicitaVaga(idSolicitante, nivel, idAvaliador, isAprovado);
-        System.out.println(solicitaVaga.toString());
+
+        if(isAprovado == null)
+        {
+            ExampleMatcher matcher = ExampleMatcher.matching()
+                    .withIgnoreNullValues()
+                    .withIgnorePaths("aprovado")
+                    .withIgnorePaths("avaliador.ativo")
+                    .withIgnorePaths("solicitante.ativo");
+
+            Example<SolicitaVaga> solicitacaoExemplo = Example.of(solicitaVaga, matcher);
+
+            return solicitaVagaRepository.findAll(solicitacaoExemplo);
+        }
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase("avaliador.ativo")
+                .withIgnorePaths("solicitante.ativo");
+
+
         return solicitaVagaRepository.findAll(Example.of(solicitaVaga));
     }
 

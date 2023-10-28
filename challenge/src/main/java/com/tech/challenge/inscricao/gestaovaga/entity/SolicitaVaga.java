@@ -50,7 +50,7 @@ public class SolicitaVaga
     public SolicitaVaga() {
     }
 
-    public SolicitaVaga(String idSolicitante, Nivel nivel, String idAvaliador, boolean isAprovado)
+    public SolicitaVaga(String idSolicitante, Nivel nivel, String idAvaliador, Boolean isAprovado)
     {
         if(idSolicitante != null)
             this.solicitante = new Usuario(idSolicitante);
@@ -61,7 +61,7 @@ public class SolicitaVaga
         if(idAvaliador != null)
             this.avaliador = new Usuario(idAvaliador);
 
-        if(isAprovado)
+        if(isAprovado != null)
             this.aprovado = isAprovado;
     }
 

@@ -39,7 +39,7 @@ public class SolicitaVagaController
         @RequestParam(required = false) String idSolicitante,
         @RequestParam(required = false) Nivel nivel,
         @RequestParam(required = false) String idAvaliador,
-        @RequestParam(required = false) boolean isAprovado)
+        @RequestParam(required = false) Boolean isAprovado)
 
     {
         return ResponseEntity.ok(solicitaVagaService.findByExample(idSolicitante, nivel, idAvaliador, isAprovado));

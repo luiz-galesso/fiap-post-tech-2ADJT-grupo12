@@ -50,6 +50,10 @@ public class Vaga {
     public Vaga() {
     }
 
+    public Vaga(Long id) {
+        this.id = id;
+    }
+
     public Vaga (SolicitaVaga solicitacao)
     {
         this.titulo = solicitacao.getTitulo();
