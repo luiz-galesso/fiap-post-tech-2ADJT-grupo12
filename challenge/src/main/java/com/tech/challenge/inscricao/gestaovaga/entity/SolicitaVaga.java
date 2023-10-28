@@ -37,6 +37,8 @@ public class SolicitaVaga
 
     private Boolean aprovado;
 
+    private String mensagem;
+
     public boolean isAprovado() {
         return Boolean.TRUE.equals(this.aprovado);
     }
@@ -144,4 +146,19 @@ public class SolicitaVaga
         this.dataAvaliado = dataAvaliado;
     }
 
+    public Boolean getAprovado() {
+        return aprovado;
+    }
+
+    public void setAprovado(Boolean aprovado) {
+        this.aprovado = aprovado;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
 }

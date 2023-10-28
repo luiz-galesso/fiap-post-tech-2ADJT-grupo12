@@ -76,7 +76,7 @@ public class SolicitaVagaService
      * @param idSolicitacao
      * @param idAprovador
      */
-    public boolean reprovaSolicitacao(Integer idSolicitacao, String idAprovador)
+    public boolean reprovaSolicitacao(Integer idSolicitacao, String idAprovador, String mensagem)
     {
         SolicitaVaga solicitacao = findById(idSolicitacao);
 
@@ -86,6 +86,7 @@ public class SolicitaVagaService
         solicitacao.setAvaliador(new Usuario(idAprovador));
         solicitacao.setDataAvaliado(new Date());
         solicitacao.setAprovado(false);
+        solicitacao.setMensagem(mensagem);
         solicitaVagaRepository.save(solicitacao);
         return true;
     }

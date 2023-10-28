@@ -1,6 +1,7 @@
 package com.tech.challenge.inscricao.gestaovaga.controller;
 
 import com.tech.challenge.inscricao.gestaovaga.dto.AprovaSolicitacaoDTO;
+import com.tech.challenge.inscricao.gestaovaga.dto.ReprovaSolicitacaoDTO;
 import com.tech.challenge.inscricao.gestaovaga.dto.SolicitaVagaDTO;
 import com.tech.challenge.inscricao.gestaovaga.dto.SolicitaVagaRespostaDTO;
 import com.tech.challenge.inscricao.gestaovaga.entity.SolicitaVaga;
@@ -97,11 +98,13 @@ public class SolicitaVagaController
     }
 
     @PostMapping("/reprovar")
-    public ResponseEntity<?> reprovaSolicitacao(@RequestBody AprovaSolicitacaoDTO aprovaSolicitacaoDTO)
+    public ResponseEntity<?> reprovaSolicitacao(@RequestBody ReprovaSolicitacaoDTO reprovaSolicitacaoDTO)
     {
         try
         {
-            solicitaVagaService.reprovaSolicitacao(aprovaSolicitacaoDTO.idSolicitacao(), aprovaSolicitacaoDTO.idAprovador());
+            solicitaVagaService.reprovaSolicitacao(reprovaSolicitacaoDTO.idSolicitacao(),
+                                                   reprovaSolicitacaoDTO.idAprovador(),
+                                                   reprovaSolicitacaoDTO.mensagem());
 
             HashMap<String, String> resposta = new HashMap<>();
             resposta.put("message", "Vaga reprovada com sucesso.");
