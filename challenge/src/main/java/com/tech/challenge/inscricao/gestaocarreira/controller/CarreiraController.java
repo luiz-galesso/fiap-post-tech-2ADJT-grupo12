@@ -1,8 +1,8 @@
-package com.tech.challenge.inscricao.carreira.controller;
+package com.tech.challenge.inscricao.gestaocarreira.controller;
 
-import com.tech.challenge.inscricao.carreira.dto.CarreiraRequestDTO;
-import com.tech.challenge.inscricao.carreira.entity.Carreira;
-import com.tech.challenge.inscricao.carreira.service.CarreiraService;
+import com.tech.challenge.inscricao.gestaocarreira.dto.CarreiraRequestDTO;
+import com.tech.challenge.inscricao.gestaocarreira.entity.Carreira;
+import com.tech.challenge.inscricao.gestaocarreira.service.CarreiraService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

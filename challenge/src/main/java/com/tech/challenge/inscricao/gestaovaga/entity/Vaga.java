@@ -14,7 +14,7 @@ public class Vaga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @NotNull(message="O título é obrigatório")
     private String titulo;
     @NotNull(message="A descrição é obrigatória")
@@ -53,5 +53,7 @@ public class Vaga {
         this.dataCriacao = Calendar.getInstance().getTime();
         this.criador = solicitacao.getAvaliador();
         this.solicitacao = solicitacao;
+        //alterar
+        this.carreira = solicitacao.getTitulo();
     }
 }
