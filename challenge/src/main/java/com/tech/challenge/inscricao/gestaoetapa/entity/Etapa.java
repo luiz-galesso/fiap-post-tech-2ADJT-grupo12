@@ -23,7 +23,7 @@ public class Etapa {
     public Etapa() {}
 
     public Etapa(String descricao) {
-        this.descricao = descricao;
+        setDescricao(descricao);
     }
 
     public Long getId() {
@@ -39,6 +39,6 @@ public class Etapa {
     }
 
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        this.descricao = descricao.toUpperCase();
     }
 }
