@@ -18,7 +18,7 @@ public class ControllerExceptionHandler {
         logError.setTimestamp(Instant.now());
         logError.setStatus(status.value());
         logError.setError("Entidade não encontrada");
-        logError.setMessage(e.getMessage());
+       // logError.setMessage(e.getMessage());
         logError.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(this.logError);
     }
