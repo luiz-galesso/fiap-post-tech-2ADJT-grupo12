@@ -3,6 +3,7 @@ package com.tech.challenge.inscricao.gestaovaga.entity;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -25,6 +26,10 @@ public class SolicitaVaga
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAvaliado = null;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dataExpiracao;
 
     @ManyToOne
     private Usuario solicitante;
@@ -50,7 +55,7 @@ public class SolicitaVaga
     public SolicitaVaga() {
     }
 
-    public SolicitaVaga(String idSolicitante, Nivel nivel, String idAvaliador, boolean isAprovado)
+    public SolicitaVaga(String idSolicitante, Nivel nivel, String idAvaliador, Boolean isAprovado)
     {
         if(idSolicitante != null)
             this.solicitante = new Usuario(idSolicitante);
@@ -61,17 +66,18 @@ public class SolicitaVaga
         if(idAvaliador != null)
             this.avaliador = new Usuario(idAvaliador);
 
-        if(isAprovado)
+        if(isAprovado != null)
             this.aprovado = isAprovado;
     }
 
-    public SolicitaVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel) {
+    public SolicitaVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel, Date dataExpiracao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.quantidadeDeVagas = quantidadeDeVagas;
         this.solicitante = new Usuario(idSolicitante);
         this.nivel = nivel;
         this.dataSolicitacao = new Date();
+        this.dataExpiracao = dataExpiracao;
     }
 
     public Integer getId() {
@@ -160,5 +166,13 @@ public class SolicitaVaga
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public Date getDataExpiracao() {
+        return dataExpiracao;
+    }
+
+    public void setDataExpiracao(Date dataExpiracao) {
+        this.dataExpiracao = dataExpiracao;
     }
 }

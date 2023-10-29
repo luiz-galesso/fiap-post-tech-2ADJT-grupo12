@@ -9,9 +9,11 @@ import com.tech.challenge.inscricao.gestaovaga.entity.SolicitaVaga;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import com.tech.challenge.inscricao.gestaovaga.repository.SolicitaVagaRepository;
+import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -42,7 +44,8 @@ public class SolicitaVagaService
         SolicitaVaga solicitacao = toEntity(solicitacaoDTO);
 
         //verificar perfil
-        Usuario usuario = usuarioService.findById(solicitacao.getSolicitante().getCpf());
+         Usuario usuario = usuarioService.findById(
+                StringUtils.removeMascara(solicitacao.getSolicitante().getCpf()));
         Perfil perfil = perfilService.findById(usuario.getPerfil().getId());
         if(perfil.getDescricao().equals("CANDIDATO")){
             throw new EntityNotFoundException("Perfil não autorizado");
@@ -54,8 +57,8 @@ public class SolicitaVagaService
 
     /**
      * aprova solicitacao
-     * @param idSolicitacao
-     * @param idAprovador
+     * @param idSolicitacao cpf
+     * @param idAprovador cpf
      */
     public Vaga aprovaSolicitacao(Integer idSolicitacao, String idAprovador)
     {
@@ -76,7 +79,7 @@ public class SolicitaVagaService
      * @param idSolicitacao
      * @param idAprovador
      */
-    public boolean reprovaSolicitacao(Integer idSolicitacao, String idAprovador, String mensagem)
+    public void reprovaSolicitacao(Integer idSolicitacao, String idAprovador, String mensagem)
     {
         SolicitaVaga solicitacao = findById(idSolicitacao);
 
@@ -88,7 +91,6 @@ public class SolicitaVagaService
         solicitacao.setAprovado(false);
         solicitacao.setMensagem(mensagem);
         solicitaVagaRepository.save(solicitacao);
-        return true;
     }
 
     /**
@@ -107,13 +109,39 @@ public class SolicitaVagaService
      * @param idAvaliador
      * @return
      */
-    public List<SolicitaVaga> findByExample(String idSolicitante, Nivel nivel, String idAvaliador, boolean isAprovado)
+    public List<SolicitaVaga> findByExample(String idSolicitante, Nivel nivel, String idAvaliador, Boolean isAprovado)
     {
         SolicitaVaga solicitaVaga = new SolicitaVaga(idSolicitante, nivel, idAvaliador, isAprovado);
-        System.out.println(solicitaVaga.toString());
+
+        //necessario devido pq sempre sao considerados os booleanos
+        //necesse sentido, precis ignora-los qd nao possuirem valor
+        if(isAprovado == null)
+        {
+            ExampleMatcher matcher = ExampleMatcher.matching()
+                    .withIgnoreNullValues()
+                    .withIgnorePaths("aprovado")
+                    .withIgnorePaths("avaliador.ativo")
+                    .withIgnorePaths("solicitante.ativo");
+
+            Example<SolicitaVaga> solicitacaoExemplo = Example.of(solicitaVaga, matcher);
+
+            return solicitaVagaRepository.findAll(solicitacaoExemplo);
+        }
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase("avaliador.ativo")
+                .withIgnorePaths("solicitante.ativo");
+
+
         return solicitaVagaRepository.findAll(Example.of(solicitaVaga));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public SolicitaVaga findById(Integer id)
     {
         return solicitaVagaRepository.findById(id).orElse(null);
@@ -130,8 +158,9 @@ public class SolicitaVagaService
                 solicitaVagaDTO.titulo(),
                 solicitaVagaDTO.descricao(),
                 solicitaVagaDTO.quantidade(),
-                solicitaVagaDTO.idSolicitante(),
-                Nivel.valueOf(solicitaVagaDTO.nivel())
+                StringUtils.removeMascara(solicitaVagaDTO.idSolicitante()),
+                Nivel.valueOf(solicitaVagaDTO.nivel()),
+                solicitaVagaDTO.dataExpiracao()
         );
     }
 
@@ -140,7 +169,8 @@ public class SolicitaVagaService
                 solicitaVaga.getDescricao(),
                 solicitaVaga.getQuantidadeDeVagas(),
                 solicitaVaga.getSolicitante().getCpf(),
-                solicitaVaga.getNivel().toString()
+                solicitaVaga.getNivel().toString(),
+                solicitaVaga.getDataExpiracao()
         );
     }
 }

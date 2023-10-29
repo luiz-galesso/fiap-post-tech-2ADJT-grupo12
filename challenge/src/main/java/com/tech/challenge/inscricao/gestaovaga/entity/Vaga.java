@@ -1,5 +1,6 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
+import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="tb_vaga")
@@ -20,7 +22,8 @@ public class Vaga {
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
 
-/*    private List<Etapa> etapas;*/
+    @OneToMany
+    private List<Etapa> etapas;
     @NotNull(message="A carreira é obrigatória")
     private String carreira;
 
@@ -42,6 +45,10 @@ public class Vaga {
     public Vaga() {
     }
 
+    public Vaga(Long id) {
+        this.id = id;
+    }
+
     public Vaga (SolicitaVaga solicitacao)
     {
         this.titulo = solicitacao.getTitulo();
@@ -55,6 +62,7 @@ public class Vaga {
         this.solicitacao = solicitacao;
         //alterar
         this.carreira = solicitacao.getTitulo();
+        this.dataExpiracao = solicitacao.getDataExpiracao();
     }
 
     public Long getId() {
@@ -79,6 +87,14 @@ public class Vaga {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Etapa> getEtapas() {
+        return etapas;
+    }
+
+    public void setEtapas(List<Etapa> etapas) {
+        this.etapas = etapas;
     }
 
     public String getCarreira() {

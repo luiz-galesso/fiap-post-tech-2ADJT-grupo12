@@ -10,7 +10,7 @@ public class Perfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idPerfil;
 
     @NotBlank
     @NotNull(message="A descrição é obrigatória")
@@ -19,16 +19,16 @@ public class Perfil {
     public Perfil() {
     }
 
-    public Perfil(Long id) {
-        this.id = id;
+    public Perfil(Long idPerfil) {
+        this.idPerfil = idPerfil;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPerfil() {
+        return idPerfil;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPerfil(Long idPerfil) {
+        this.idPerfil = idPerfil;
     }
 
     public String getDescricao() {

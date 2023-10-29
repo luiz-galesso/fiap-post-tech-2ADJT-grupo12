@@ -29,17 +29,17 @@ public class SolicitaVagaController
      * um exemplo da classe SolicitaVaga
      * Os parametros não são obrigatórios.
      * Caso não seja passado, retorna todos.
-     * @param idSolicitante
-     * @param nivel
-     * @param idAvaliador
-     * @return
+     * @param idSolicitante cpf
+     * @param nivel enum Nivel
+     * @param idAvaliador cpf
+     * @return List<SolicitaVaga>
      */
     @GetMapping
     public ResponseEntity<?> getSolicitacoes(
         @RequestParam(required = false) String idSolicitante,
         @RequestParam(required = false) Nivel nivel,
         @RequestParam(required = false) String idAvaliador,
-        @RequestParam(required = false) boolean isAprovado)
+        @RequestParam(required = false) Boolean isAprovado)
 
     {
         return ResponseEntity.ok(solicitaVagaService.findByExample(idSolicitante, nivel, idAvaliador, isAprovado));
@@ -116,7 +116,4 @@ public class SolicitaVagaController
             return ResponseEntity.internalServerError().body("'message': 'A vaga não foi alterada devido a um erro de sistema.'");
         }
     }
-
-
-
 }
