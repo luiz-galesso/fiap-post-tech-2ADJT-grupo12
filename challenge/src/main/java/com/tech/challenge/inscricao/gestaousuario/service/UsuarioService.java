@@ -1,6 +1,8 @@
 package com.tech.challenge.inscricao.gestaousuario.service;
 
 
+import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
+import com.tech.challenge.inscricao.gestaocandidatura.entity.Candidatura;
 import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
 import com.tech.challenge.inscricao.gestaousuario.entity.Perfil;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
@@ -23,12 +25,9 @@ public class UsuarioService {
     private PerfilService perfilService;
 
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
-
-        if(perfilService.findById(usuarioDTO.perfil().id()) == null){
-            throw new EntityNotFoundException();
-        }
-
         Usuario usuario = toEntity(usuarioDTO);
+        perfilService.verificaEntidade(usuario);
+        validaSeJaCadastrado(usuario);
         usuario = usuarioRepository.save(usuario);
         return toUsuarioDTO(usuario);
     }
@@ -38,6 +37,9 @@ public class UsuarioService {
             id = StringUtils.removeMascara(id);
             Usuario usuario = usuarioRepository.getReferenceById(id);
             usuario.setDadosPessoais(new DadosPessoais(usuarioDTO.dadosPessoais()));
+            usuario.setPerfil(new Perfil(usuarioDTO.perfil()));
+            usuario.setNomeUsuario(usuarioDTO.nomeUsuario());
+            usuario.setNome(usuarioDTO.nomeCompleto());
             usuario = usuarioRepository.save(usuario);
 
             return toUsuarioDTO(usuario);
@@ -65,13 +67,21 @@ public class UsuarioService {
                     .replace("Service","")
                     + " não localizado")*/
                     "Usuário não localizado"
-                    ));
+            ));
 
 
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Usuário não localizado");
         }
     }
+
+    public void validaSeJaCadastrado(Usuario usuario){
+        Usuario usuarioLocal = findById(usuario.getCpf());
+        if(usuarioLocal != null){
+            throw new EntityFoundException("Já cadastrado!");
+        }
+    }
+
 
     private Usuario toEntity(UsuarioDTO usuarioDTO) {
         return new Usuario(
@@ -81,7 +91,7 @@ public class UsuarioService {
                 new DadosPessoais(usuarioDTO.dadosPessoais()),
                 new Perfil(usuarioDTO.perfil())
 
-                );
+        );
     }
 
     private UsuarioDTO toUsuarioDTO(Usuario usuario) {
@@ -101,6 +111,6 @@ public class UsuarioService {
                                 usuario.getDadosPessoais().getEndereco().getNumero(),
                                 usuario.getDadosPessoais().getEndereco().getComplemento()))
                 , new PerfilDTO(usuario.getPerfil().getId())
-                , usuario.isAtivo());
+        );
     }
 }

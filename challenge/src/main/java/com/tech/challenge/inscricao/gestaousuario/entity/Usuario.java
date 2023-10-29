@@ -29,7 +29,6 @@ public class Usuario {
     @Embedded
     private Perfil perfil; // validar como fazer o relacionamento e guardar apenas o id na tabela
 
-    private boolean ativo;
 
     public Usuario (){}
 
@@ -43,7 +42,6 @@ public class Usuario {
         this.nome = nome;
         this.dadosPessoais = dadosPessoais;
         this.perfil = perfil;
-        this.ativo = true;
     }
 
     public String getCpf() {
@@ -86,11 +84,4 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
 }
