@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
 import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.inscricao.gestaovaga.controller.exception.DataExpiradaException;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.repository.VagaRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -56,7 +57,7 @@ public class VagaService {
     public void validarVagaExpirada(Long idVaga) {
         Vaga vaga = findById(idVaga);
         if(!vaga.getDataExpiracao().after(new Date().from(Instant.now()))){
-            System.out.println("ERRO");
+            throw new DataExpiradaException("A vaga está expirada");
         }
 
     }
