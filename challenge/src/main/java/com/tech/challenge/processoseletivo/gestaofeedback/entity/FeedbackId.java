@@ -29,7 +29,7 @@ public class FeedbackId implements Serializable {
         Usuario candidato = new Usuario();
         candidato.setCpf(idCandidato);
         Vaga vaga = new Vaga();
-        vaga.setIdVaga(idVaga);
+        vaga.setId(idVaga);
         Etapa etapa = new Etapa();
         etapa.setId(idEtapa);
         this.candidato = candidato;
