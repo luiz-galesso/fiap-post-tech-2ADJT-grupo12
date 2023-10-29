@@ -10,6 +10,7 @@ import com.tech.challenge.processoseletivo.gestaoentrevista.dto.EntrevistaReques
 import com.tech.challenge.processoseletivo.gestaoentrevista.dto.EntrevistaResponseDTO;
 import com.tech.challenge.processoseletivo.gestaoentrevista.entity.Entrevista;
 import com.tech.challenge.processoseletivo.gestaoentrevista.repository.EntrevistaRepository;
+import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class EntrevistaService {
     public EntrevistaResponseDTO findByUsuario(String idUsuario, String tipoPerfil) {
         try {
             var entrevista = new Entrevista();
-            Usuario usuario = usuarioService.findById(idUsuario);
+            Usuario usuario = usuarioService.findById(StringUtils.removeMascara(idUsuario));
             Perfil perfil = perfilService.findById(usuario.getPerfil().getId());
 
             if (perfil.getDescricao().toUpperCase().equals("CANDIDATO") && tipoPerfil.toUpperCase().equals("CANDIDATO")) {
@@ -76,10 +77,10 @@ public class EntrevistaService {
     public EntrevistaResponseDTO update(Long id, EntrevistaRequestDTO entrevistaDTO) {
         try {
             Entrevista entrevista = entrevistaRepository.getReferenceById(id);
-            entrevista.setEntrevistador(usuarioService.findById(entrevistaDTO.entrevistador()));
+            entrevista.setEntrevistador(usuarioService.findById(StringUtils.removeMascara(entrevistaDTO.entrevistador())));
             entrevista.setDataEntrevista(entrevistaDTO.dataEntrevista());
             entrevista.setLocal(entrevistaDTO.local());
-            entrevista.setEntrevistador(usuarioService.findById(entrevistaDTO.candidato()));
+            entrevista.setCandidato(usuarioService.findById(StringUtils.removeMascara(entrevistaDTO.candidato())));
             entrevista = entrevistaRepository.save(entrevista);
 
             return toEntrevistaResponseDTO(entrevista);
@@ -105,8 +106,8 @@ public class EntrevistaService {
         return new Entrevista(entrevistaDTO.id(),
                 entrevistaDTO.local(),
                 entrevistaDTO.dataEntrevista(),
-                usuarioService.findById(entrevistaDTO.candidato()),
-                usuarioService.findById(entrevistaDTO.entrevistador()),
+                usuarioService.findById(StringUtils.removeMascara(entrevistaDTO.candidato())),
+                usuarioService.findById(StringUtils.removeMascara(entrevistaDTO.entrevistador())),
                 vagaService.findById(entrevistaDTO.vaga())
         );
     }
