@@ -27,7 +27,7 @@ public class UsuarioService {
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
         Usuario usuario = toEntity(usuarioDTO);
         perfilService.verificaEntidade(usuario);
-        validaSeJaCadastrado(usuario);
+        //validaSeJaCadastrado(usuario);
         usuario = usuarioRepository.save(usuario);
         return toUsuarioDTO(usuario);
     }
