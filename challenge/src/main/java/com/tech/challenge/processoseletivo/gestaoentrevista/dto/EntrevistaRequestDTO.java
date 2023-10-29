@@ -19,7 +19,10 @@ public record EntrevistaRequestDTO(
         String local,
 
         @CPF(message = "CPF Invalido")
-        String candidato
+        String candidato,
+
+        @NotNull
+        Long vaga
 
 
 ) {

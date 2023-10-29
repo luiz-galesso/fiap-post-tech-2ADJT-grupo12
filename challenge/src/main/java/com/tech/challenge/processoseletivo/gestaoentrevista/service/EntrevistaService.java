@@ -5,6 +5,7 @@ import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import com.tech.challenge.processoseletivo.gestaoentrevista.dto.EntrevistaRequestDTO;
 import com.tech.challenge.processoseletivo.gestaoentrevista.dto.EntrevistaResponseDTO;
 import com.tech.challenge.processoseletivo.gestaoentrevista.entity.Entrevista;
@@ -23,11 +24,14 @@ public class EntrevistaService {
     private final UsuarioService usuarioService;
     private final PerfilService perfilService;
 
+    private final VagaService vagaService;
+
     @Autowired
-    public EntrevistaService(EntrevistaRepository entrevistaRepository, UsuarioService usuarioService, PerfilService perfilService) {
+    public EntrevistaService(EntrevistaRepository entrevistaRepository, UsuarioService usuarioService, PerfilService perfilService, VagaService vagaService) {
         this.entrevistaRepository = entrevistaRepository;
         this.usuarioService = usuarioService;
         this.perfilService = perfilService;
+        this.vagaService = vagaService;
     }
 
     public Collection<EntrevistaResponseDTO> findAll() {
@@ -93,7 +97,8 @@ public class EntrevistaService {
                 entrevista.getEntrevistador().getNome(),
                 entrevista.getDataEntrevista(),
                 entrevista.getLocal(),
-                entrevista.getCandidato().getNome());
+                entrevista.getCandidato().getNome(),
+                entrevista.getVaga().getTitulo());
     }
 
     private Entrevista toEntrevista(EntrevistaRequestDTO entrevistaDTO) {
@@ -101,7 +106,8 @@ public class EntrevistaService {
                 entrevistaDTO.local(),
                 entrevistaDTO.dataEntrevista(),
                 usuarioService.findById(entrevistaDTO.candidato()),
-                usuarioService.findById(entrevistaDTO.entrevistador())
+                usuarioService.findById(entrevistaDTO.entrevistador()),
+                vagaService.findById(entrevistaDTO.vaga())
         );
     }
 }

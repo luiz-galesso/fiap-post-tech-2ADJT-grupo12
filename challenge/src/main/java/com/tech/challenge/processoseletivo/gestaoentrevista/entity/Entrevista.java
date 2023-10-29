@@ -1,6 +1,7 @@
 package com.tech.challenge.processoseletivo.gestaoentrevista.entity;
 
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,15 +25,19 @@ public class Entrevista {
     @OneToOne
     private Usuario entrevistador;
 
+    @OneToOne
+    private Vaga vaga;
+
     public Entrevista() {
     }
 
-    public Entrevista(Long id, String local, LocalDate dataEntrevista, Usuario candidato, Usuario entrevistador) {
+    public Entrevista(Long id, String local, LocalDate dataEntrevista, Usuario candidato, Usuario entrevistador, Vaga vaga) {
         this.id = id;
         this.local = local;
         this.dataEntrevista = dataEntrevista;
         this.candidato = candidato;
         this.entrevistador = entrevistador;
+        this.vaga = vaga;
     }
 
     public Long getId() {
@@ -75,4 +80,11 @@ public class Entrevista {
         this.entrevistador = entrevistador;
     }
 
+    public Vaga getVaga() {
+        return vaga;
+    }
+
+    public void setVaga(Vaga vaga) {
+        this.vaga = vaga;
+    }
 }
