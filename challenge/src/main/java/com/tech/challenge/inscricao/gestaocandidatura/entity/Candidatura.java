@@ -19,15 +19,20 @@ public class Candidatura {
     @ManyToOne
     private Usuario candidato;
 
-    private Long etapaAtual;
-
     public Candidatura(){
     }
 
     public Candidatura(Vaga vaga, Usuario usuario){
         setVaga(vaga);
         setUsuario(usuario);
-        setEtapaAtual(1l);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Vaga getVaga(){
@@ -46,11 +51,4 @@ public class Candidatura {
         this.candidato = candidato;
     }
 
-    public Long getEtapaAtual() {
-        return etapaAtual;
-    }
-
-    public void setEtapaAtual(Long etapaAtual) {
-        this.etapaAtual = etapaAtual;
-    }
 }
