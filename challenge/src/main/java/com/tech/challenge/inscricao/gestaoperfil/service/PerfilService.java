@@ -88,10 +88,8 @@ public class PerfilService {
     public boolean verificaPerfil(Usuario usuario, String perfil){
 
      Perfil perfilLocal = findById(usuario.getPerfil().getId());
-        if(perfilLocal.getDescricao().equals(perfil)){
-            return true;
-        }
-        return false;
+        return perfilLocal.getDescricao().equals(perfil);
+
     }
 
     public void autorizaPerfil(Usuario usuario, String perfil){
