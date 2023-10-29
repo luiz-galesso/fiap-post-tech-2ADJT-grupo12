@@ -16,18 +16,13 @@ public class Vaga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vaga_id")
     private Long id;
     @NotNull(message="O título é obrigatório")
     private String titulo;
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
 
-    @ManyToMany
-     @JoinTable(name = "tb_vaga_etapa",
-        joinColumns = @JoinColumn(name="vaga_id"),
-             inverseJoinColumns = @JoinColumn(name = "etapa_id")
-     )
+    @OneToMany
     private List<Etapa> etapas;
     @NotNull(message="A carreira é obrigatória")
     private String carreira;

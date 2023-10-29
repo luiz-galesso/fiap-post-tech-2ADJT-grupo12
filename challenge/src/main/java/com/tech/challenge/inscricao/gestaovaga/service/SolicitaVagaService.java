@@ -9,6 +9,7 @@ import com.tech.challenge.inscricao.gestaovaga.entity.SolicitaVaga;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import com.tech.challenge.inscricao.gestaovaga.repository.SolicitaVagaRepository;
+import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -43,7 +44,8 @@ public class SolicitaVagaService
         SolicitaVaga solicitacao = toEntity(solicitacaoDTO);
 
         //verificar perfil
-        Usuario usuario = usuarioService.findById(solicitacao.getSolicitante().getCpf());
+         Usuario usuario = usuarioService.findById(
+                StringUtils.removeMascara(solicitacao.getSolicitante().getCpf()));
         Perfil perfil = perfilService.findById(usuario.getPerfil().getId());
         if(perfil.getDescricao().equals("CANDIDATO")){
             throw new EntityNotFoundException("Perfil não autorizado");
@@ -156,7 +158,7 @@ public class SolicitaVagaService
                 solicitaVagaDTO.titulo(),
                 solicitaVagaDTO.descricao(),
                 solicitaVagaDTO.quantidade(),
-                solicitaVagaDTO.idSolicitante(),
+                StringUtils.removeMascara(solicitaVagaDTO.idSolicitante()),
                 Nivel.valueOf(solicitaVagaDTO.nivel()),
                 solicitaVagaDTO.dataExpiracao()
         );

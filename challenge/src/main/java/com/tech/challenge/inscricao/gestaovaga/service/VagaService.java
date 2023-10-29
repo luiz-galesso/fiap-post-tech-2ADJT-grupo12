@@ -1,5 +1,6 @@
 package com.tech.challenge.inscricao.gestaovaga.service;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
 import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,12 +53,12 @@ public class VagaService {
         }
     }
 
-    public boolean validarVagaExpirada(Long idVaga) {
+    public void validarVagaExpirada(Long idVaga) {
         Vaga vaga = findById(idVaga);
-        if(vaga.getDataExpiracao().after(new Date().from(Instant.now()))) {
-            return true;
+        if(!vaga.getDataExpiracao().after(new Date().from(Instant.now()))){
+            System.out.println("ERRO");
         }
-        return false;
+
     }
 
     public Optional<List<Vaga>> listaVagasDisponiveis()
