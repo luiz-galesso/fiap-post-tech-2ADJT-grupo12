@@ -1,5 +1,6 @@
 package com.tech.challenge.inscricao.gestaocandidatura.service;
 
+import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
 import com.tech.challenge.inscricao.gestaocandidatura.entity.Candidatura;
 import com.tech.challenge.inscricao.gestaocandidatura.repository.CandidaturaRepository;
 import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
@@ -30,19 +31,15 @@ public class CandidaturaService {
 
 
     public CandidaturaRequestDTO save (CandidaturaRequestDTO candidaturaRequestDTO){
-        try {
             String cpf = StringUtils.removeMascara(candidaturaRequestDTO.cpfCandidato());
             Usuario usuario = usuarioService.findById(cpf);
             perfilService.autorizaPerfil(usuario, "CANDIDATO");
             //Precisa do service da vaga service da vaga ainda não foi mergeado
             vagaService.validarVagaExpirada(candidaturaRequestDTO.idVaga());
-            jaCadastrado(candidaturaRequestDTO.idVaga(), candidaturaRequestDTO.cpfCandidato());
+            validaSeJaCadastrado(candidaturaRequestDTO.idVaga(), candidaturaRequestDTO.cpfCandidato());
             Candidatura candidatura = toEntity(candidaturaRequestDTO);
             candidaturaRepository.save(candidatura);
             return toCandidaturaRequestDTO(candidatura);
-        }catch (Exception e){
-            return null;
-        }
     }
 
     public void delete(String cpfCandidato, Long idVaga){
@@ -57,14 +54,10 @@ public class CandidaturaService {
         return candidaturaRepository.findByVagaAndCandidato(idVaga, cpf);
     }
 
-    public void jaCadastrado(Long idVaga, String cpf){
-        if(findByVagaAndCandidato(idVaga, cpf) != null){
-            System.out.println("Já cadastrado");
-            try {
-                throw new Exception();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+    public void validaSeJaCadastrado(Long idVaga, String cpf){
+        Candidatura candidatura = findByVagaAndCandidato(idVaga, cpf);
+        if(candidatura != null){
+           throw new EntityFoundException("Já cadastrado!");
         }
     }
 
