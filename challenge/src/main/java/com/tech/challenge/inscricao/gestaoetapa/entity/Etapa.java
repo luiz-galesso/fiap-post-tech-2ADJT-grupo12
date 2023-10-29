@@ -2,6 +2,7 @@ package com.tech.challenge.inscricao.gestaoetapa.entity;
 
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
@@ -15,12 +16,9 @@ public class Etapa {
     @Column(name = "etapa_id")
     private Long id;
 
-    @NotNull(message = "A descrição é obrigatória")
+    @NotBlank (message = "A descrição é obrigatória")
     @Column(unique = true)
     private String descricao;
-
-    @ManyToMany(mappedBy = "etapas")
-    private List<Vaga> vagas;
 
     public Etapa() {}
 
