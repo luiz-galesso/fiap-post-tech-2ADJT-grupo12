@@ -1,6 +1,6 @@
 package com.tech.challenge.processoseletivo.gestaofeedback.entity;
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaousuario.entity.Candidato;
+import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
@@ -17,7 +17,7 @@ public class Feedback {
 
     @Id
     @ManyToOne(cascade = CascadeType.ALL)
-    private Candidato candidato;
+    private Usuario candidato;
     @Id
     @ManyToOne(cascade =  CascadeType.ALL)
     private Vaga vaga;
@@ -34,7 +34,7 @@ public class Feedback {
     private LocalDate dataFeedback;
     public Feedback(){}
 
-    public Feedback(Candidato candidato, Vaga vaga, Etapa etapa, String conteudoFeedback, Usuario autor, LocalDate dataFeedback) {
+    public Feedback(Usuario candidato, Vaga vaga, Etapa etapa, String conteudoFeedback, Usuario autor, LocalDate dataFeedback) {
         this.candidato = candidato;
         this.vaga = vaga;
         this.etapa = etapa;
@@ -43,11 +43,11 @@ public class Feedback {
         this.dataFeedback = dataFeedback;
     }
 
-    public Candidato getCandidato() {
+    public Usuario getUsuario() {
         return candidato;
     }
 
-    public void setCandidato(Candidato candidato) {
+    public void setUsuario(Usuario candidato) {
         this.candidato = candidato;
     }
 
