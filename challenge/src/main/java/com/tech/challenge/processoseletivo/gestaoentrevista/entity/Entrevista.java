@@ -2,9 +2,8 @@ package com.tech.challenge.processoseletivo.gestaoentrevista.entity;
 
 import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Entity
@@ -15,22 +14,24 @@ public class Entrevista {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date dataEntrevista;
-
-    @NotBlank(message = "")
     private String local;
 
+    private LocalDate dataEntrevista;
+
     @OneToOne
-    @NotBlank(message = "")
+    private Usuario candidato;
+
+    @OneToOne
     private Usuario entrevistador;
 
     public Entrevista() {
     }
 
-    public Entrevista(Long id, Date dataEntrevista, String local, Usuario entrevistador) {
+    public Entrevista(Long id, String local, LocalDate dataEntrevista, Usuario candidato, Usuario entrevistador) {
         this.id = id;
-        this.dataEntrevista = dataEntrevista;
         this.local = local;
+        this.dataEntrevista = dataEntrevista;
+        this.candidato = candidato;
         this.entrevistador = entrevistador;
     }
 
@@ -38,20 +39,8 @@ public class Entrevista {
         return id;
     }
 
-    public Usuario getEntrevistador() {
-        return entrevistador;
-    }
-
-    public void setEntrevistador(Usuario entrevistador) {
-        this.entrevistador = entrevistador;
-    }
-
-    public Date getDataEntrevista() {
-        return dataEntrevista;
-    }
-
-    public void setDataEntrevista(Date dataEntrevista) {
-        this.dataEntrevista = dataEntrevista;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLocal() {
@@ -60,6 +49,30 @@ public class Entrevista {
 
     public void setLocal(String local) {
         this.local = local;
+    }
+
+    public LocalDate getDataEntrevista() {
+        return dataEntrevista;
+    }
+
+    public void setDataEntrevista(LocalDate dataEntrevista) {
+        this.dataEntrevista = dataEntrevista;
+    }
+
+    public Usuario getCandidato() {
+        return candidato;
+    }
+
+    public void setCandidato(Usuario candidato) {
+        this.candidato = candidato;
+    }
+
+    public Usuario getEntrevistador() {
+        return entrevistador;
+    }
+
+    public void setEntrevistador(Usuario entrevistador) {
+        this.entrevistador = entrevistador;
     }
 
 }
