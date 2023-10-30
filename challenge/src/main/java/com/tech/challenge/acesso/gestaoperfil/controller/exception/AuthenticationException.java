@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaoperfil.controller.exception;
+package com.tech.challenge.acesso.gestaoperfil.controller.exception;
 
 public class AuthenticationException extends RuntimeException{
 

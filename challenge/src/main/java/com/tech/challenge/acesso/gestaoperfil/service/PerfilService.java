@@ -1,13 +1,12 @@
-package com.tech.challenge.inscricao.gestaoperfil.service;
+package com.tech.challenge.acesso.gestaoperfil.service;
 
-import com.tech.challenge.inscricao.gestaoperfil.controller.exception.AuthenticationException;
-import com.tech.challenge.inscricao.gestaoperfil.dto.PerfilRequestDTO;
-import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
-import com.tech.challenge.inscricao.gestaoperfil.repository.PerfilRepository;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaoperfil.controller.exception.AuthenticationException;
+import com.tech.challenge.acesso.gestaoperfil.dto.PerfilRequestDTO;
+import com.tech.challenge.acesso.gestaoperfil.entity.Perfil;
+import com.tech.challenge.acesso.gestaoperfil.repository.PerfilRepository;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
 
-import com.tech.challenge.inscricao.gestaousuario.dto.UsuarioDTO;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

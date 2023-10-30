@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaoperfil.dto;
+package com.tech.challenge.acesso.gestaoperfil.dto;
 
 public record PerfilRequestDTO(
 

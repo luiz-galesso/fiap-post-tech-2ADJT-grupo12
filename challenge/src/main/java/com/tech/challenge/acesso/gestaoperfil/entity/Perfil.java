@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaoperfil.entity;
+package com.tech.challenge.acesso.gestaoperfil.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,6 @@
-package com.tech.challenge.inscricao.gestaoperfil.controller.exception;
+package com.tech.challenge.acesso.gestaoperfil.controller.exception;
 
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.LogError;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.LogError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
