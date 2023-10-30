@@ -1,5 +1,7 @@
 package com.tech.challenge.processoseletivo.gestaoentrevista.service;
 
+import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
+import com.tech.challenge.inscricao.gestaoetapa.service.EtapaService;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
 import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
 import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
@@ -24,15 +26,16 @@ public class EntrevistaService {
     private final EntrevistaRepository entrevistaRepository;
     private final UsuarioService usuarioService;
     private final PerfilService perfilService;
-
     private final VagaService vagaService;
+    private final EtapaService etapaService;
 
     @Autowired
-    public EntrevistaService(EntrevistaRepository entrevistaRepository, UsuarioService usuarioService, PerfilService perfilService, VagaService vagaService) {
+    public EntrevistaService(EntrevistaRepository entrevistaRepository, UsuarioService usuarioService, PerfilService perfilService, VagaService vagaService, EtapaService etapaService) {
         this.entrevistaRepository = entrevistaRepository;
         this.usuarioService = usuarioService;
         this.perfilService = perfilService;
         this.vagaService = vagaService;
+        this.etapaService = etapaService;
     }
 
     public Collection<EntrevistaResponseDTO> findAll() {
@@ -99,7 +102,8 @@ public class EntrevistaService {
                 entrevista.getDataEntrevista(),
                 entrevista.getLocal(),
                 entrevista.getCandidato().getNome(),
-                entrevista.getVaga().getTitulo());
+                entrevista.getVaga().getTitulo(),
+                entrevista.getEtapa().getDescricao());
     }
 
     private Entrevista toEntrevista(EntrevistaRequestDTO entrevistaDTO) {
@@ -108,7 +112,7 @@ public class EntrevistaService {
                 entrevistaDTO.dataEntrevista(),
                 usuarioService.findById(StringUtils.removeMascara(entrevistaDTO.candidato())),
                 usuarioService.findById(StringUtils.removeMascara(entrevistaDTO.entrevistador())),
-                vagaService.findById(entrevistaDTO.vaga())
-        );
+                vagaService.findById(entrevistaDTO.vaga()),
+                etapaService.findById(entrevistaDTO.etapa()));
     }
 }

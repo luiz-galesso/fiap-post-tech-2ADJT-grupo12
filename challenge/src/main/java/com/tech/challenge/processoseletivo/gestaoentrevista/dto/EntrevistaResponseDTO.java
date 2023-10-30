@@ -9,6 +9,7 @@ public record EntrevistaResponseDTO(
         LocalDate dataEntrevista,
         String local,
         String candidato,
-        String vaga
+        String vaga,
+        String etapa
 ) {
 }

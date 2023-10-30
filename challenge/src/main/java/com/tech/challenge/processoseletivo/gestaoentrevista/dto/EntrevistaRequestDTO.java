@@ -21,8 +21,11 @@ public record EntrevistaRequestDTO(
         @CPF(message = "CPF Invalido")
         String candidato,
 
-        @NotNull
-        Long vaga
+        @NotNull(message = "Vaga não pode estar em branco")
+        Long vaga,
+
+        @NotNull(message = "Etapa não pode estar em branco")
+        Long etapa
 
 
 ) {
