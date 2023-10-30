@@ -1,13 +1,14 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="tb_vaga"
