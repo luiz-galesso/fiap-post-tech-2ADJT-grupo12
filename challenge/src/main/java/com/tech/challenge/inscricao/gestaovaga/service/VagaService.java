@@ -1,9 +1,7 @@
 package com.tech.challenge.inscricao.gestaovaga.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
 import com.tech.challenge.inscricao.gestaovaga.controller.exception.DataExpiradaException;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.repository.VagaRepository;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

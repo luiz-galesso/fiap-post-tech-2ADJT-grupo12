@@ -1,9 +1,9 @@
 package com.tech.challenge.inscricao.gestaovaga.service;
 
-import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
-import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
-import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.acesso.gestaoperfil.entity.Perfil;
+import com.tech.challenge.acesso.gestaoperfil.service.PerfilService;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
 import com.tech.challenge.inscricao.gestaovaga.dto.SolicitaVagaDTO;
 import com.tech.challenge.inscricao.gestaovaga.entity.SolicitaVaga;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;

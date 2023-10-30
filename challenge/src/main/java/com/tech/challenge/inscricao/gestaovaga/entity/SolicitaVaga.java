@@ -1,6 +1,6 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;

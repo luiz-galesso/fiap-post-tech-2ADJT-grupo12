@@ -1,7 +1,7 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="tb_vaga")
+@Table(name="tb_vaga"
+//,uniqueConstraints={
+//@UniqueConstraint(columnNames = {"id", "etapas"})
+//}
+)
 public class Vaga {
 
     @Id
@@ -22,7 +26,7 @@ public class Vaga {
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
 
-    @OneToMany
+    @OneToMany(mappedBy="vaga")
     private List<Etapa> etapas;
     @NotNull(message="A carreira é obrigatória")
     private String carreira;
