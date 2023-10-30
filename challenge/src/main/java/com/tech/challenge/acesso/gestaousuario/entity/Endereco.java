@@ -1,6 +1,6 @@
-package com.tech.challenge.inscricao.gestaousuario.entity;
+package com.tech.challenge.acesso.gestaousuario.entity;
 
-import com.tech.challenge.inscricao.gestaousuario.dto.EnderecoDTO;
+import com.tech.challenge.acesso.gestaousuario.dto.EnderecoDTO;
 import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;

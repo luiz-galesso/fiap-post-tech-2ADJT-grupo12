@@ -1,6 +1,6 @@
-package com.tech.challenge.inscricao.gestaousuario.repository;
+package com.tech.challenge.acesso.gestaousuario.repository;
 
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

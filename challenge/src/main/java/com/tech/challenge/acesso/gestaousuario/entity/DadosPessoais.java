@@ -1,6 +1,6 @@
-package com.tech.challenge.inscricao.gestaousuario.entity;
+package com.tech.challenge.acesso.gestaousuario.entity;
 
-import com.tech.challenge.inscricao.gestaousuario.dto.DadosPessoaisDTO;
+import com.tech.challenge.acesso.gestaousuario.dto.DadosPessoaisDTO;
 import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;

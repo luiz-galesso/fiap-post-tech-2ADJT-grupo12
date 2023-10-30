@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaousuario.controller.exception;
+package com.tech.challenge.acesso.gestaousuario.controller.exception;
 
 import java.time.Instant;
 

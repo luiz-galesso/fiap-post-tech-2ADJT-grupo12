@@ -1,9 +1,9 @@
-package com.tech.challenge.inscricao.gestaousuario.controller;
+package com.tech.challenge.acesso.gestaousuario.controller;
 
-import com.tech.challenge.inscricao.gestaousuario.dto.AtualizarUsuarioDTO;
-import com.tech.challenge.inscricao.gestaousuario.dto.UsuarioDTO;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
-import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.acesso.gestaousuario.dto.AtualizarUsuarioDTO;
+import com.tech.challenge.acesso.gestaousuario.dto.UsuarioDTO;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

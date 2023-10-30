@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaousuario.entity;
+package com.tech.challenge.acesso.gestaousuario.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;

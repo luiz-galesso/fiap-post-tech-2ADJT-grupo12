@@ -1,15 +1,15 @@
-package com.tech.challenge.inscricao.gestaousuario.service;
+package com.tech.challenge.acesso.gestaousuario.service;
 
 
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaousuario.dto.*;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.repository.UsuarioRepository;
 import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
-import com.tech.challenge.inscricao.gestaocandidatura.entity.Candidatura;
-import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
-import com.tech.challenge.inscricao.gestaousuario.entity.Perfil;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaousuario.dto.*;
-import com.tech.challenge.inscricao.gestaousuario.entity.DadosPessoais;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
-import com.tech.challenge.inscricao.gestaousuario.repository.UsuarioRepository;
+import com.tech.challenge.acesso.gestaoperfil.service.PerfilService;
+import com.tech.challenge.acesso.gestaousuario.entity.Perfil;
+
+import com.tech.challenge.acesso.gestaousuario.entity.DadosPessoais;
 import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

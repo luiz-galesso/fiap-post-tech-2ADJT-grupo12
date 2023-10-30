@@ -1,6 +1,4 @@
-package com.tech.challenge.inscricao.gestaousuario.dto;
-
-import com.tech.challenge.inscricao.gestaousuario.entity.Perfil;
+package com.tech.challenge.acesso.gestaousuario.dto;
 
 public record UsuarioDTO(
         String nomeUsuario,

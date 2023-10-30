@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaousuario.dto;
+package com.tech.challenge.acesso.gestaousuario.dto;
 
 import java.time.LocalDate;
 
