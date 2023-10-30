@@ -1,7 +1,6 @@
 package com.tech.challenge.inscricao.gestaocandidatura.controller.exception;
 
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.LogError;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.LogError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -3,12 +3,12 @@ package com.tech.challenge.inscricao.gestaocandidatura.service;
 import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
 import com.tech.challenge.inscricao.gestaocandidatura.entity.Candidatura;
 import com.tech.challenge.inscricao.gestaocandidatura.repository.CandidaturaRepository;
-import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import com.tech.challenge.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
+import com.tech.challenge.acesso.gestaoperfil.service.PerfilService;
 
 import com.tech.challenge.inscricao.gestaocandidatura.dto.CandidaturaRequestDTO;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;

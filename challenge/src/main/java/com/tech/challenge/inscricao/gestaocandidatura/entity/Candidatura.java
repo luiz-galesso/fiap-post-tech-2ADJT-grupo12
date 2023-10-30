@@ -1,9 +1,8 @@
 package com.tech.challenge.inscricao.gestaocandidatura.entity;
 
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
-import com.tech.challenge.inscricao.gestaocandidatura.dto.CandidaturaRequestDTO;
 
 @Entity
 @Table(name="tb_candidatura")

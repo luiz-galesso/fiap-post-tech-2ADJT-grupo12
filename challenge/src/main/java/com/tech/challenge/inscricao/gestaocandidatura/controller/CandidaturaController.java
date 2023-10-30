@@ -1,9 +1,7 @@
 package com.tech.challenge.inscricao.gestaocandidatura.controller;
 
 import com.tech.challenge.inscricao.gestaocandidatura.dto.CandidaturaRequestDTO;
-import com.tech.challenge.inscricao.gestaocandidatura.repository.CandidaturaRepository;
 import com.tech.challenge.inscricao.gestaocandidatura.service.CandidaturaService;
-import com.tech.challenge.inscricao.gestaousuario.dto.UsuarioDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
