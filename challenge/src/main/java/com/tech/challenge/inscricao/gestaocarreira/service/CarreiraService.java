@@ -4,7 +4,7 @@ import com.tech.challenge.inscricao.gestaocarreira.controller.exception.UniqueEx
 import com.tech.challenge.inscricao.gestaocarreira.dto.CarreiraRequestDTO;
 import com.tech.challenge.inscricao.gestaocarreira.entity.Carreira;
 import com.tech.challenge.inscricao.gestaocarreira.repository.CarreiraRepository;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

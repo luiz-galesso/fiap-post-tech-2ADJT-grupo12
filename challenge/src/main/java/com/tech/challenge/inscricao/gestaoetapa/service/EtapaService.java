@@ -4,11 +4,12 @@ import com.tech.challenge.inscricao.gestaoetapa.dto.EtapaDTO;
 import com.tech.challenge.inscricao.gestaoetapa.dto.EtapaRequestDTO;
 import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
 import com.tech.challenge.inscricao.gestaoetapa.repository.EtapaRepository;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -45,9 +46,9 @@ public class EtapaService {
 
     public Etapa findById(Long id) {
         try {
-            return etapaRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Etapa não localizada"));
+            return etapaRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Etapa com identificador" + id + "não cadastrada"));
         } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Etapa não localizada");
+            throw new ControllerNotFoundException("Etapa não cadastrada");
         }
     }
 
@@ -57,6 +58,12 @@ public class EtapaService {
             return etapaRepository.findAll();
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Não existem etapas cadastradas");
+        }
+    }
+
+    public void validaEtapas(ArrayList<Etapa> etapas){
+        for(Etapa etapa: etapas){
+            findById(etapa.getId());
         }
     }
 
