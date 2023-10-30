@@ -1,14 +1,14 @@
 package com.tech.challenge.processoseletivo.gestaofeedback.service;
 
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
+import com.tech.challenge.inscricao.gestaoetapa.service.EtapaService;
 import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
-import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
+import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.AtualizarFeedbackDTO;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.FeedbackDTO;
 import com.tech.challenge.processoseletivo.gestaofeedback.entity.Feedback;
-import com.tech.challenge.processoseletivo.gestaofeedback.entity.FeedbackId;
 import com.tech.challenge.processoseletivo.gestaofeedback.repository.FeedbackRepository;
+import com.tech.challenge.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +19,18 @@ import java.time.LocalDate;
 @Service
 public class FeedbackService {
 
+    private final UsuarioService usuarioService;
+
+    private final VagaService vagaService;
+
+    private final EtapaService etapaService;
+
     private final FeedbackRepository feedbackRepository;
 
-    public FeedbackService(FeedbackRepository feedbackRepository) {
+    public FeedbackService(UsuarioService usuarioService, VagaService vagaService, EtapaService etapaService, FeedbackRepository feedbackRepository) {
+        this.usuarioService = usuarioService;
+        this.vagaService = vagaService;
+        this.etapaService = etapaService;
         this.feedbackRepository = feedbackRepository;
     }
 
@@ -31,14 +40,15 @@ public class FeedbackService {
         return toFeedbackDTO(feedback);
     }
 
-    public FeedbackDTO update(FeedbackId feedbackId, AtualizarFeedbackDTO atualizarFeedbackDTO) {
+    public FeedbackDTO update(Long feedbackId, AtualizarFeedbackDTO atualizarFeedbackDTO) {
         try {
             Feedback feedback = feedbackRepository.getReferenceById(feedbackId);
             feedback.setConteudoFeedback(atualizarFeedbackDTO.conteudoFeedback());
-            Usuario autor = new Usuario();
-            autor.setNomeUsuario(atualizarFeedbackDTO.idAutor());
-            feedback.setAutor(autor);
+            feedback.setAutor(usuarioService.findById(atualizarFeedbackDTO.idAutor()));
+            feedback.setVaga(vagaService.findById(atualizarFeedbackDTO.idVaga()));
+            feedback.setEtapa(etapaService.findById(atualizarFeedbackDTO.idEtapa()));
             feedback.setDataFeedback(LocalDate.now());
+            feedback.setCandidato(usuarioService.findById(atualizarFeedbackDTO.idCandidato()));
             feedback = feedbackRepository.save(feedback);
             return toFeedbackDTO(feedback);
         } catch (EntityNotFoundException e) {
@@ -46,7 +56,7 @@ public class FeedbackService {
         }
     }
 
-    public void delete(FeedbackId feedbackId) {
+    public void delete(Long feedbackId) {
         try {
             feedbackRepository.deleteById(feedbackId);
 
@@ -55,7 +65,7 @@ public class FeedbackService {
         }
     }
 
-    public FeedbackDTO findById(FeedbackId feedbackId) {
+    public FeedbackDTO findById(Long feedbackId) {
         try {
             return feedbackRepository.findById(feedbackId).map(this::toFeedbackDTO).orElseThrow(() -> new ControllerNotFoundException("Feedback não localizado."));
         } catch (EntityNotFoundException e) {
@@ -69,34 +79,22 @@ public class FeedbackService {
     }
 
     private FeedbackDTO toFeedbackDTO(Feedback feedback) {
-        return new FeedbackDTO(feedback.getUsuario().getCpf(),
+        return new FeedbackDTO(feedback.getId(), feedback.getUsuario().getCpf(),
                 feedback.getVaga().getId(),
                 feedback.getEtapa().getId(),
                 feedback.getConteudoFeedback(),
-                feedback.getAutor().getNomeUsuario()
+                feedback.getAutor().getCpf()
         );
 
     }
 
     private Feedback toEntity(FeedbackDTO feedbackDTO) {
-        Usuario candidato = new Usuario();
-        candidato.setCpf(feedbackDTO.idCandidato());
-
-        Vaga vaga = new Vaga();
-        vaga.setId(feedbackDTO.idVaga());
-
-        Etapa etapa = new Etapa();
-        etapa.setId(feedbackDTO.idEtapa());
-
-        Usuario usuario = new Usuario();
-
-        usuario.setNomeUsuario(feedbackDTO.idAutor());
-
-        return new Feedback(candidato,
-                vaga,
-                etapa,
-                feedbackDTO.conteudoFeedback(),
-                usuario,
-                LocalDate.now());
+        return new Feedback(feedbackDTO.id(),
+                            usuarioService.findById(StringUtils.removeMascara(feedbackDTO.idCandidato())),
+                            vagaService.findById(feedbackDTO.idVaga()),
+                            etapaService.findById(feedbackDTO.idEtapa()),
+                            feedbackDTO.conteudoFeedback(),
+                            usuarioService.findById(StringUtils.removeMascara(feedbackDTO.idAutor())),
+                            LocalDate.now());
     }
 }
