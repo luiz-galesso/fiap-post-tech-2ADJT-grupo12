@@ -1,50 +1,48 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.inscricao.gestaovaga.enumeration.VagaSituacao;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="tb_vaga"
-//,uniqueConstraints={
-//@UniqueConstraint(columnNames = {"id", "etapas"})
-//}
 )
 public class Vaga {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="vaga_generator")
+    @SequenceGenerator(name="vaga_generator", sequenceName="vaga_sequence", allocationSize = 1)
     private Long id;
     @NotNull(message="O título é obrigatório")
     private String titulo;
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
 
-    @OneToMany
-    private List<Etapa> etapas;
     @NotNull(message="A carreira é obrigatória")
     private String carreira;
 
     @Enumerated(EnumType.STRING)
     private Nivel nivel;
 
-    @Temporal(TemporalType.DATE)
-    private Date dataExpiracao;
+    private Integer quantidadeDeVagas;
+    @Enumerated(EnumType.STRING)
+    private VagaSituacao situacao;
 
     @Temporal(TemporalType.DATE)
     private Date dataCriacao;
+    @Temporal(TemporalType.DATE)
+    private Date dataExpiracao;
 
     @ManyToOne
     private Usuario criador;
 
     @OneToOne
-    private SolicitaVaga solicitacao;
+    private SolicitacaoVaga solicitacao;
 
     public Vaga() {
     }
@@ -53,20 +51,18 @@ public class Vaga {
         this.id = id;
     }
 
-    public Vaga (SolicitaVaga solicitacao)
+    public Vaga (SolicitacaoVaga solicitacao)
     {
         this.titulo = solicitacao.getTitulo();
         this.descricao = solicitacao.getDescricao();
         this.nivel = solicitacao.getNivel();
-        //pensar em regra de expiracao
-        //---
-
+        this.quantidadeDeVagas = solicitacao.getQuantidadeDeVagas();
         this.dataCriacao = Calendar.getInstance().getTime();
         this.criador = solicitacao.getAvaliador();
         this.solicitacao = solicitacao;
-        //alterar
         this.carreira = solicitacao.getTitulo();
         this.dataExpiracao = solicitacao.getDataExpiracao();
+        this.situacao = VagaSituacao.valueOf("ABERTA");
     }
 
     public Long getId() {
@@ -93,13 +89,9 @@ public class Vaga {
         this.descricao = descricao;
     }
 
-    public List<Etapa> getEtapas() {
-        return etapas;
-    }
-
-    public void setEtapas(List<Etapa> etapas) {
+    /*public void setEtapas(List<Etapa> etapas) {
         this.etapas = etapas;
-    }
+    }*/
 
     public String getCarreira() {
         return carreira;
@@ -141,11 +133,11 @@ public class Vaga {
         this.criador = criador;
     }
 
-    public SolicitaVaga getSolicitacao() {
+    public SolicitacaoVaga getSolicitacao() {
         return solicitacao;
     }
 
-    public void setSolicitacao(SolicitaVaga solicitacao) {
+    public void setSolicitacao(SolicitacaoVaga solicitacao) {
         this.solicitacao = solicitacao;
     }
 }

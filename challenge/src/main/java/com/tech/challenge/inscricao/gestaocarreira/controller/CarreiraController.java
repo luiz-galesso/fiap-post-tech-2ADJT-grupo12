@@ -13,7 +13,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/carreira")
+@RequestMapping("/carreiras")
 public class CarreiraController {
       @Autowired
     private CarreiraService carreiraService;

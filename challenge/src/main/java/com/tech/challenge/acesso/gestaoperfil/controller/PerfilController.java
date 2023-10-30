@@ -14,7 +14,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/perfil")
+@RequestMapping("/perfis")
 public class PerfilController {
       @Autowired
     private PerfilService perfilService;

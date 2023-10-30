@@ -1,6 +1,8 @@
-package com.tech.challenge.inscricao.gestaousuario.controller.exception;
+package com.tech.challenge.acesso.gestaousuario.controller.exception;
 
 import java.util.ArrayList;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.StandardError;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ValidateMessage;
 import java.util.List;
 
 public class ValidateError extends StandardError {

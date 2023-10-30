@@ -3,7 +3,6 @@ package com.tech.challenge.processoseletivo.gestaoetapa.controller;
 import com.tech.challenge.processoseletivo.gestaoetapa.service.VagaEtapaOrdemService;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.AtualizarFeedbackDTO;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.FeedbackDTO;
-import com.tech.challenge.processoseletivo.gestaofeedback.entity.FeedbackId;
 import com.tech.challenge.processoseletivo.gestaofeedback.service.FeedbackService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/feedbacks")
 public class VagaEtapaOrdemController {
-    private final VagaEtapaOrdemService vagaEtapaOrdemService;
+   /* private final VagaEtapaOrdemService vagaEtapaOrdemService;
 
     public VagaEtapaOrdemController(VagaEtapaOrdemService vagaEtapaOrdemService) {
         this.vagaEtapaOrdemService = vagaEtapaOrdemService;
@@ -53,7 +52,7 @@ public class VagaEtapaOrdemController {
         Page<FeedbackDTO> feedbackDTOS = feedbackService.findAll(pageable);
         return ResponseEntity.ok(feedbackDTOS);
 
-    }
+    }*/
 
 
 }

@@ -9,11 +9,13 @@ import jakarta.validation.constraints.NotNull;
 public class Perfil {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="perfil_generator")
+    @SequenceGenerator(name="perfil_generator", sequenceName="perfil_sequence", allocationSize = 1)
     private Long idPerfil;
 
     @NotBlank
     @NotNull(message="A descrição é obrigatória")
+    @Column(unique=true)
     private String descricao;
 
     public Perfil() {

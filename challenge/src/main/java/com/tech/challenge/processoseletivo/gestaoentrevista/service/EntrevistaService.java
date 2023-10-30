@@ -1,12 +1,11 @@
 package com.tech.challenge.processoseletivo.gestaoentrevista.service;
 
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaoetapa.service.EtapaService;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaoperfil.entity.Perfil;
-import com.tech.challenge.inscricao.gestaoperfil.service.PerfilService;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
-import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.processoseletivo.gestaoetapa.service.EtapaService;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaoperfil.entity.Perfil;
+import com.tech.challenge.acesso.gestaoperfil.service.PerfilService;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
 import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import com.tech.challenge.processoseletivo.gestaoentrevista.dto.EntrevistaRequestDTO;
 import com.tech.challenge.processoseletivo.gestaoentrevista.dto.EntrevistaResponseDTO;

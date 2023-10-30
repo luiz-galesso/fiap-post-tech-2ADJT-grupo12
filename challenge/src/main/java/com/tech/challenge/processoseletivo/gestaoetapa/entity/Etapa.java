@@ -1,20 +1,16 @@
-package com.tech.challenge.inscricao.gestaoetapa.entity;
+package com.tech.challenge.processoseletivo.gestaoetapa.entity;
 
-import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.util.List;
 
 @Entity
 @Table(name = "tb_etapa")
 public class Etapa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "etapa_id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="etapa_generator")
+    @SequenceGenerator(name="etapa_generator", sequenceName="etapa_sequence", allocationSize = 1)
+    private Long idEtapa;
 
     @NotBlank (message = "A descrição é obrigatória")
     @Column(unique = true)
@@ -27,11 +23,11 @@ public class Etapa {
     }
 
     public Long getId() {
-        return id;
+        return idEtapa;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.idEtapa = id;
     }
 
     public String getDescricao() {

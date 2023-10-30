@@ -2,12 +2,13 @@ package com.tech.challenge.inscricao.gestaovaga.controller;
 
 import com.tech.challenge.inscricao.gestaovaga.dto.AprovaSolicitacaoDTO;
 import com.tech.challenge.inscricao.gestaovaga.dto.ReprovaSolicitacaoDTO;
-import com.tech.challenge.inscricao.gestaovaga.dto.SolicitaVagaDTO;
-import com.tech.challenge.inscricao.gestaovaga.dto.SolicitaVagaRespostaDTO;
-import com.tech.challenge.inscricao.gestaovaga.entity.SolicitaVaga;
+import com.tech.challenge.inscricao.gestaovaga.dto.SolicitacaoVagaDTO;
+import com.tech.challenge.inscricao.gestaovaga.dto.SolicitacaoVagaRespostaDTO;
+import com.tech.challenge.inscricao.gestaovaga.entity.SolicitacaoVaga;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
-import com.tech.challenge.inscricao.gestaovaga.service.SolicitaVagaService;
+import com.tech.challenge.inscricao.gestaovaga.enumeration.SolicitacaoSituacao;
+import com.tech.challenge.inscricao.gestaovaga.service.SolicitacaoVagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,11 @@ import java.util.HashMap;
  * @author thiago-ribeiro
  */
 @RestController
-@RequestMapping("/solicitavaga")
-public class SolicitaVagaController
+@RequestMapping("/solicitacaovaga")
+public class SolicitacaoVagaController
 {
     @Autowired
-    private SolicitaVagaService solicitaVagaService;
+    private SolicitacaoVagaService solicitacaoVagaService;
 
     /**
      * encontra solicitações utilizando
@@ -37,40 +38,35 @@ public class SolicitaVagaController
     @GetMapping
     public ResponseEntity<?> getSolicitacoes(
         @RequestParam(required = false) String idSolicitante,
-        @RequestParam(required = false) Nivel nivel,
+        @RequestParam(required = false) String nivel,
         @RequestParam(required = false) String idAvaliador,
-        @RequestParam(required = false) Boolean isAprovado)
+        @RequestParam(required = false) String situacao)
 
     {
-        return ResponseEntity.ok(solicitaVagaService.findByExample(idSolicitante, nivel, idAvaliador, isAprovado));
+        return ResponseEntity.ok(solicitacaoVagaService.findByFiltro(idSolicitante, nivel, idAvaliador, situacao));
     }
 
     /**
      * cria uma solicitaão para a vaga
      * essa solicitação deverá ser exibida nos perfis
      * responsáveis por aprovar a vaga
-     * @param solicitaVagaDTO
+     * @param solicitacaoVagaDTO
      * @return
      */
     @PostMapping
-    public ResponseEntity<?> solicitaVaga(@RequestBody SolicitaVagaDTO solicitaVagaDTO)
+    public ResponseEntity<?> solicitacaoVaga(@RequestBody SolicitacaoVagaDTO solicitacaoVagaDTO)
     {
         try
         {
-            SolicitaVaga solicitaVaga = solicitaVagaService.solicitaVaga(solicitaVagaDTO);
+            SolicitacaoVaga solicitacaoVaga = solicitacaoVagaService.criarSolicitacaoVaga(solicitacaoVagaDTO);
             return ResponseEntity.ok(
-                new SolicitaVagaRespostaDTO(
-                        solicitaVaga.getTitulo(),
-                        solicitaVaga.getDescricao(),
-                        solicitaVaga.getQuantidadeDeVagas(),
-                        solicitaVaga.getDataSolicitacao(),
-                        solicitaVaga.getNivel()
+                new SolicitacaoVagaRespostaDTO(
+                        solicitacaoVaga.getId()
                 ));
         }
         catch (Exception e)
         {
-            System.out.println("Erro ao salvar solicitação de vaga: " + e.getMessage());
-            return ResponseEntity.internalServerError().body("Erro ao salvar a solicitação");
+            return ResponseEntity.internalServerError().body("Não foi possível inserir a solicitação de vaga");
         }
     }
 
@@ -81,12 +77,12 @@ public class SolicitaVagaController
      * @param aprovaSolicitacaoDTO
      * @return
      */
-    @PostMapping("/aprovar")
-    public ResponseEntity<?> aprovaSolicitacao(@RequestBody AprovaSolicitacaoDTO aprovaSolicitacaoDTO)
+    @PutMapping("{idSolicitacao}/aprovar")
+    public ResponseEntity<?> aprovaSolicitacao(@PathVariable Integer idSolicitacao, @RequestBody AprovaSolicitacaoDTO aprovaSolicitacaoDTO)
     {
         try
         {
-            Vaga vaga = solicitaVagaService.aprovaSolicitacao(aprovaSolicitacaoDTO.idSolicitacao(), aprovaSolicitacaoDTO.idAprovador());
+            Vaga vaga = solicitacaoVagaService.aprovaSolicitacao(idSolicitacao, aprovaSolicitacaoDTO.idAprovador());
 
             return ResponseEntity.ok(vaga);
         }
@@ -97,12 +93,12 @@ public class SolicitaVagaController
         }
     }
 
-    @PostMapping("/reprovar")
-    public ResponseEntity<?> reprovaSolicitacao(@RequestBody ReprovaSolicitacaoDTO reprovaSolicitacaoDTO)
+    @PutMapping("{idSolicitacao}/reprovar")
+    public ResponseEntity<?> reprovaSolicitacao(@PathVariable Integer idSolicitacao, @RequestBody ReprovaSolicitacaoDTO reprovaSolicitacaoDTO)
     {
         try
         {
-            solicitaVagaService.reprovaSolicitacao(reprovaSolicitacaoDTO.idSolicitacao(),
+            solicitacaoVagaService.reprovaSolicitacao(idSolicitacao,
                                                    reprovaSolicitacaoDTO.idAprovador(),
                                                    reprovaSolicitacaoDTO.mensagem());
 
@@ -112,7 +108,6 @@ public class SolicitaVagaController
         }
         catch (Exception e)
         {
-            System.out.println("Erro ao reprovar solicitação: " + e.getMessage());
             return ResponseEntity.internalServerError().body("'message': 'A vaga não foi alterada devido a um erro de sistema.'");
         }
     }

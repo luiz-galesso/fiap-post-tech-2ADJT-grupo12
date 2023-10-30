@@ -1,4 +1,4 @@
-package com.tech.challenge.inscricao.gestaoetapa.dto;
+package com.tech.challenge.processoseletivo.gestaoetapa.dto;
 
 public record EtapaRequestDTO(
         Long id,

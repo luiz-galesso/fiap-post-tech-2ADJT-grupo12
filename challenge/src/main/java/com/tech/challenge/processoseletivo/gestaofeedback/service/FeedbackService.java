@@ -1,8 +1,8 @@
 package com.tech.challenge.processoseletivo.gestaofeedback.service;
 
-import com.tech.challenge.inscricao.gestaoetapa.service.EtapaService;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.processoseletivo.gestaoetapa.service.EtapaService;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
 import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.AtualizarFeedbackDTO;
 import com.tech.challenge.processoseletivo.gestaofeedback.dto.FeedbackDTO;

@@ -1,5 +1,6 @@
 package com.tech.challenge.acesso.gestaousuario.controller;
 
+import com.tech.challenge.acesso.gestaoperfil.entity.Perfil;
 import com.tech.challenge.acesso.gestaousuario.dto.AtualizarUsuarioDTO;
 import com.tech.challenge.acesso.gestaousuario.dto.UsuarioDTO;
 import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
@@ -10,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    //desde o spring boot 2.3, o uso do Autowired eh opicional
+    //desde o spring boot 2.3, o uso do Autowired eh opcional
     @Autowired
     private UsuarioService usuarioService;
 
@@ -40,5 +43,11 @@ public class UsuarioController {
     public ResponseEntity<Usuario> findById(@PathVariable("id") String id) {
         var usuario = usuarioService.findById(id);
         return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Usuario>> findAll() {
+        var usuarios = usuarioService.findAll();
+        return ResponseEntity.ok(usuarios);
     }
 }

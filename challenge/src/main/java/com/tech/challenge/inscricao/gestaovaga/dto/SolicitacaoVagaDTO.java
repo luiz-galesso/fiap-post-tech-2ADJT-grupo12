@@ -2,7 +2,7 @@ package com.tech.challenge.inscricao.gestaovaga.dto;
 
 import java.util.Date;
 
-public record SolicitaVagaDTO(
+public record SolicitacaoVagaDTO(
     String titulo,
     String descricao,
 
@@ -12,5 +12,8 @@ public record SolicitaVagaDTO(
 
     String nivel,
 
-    Date dataExpiracao
+    Date dataExpiracao,
+
+    Long carreira
+
 ) { }

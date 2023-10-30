@@ -1,10 +1,10 @@
-package com.tech.challenge.inscricao.gestaoetapa.controller;
+package com.tech.challenge.processoseletivo.gestaoetapa.controller;
 
 
-import com.tech.challenge.inscricao.gestaoetapa.dto.EtapaDTO;
-import com.tech.challenge.inscricao.gestaoetapa.dto.EtapaRequestDTO;
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaoetapa.service.EtapaService;
+import com.tech.challenge.processoseletivo.gestaoetapa.dto.EtapaDTO;
+import com.tech.challenge.processoseletivo.gestaoetapa.dto.EtapaRequestDTO;
+import com.tech.challenge.processoseletivo.gestaoetapa.entity.Etapa;
+import com.tech.challenge.processoseletivo.gestaoetapa.service.EtapaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

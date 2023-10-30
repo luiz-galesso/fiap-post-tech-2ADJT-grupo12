@@ -1,9 +1,9 @@
-package com.tech.challenge.inscricao.gestaoetapa.service;
+package com.tech.challenge.processoseletivo.gestaoetapa.service;
 
-import com.tech.challenge.inscricao.gestaoetapa.dto.EtapaDTO;
-import com.tech.challenge.inscricao.gestaoetapa.dto.EtapaRequestDTO;
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaoetapa.repository.EtapaRepository;
+import com.tech.challenge.processoseletivo.gestaoetapa.dto.EtapaDTO;
+import com.tech.challenge.processoseletivo.gestaoetapa.dto.EtapaRequestDTO;
+import com.tech.challenge.processoseletivo.gestaoetapa.entity.Etapa;
+import com.tech.challenge.processoseletivo.gestaoetapa.repository.EtapaRepository;
 import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.tech.challenge.inscricao.gestaoetapa.repository;
+package com.tech.challenge.processoseletivo.gestaoetapa.repository;
 
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
+import com.tech.challenge.processoseletivo.gestaoetapa.entity.Etapa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

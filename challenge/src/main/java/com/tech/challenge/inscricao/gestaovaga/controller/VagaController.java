@@ -1,18 +1,14 @@
 package com.tech.challenge.inscricao.gestaovaga.controller;
 
-import com.tech.challenge.inscricao.gestaoetapa.service.EtapaService;
-import com.tech.challenge.inscricao.gestaovaga.dto.AdicionaEtapaDTO;
+import com.tech.challenge.processoseletivo.gestaoetapa.service.EtapaService;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- */
 @RestController
-@RequestMapping("/vaga")
+@RequestMapping("/vagas")
 public class VagaController {
 
     @Autowired
@@ -21,7 +17,7 @@ public class VagaController {
     @Autowired
     private EtapaService etapaService;
 
-    @PostMapping("/adicionarEtapas")
+    /*@PostMapping("/adicionarEtapas")
     public ResponseEntity<?> adicionaEtapa(@RequestBody AdicionaEtapaDTO adicionaEtapaDTO)
     {
         try
@@ -38,9 +34,9 @@ public class VagaController {
             System.out.println("Erro ao adicionar etapa: " + e.getMessage());
             return ResponseEntity.badRequest().body("Erro ao adicionar etapa");
         }
-    }
+    }*/
 
-    @DeleteMapping("/removerEtapas")
+   /* @DeleteMapping("/removerEtapas")
     public ResponseEntity<?> removerEtapa(@RequestBody AdicionaEtapaDTO adicionaEtapaDTO)
     {
         try
@@ -57,7 +53,7 @@ public class VagaController {
             System.out.println("Erro ao remover etapa: " + e.getMessage());
             return ResponseEntity.badRequest().body("Erro ao remover Etapa");
         }
-    }
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<Vaga> findById(@PathVariable("id") Long id) {
@@ -66,7 +62,7 @@ public class VagaController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listaVagasDisponiveis()
+    public ResponseEntity<?> listarVagasDisponiveis()
     {
         return ResponseEntity.ok(vagaService.listaVagasDisponiveis());
     }

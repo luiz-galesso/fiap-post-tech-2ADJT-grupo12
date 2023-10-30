@@ -7,24 +7,24 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class Perfil {
 
-    private Long id;
+    private Long idPerfil;
 
     public Perfil() {
     }
 
     public Perfil(PerfilDTO perfilDTO) {
-        this.id = perfilDTO.id();
+        this.idPerfil = perfilDTO.id();
     }
 
     public Perfil(PerfilRequestDTO perfilRequestDTO) {
-        this.id = perfilRequestDTO.id();
+        this.idPerfil = perfilRequestDTO.id();
     }
 
     public Long getId() {
-        return id;
+        return idPerfil;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.idPerfil = id;
     }
 }

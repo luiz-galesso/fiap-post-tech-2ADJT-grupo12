@@ -1,6 +1,6 @@
 package com.tech.challenge.processoseletivo.gestaofeedback.entity;
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.processoseletivo.gestaoetapa.entity.Etapa;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

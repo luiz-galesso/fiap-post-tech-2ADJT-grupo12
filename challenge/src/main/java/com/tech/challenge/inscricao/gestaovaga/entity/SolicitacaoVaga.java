@@ -1,31 +1,47 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
 import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.inscricao.gestaocarreira.entity.Carreira;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
+import com.tech.challenge.inscricao.gestaovaga.enumeration.SolicitacaoSituacao;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "tb_solicita_vaga")
-public class SolicitaVaga
+@Table(name = "tb_solicitacao_vaga")
+public class SolicitacaoVaga
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="solicitacao_generator")
+    @SequenceGenerator(name="solicitacao_generator", sequenceName="solicitacao_sequence", allocationSize = 1)
     private Integer id;
 
     private String titulo;
 
     private String descricao;
 
+    @NotNull(message="A carreira é obrigatória")
+    @ManyToOne
+    private Carreira carreira;
+
+    @Enumerated(EnumType.STRING)
+    private Nivel nivel;
     private Integer quantidadeDeVagas;
 
+    public SolicitacaoVaga(String idSolicitante, Nivel nivel, String idAvaliador, SolicitacaoSituacao situacao) {
+    }
+
+
+    @Enumerated(EnumType.STRING)
+    private SolicitacaoSituacao situacao;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataSolicitacao;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAvaliado = null;
+    private Date dataAvaliacao = null;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -37,40 +53,13 @@ public class SolicitaVaga
     @ManyToOne
     private Usuario avaliador = null;
 
-    @Enumerated(EnumType.STRING)
-    private Nivel nivel;
-
-    private Boolean aprovado;
-
     private String mensagem;
 
-    public boolean isAprovado() {
-        return Boolean.TRUE.equals(this.aprovado);
+
+    public SolicitacaoVaga() {
     }
 
-    public void setAprovado(boolean aprovado) {
-        this.aprovado = aprovado;
-    }
-
-    public SolicitaVaga() {
-    }
-
-    public SolicitaVaga(String idSolicitante, Nivel nivel, String idAvaliador, Boolean isAprovado)
-    {
-        if(idSolicitante != null)
-            this.solicitante = new Usuario(idSolicitante);
-
-        if(nivel != null)
-            this.nivel = nivel;
-
-        if(idAvaliador != null)
-            this.avaliador = new Usuario(idAvaliador);
-
-        if(isAprovado != null)
-            this.aprovado = isAprovado;
-    }
-
-    public SolicitaVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel, Date dataExpiracao) {
+    public SolicitacaoVaga(String titulo, String descricao, Integer quantidadeDeVagas, String idSolicitante, Nivel nivel, Date dataExpiracao, Long idCarreira, SolicitacaoSituacao situacao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.quantidadeDeVagas = quantidadeDeVagas;
@@ -78,6 +67,8 @@ public class SolicitaVaga
         this.nivel = nivel;
         this.dataSolicitacao = new Date();
         this.dataExpiracao = dataExpiracao;
+        this.carreira = new Carreira(idCarreira);
+        this.situacao = situacao;
     }
 
     public Integer getId() {
@@ -135,7 +126,13 @@ public class SolicitaVaga
     public void setNivel(Nivel nivel) {
         this.nivel = nivel;
     }
+    public SolicitacaoSituacao getSituacao() {
+        return situacao;
+    }
 
+    public void setSituacao(SolicitacaoSituacao situacao) {
+        this.situacao = situacao;
+    }
     public Date getDataSolicitacao() {
         return dataSolicitacao;
     }
@@ -144,20 +141,12 @@ public class SolicitaVaga
         this.dataSolicitacao = dataSolicitacao;
     }
 
-    public Date getDataAvaliado() {
-        return dataAvaliado;
+    public Date getDataAvaliacao() {
+        return dataAvaliacao;
     }
 
-    public void setDataAvaliado(Date dataAvaliado) {
-        this.dataAvaliado = dataAvaliado;
-    }
-
-    public Boolean getAprovado() {
-        return aprovado;
-    }
-
-    public void setAprovado(Boolean aprovado) {
-        this.aprovado = aprovado;
+    public void setDataAvaliacao(Date dataAvaliacao) {
+        this.dataAvaliacao = dataAvaliacao;
     }
 
     public String getMensagem() {
@@ -174,5 +163,13 @@ public class SolicitaVaga
 
     public void setDataExpiracao(Date dataExpiracao) {
         this.dataExpiracao = dataExpiracao;
+    }
+
+    public Carreira getCarreira() {
+        return carreira;
+    }
+
+    public void setCarreira(Carreira carreira) {
+        this.carreira = carreira;
     }
 }

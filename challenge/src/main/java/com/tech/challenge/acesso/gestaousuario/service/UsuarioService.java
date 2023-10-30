@@ -15,6 +15,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Optional;
+
 @Service
 public class UsuarioService {
 
@@ -27,7 +30,7 @@ public class UsuarioService {
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
         Usuario usuario = toEntity(usuarioDTO);
         perfilService.verificaEntidade(usuario);
-        //validaSeJaCadastrado(usuario);
+        validaSeJaCadastrado(usuario);
         usuario = usuarioRepository.save(usuario);
         return toUsuarioDTO(usuario);
     }
@@ -75,13 +78,20 @@ public class UsuarioService {
         }
     }
 
-    public void validaSeJaCadastrado(Usuario usuario){
-        Usuario usuarioLocal = findById(usuario.getCpf());
-        if(usuarioLocal != null){
-            throw new EntityFoundException("Já cadastrado!");
+    public Collection<Usuario> findAll() {
+        try {
+            return usuarioRepository.findAll();
+        } catch (EntityNotFoundException e) {
+            throw new ControllerNotFoundException("Não existem usuários");
         }
     }
 
+    public void validaSeJaCadastrado(Usuario usuario){
+        Optional<Usuario> usuarioLocal = usuarioRepository.findById(usuario.getCpf());
+        if(usuarioLocal.isPresent()){
+            throw new EntityFoundException("Já cadastrado!");
+        }
+    }
 
     private Usuario toEntity(UsuarioDTO usuarioDTO) {
         return new Usuario(
