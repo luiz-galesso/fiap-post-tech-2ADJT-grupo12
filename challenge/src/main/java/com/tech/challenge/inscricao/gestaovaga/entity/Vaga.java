@@ -26,7 +26,7 @@ public class Vaga {
     @NotNull(message="A descrição é obrigatória")
     private String descricao;
 
-    @OneToMany(mappedBy="vaga")
+    @OneToMany
     private List<Etapa> etapas;
     @NotNull(message="A carreira é obrigatória")
     private String carreira;
