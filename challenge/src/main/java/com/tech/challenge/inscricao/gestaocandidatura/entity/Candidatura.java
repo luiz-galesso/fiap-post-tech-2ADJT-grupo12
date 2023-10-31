@@ -9,7 +9,8 @@ import jakarta.persistence.*;
 public class Candidatura {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="candidatura_generator")
+    @SequenceGenerator(name="candidatura_generator", sequenceName="candidatura_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne
