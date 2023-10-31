@@ -9,11 +9,13 @@ import jakarta.validation.constraints.NotNull;
 public class Carreira {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="carreira_generator")
+    @SequenceGenerator(name="carreira_generator", sequenceName="carreira_sequence", allocationSize = 1)
     private Long id;
 
     @NotBlank
     @NotNull(message="A descrição é obrigatória")
+    @Column(unique = true)
     private String descricao;
 
     public Carreira() {

@@ -1,10 +1,10 @@
 package com.tech.challenge;
 
-import com.tech.challenge.inscricao.gestaousuario.entity.Perfil;
-import com.tech.challenge.inscricao.gestaousuario.controller.UsuarioController;
+import com.tech.challenge.acesso.gestaousuario.entity.Perfil;
+import com.tech.challenge.acesso.gestaousuario.controller.UsuarioController;
 
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
-import com.tech.challenge.inscricao.gestaousuario.service.UsuarioService;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

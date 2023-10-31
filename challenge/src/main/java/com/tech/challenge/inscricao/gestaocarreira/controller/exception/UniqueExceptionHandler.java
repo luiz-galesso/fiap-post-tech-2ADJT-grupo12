@@ -1,11 +1,9 @@
 package com.tech.challenge.inscricao.gestaocarreira.controller.exception;
 
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaousuario.controller.exception.LogError;
+import com.tech.challenge.acesso.gestaousuario.controller.exception.LogError;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,11 +17,11 @@ public class UniqueExceptionHandler {
     private LogError logError = new LogError();
 
     @ExceptionHandler(UniqueException.class)
-    public ResponseEntity<LogError> entityFound(ControllerNotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<LogError> entityFound(UniqueException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         logError.setTimestamp(Instant.now());
         logError.setStatus(status.value());
-        logError.setError("Entidade já cadastrada");
+        logError.setError("Já cadastrada");
         //logError.setMessage(e.getMessage());
         logError.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(this.logError);

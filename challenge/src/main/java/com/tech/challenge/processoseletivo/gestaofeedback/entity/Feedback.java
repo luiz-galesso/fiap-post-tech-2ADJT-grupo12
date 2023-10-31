@@ -1,7 +1,6 @@
 package com.tech.challenge.processoseletivo.gestaofeedback.entity;
-import com.tech.challenge.inscricao.gestaoetapa.entity.Etapa;
-import com.tech.challenge.inscricao.gestaousuario.entity.Candidato;
-import com.tech.challenge.inscricao.gestaousuario.entity.Usuario;
+import com.tech.challenge.processoseletivo.gestaoetapa.entity.Etapa;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,30 +10,32 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "tb_feedback")
 @Embeddable
-@IdClass(FeedbackId.class)
 public class Feedback {
 
 
     @Id
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Candidato candidato;
-    @Id
-    @ManyToOne(cascade =  CascadeType.ALL)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    private Usuario candidato;
+    @ManyToOne
     private Vaga vaga;
-    @Id
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     private Etapa etapa;
 
     @NotNull(message = "É necessário preencher o conteúdo do feedback.")
     private String conteudoFeedback;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @NotNull(message = "É necessário informar o autor do feedback.")
     private Usuario autor;
 
     private LocalDate dataFeedback;
     public Feedback(){}
 
-    public Feedback(Candidato candidato, Vaga vaga, Etapa etapa, String conteudoFeedback, Usuario autor, LocalDate dataFeedback) {
+    public Feedback(Long id, Usuario candidato, Vaga vaga, Etapa etapa, String conteudoFeedback, Usuario autor, LocalDate dataFeedback) {
+        this.id = id;
         this.candidato = candidato;
         this.vaga = vaga;
         this.etapa = etapa;
@@ -43,11 +44,27 @@ public class Feedback {
         this.dataFeedback = dataFeedback;
     }
 
-    public Candidato getCandidato() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getCandidato() {
         return candidato;
     }
 
-    public void setCandidato(Candidato candidato) {
+    public void setCandidato(Usuario candidato) {
+        this.candidato = candidato;
+    }
+
+    public Usuario getUsuario() {
+        return candidato;
+    }
+
+    public void setUsuario(Usuario candidato) {
         this.candidato = candidato;
     }
 
