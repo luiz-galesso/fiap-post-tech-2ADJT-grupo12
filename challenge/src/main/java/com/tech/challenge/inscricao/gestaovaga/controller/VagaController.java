@@ -17,44 +17,6 @@ public class VagaController {
     @Autowired
     private EtapaService etapaService;
 
-    /*@PostMapping("/adicionarEtapas")
-    public ResponseEntity<?> adicionaEtapa(@RequestBody AdicionaEtapaDTO adicionaEtapaDTO)
-    {
-        try
-        {
-            Vaga vaga = vagaService.findById(adicionaEtapaDTO.idVaga());
-            etapaService.validaEtapas(adicionaEtapaDTO.etapas());
-            vagaService.adicionaEtapas(vaga, adicionaEtapaDTO.etapas());
-
-            return ResponseEntity.ok().build();
-        }
-        catch (Exception e)
-        {
-            //Criar exception especifica
-            System.out.println("Erro ao adicionar etapa: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Erro ao adicionar etapa");
-        }
-    }*/
-
-   /* @DeleteMapping("/removerEtapas")
-    public ResponseEntity<?> removerEtapa(@RequestBody AdicionaEtapaDTO adicionaEtapaDTO)
-    {
-        try
-        {
-            Vaga vaga = vagaService.findById(adicionaEtapaDTO.idVaga());
-            etapaService.validaEtapas(adicionaEtapaDTO.etapas());
-            vagaService.removeEtapas(vaga, adicionaEtapaDTO.etapas());
-
-            return ResponseEntity.ok().build();
-        }
-        catch (Exception e)
-        {
-            //Criar exception especifica
-            System.out.println("Erro ao remover etapa: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Erro ao remover Etapa");
-        }
-    }*/
-
     @GetMapping("/{id}")
     public ResponseEntity<Vaga> findById(@PathVariable("id") Long id) {
         var vaga = vagaService.findById(id);
