@@ -1,5 +1,6 @@
 package com.tech.challenge.inscricao.gestaovaga.entity;
 
+import com.tech.challenge.inscricao.gestaocarreira.entity.Carreira;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.VagaSituacao;
 import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.inscricao.gestaovaga.enumeration.Nivel;
@@ -24,7 +25,8 @@ public class Vaga {
     private String descricao;
 
     @NotNull(message="A carreira é obrigatória")
-    private String carreira;
+    @ManyToOne
+    private Carreira carreira;
 
     @Enumerated(EnumType.STRING)
     private Nivel nivel;
@@ -60,7 +62,7 @@ public class Vaga {
         this.dataCriacao = Calendar.getInstance().getTime();
         this.criador = solicitacao.getAvaliador();
         this.solicitacao = solicitacao;
-        this.carreira = solicitacao.getTitulo();
+        this.carreira = solicitacao.getCarreira();
         this.dataExpiracao = solicitacao.getDataExpiracao();
         this.situacao = VagaSituacao.valueOf("ABERTA");
     }
@@ -93,11 +95,11 @@ public class Vaga {
         this.etapas = etapas;
     }*/
 
-    public String getCarreira() {
+    public Carreira getCarreira() {
         return carreira;
     }
 
-    public void setCarreira(String carreira) {
+    public void setCarreira(Carreira carreira) {
         this.carreira = carreira;
     }
 

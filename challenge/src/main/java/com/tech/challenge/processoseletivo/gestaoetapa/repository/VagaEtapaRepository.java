@@ -7,6 +7,7 @@ import com.tech.challenge.processoseletivo.gestaoetapa.service.filtros.VagaEtapa
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 
 import java.util.List;
 
@@ -16,5 +17,4 @@ public interface VagaEtapaRepository extends JpaRepository<VagaEtapa, VagaEtapaI
     default List<VagaEtapa> findAll(VagaEtapaFiltro filtro) {
         return findAll(new VagaEtapaSpecification(filtro));
     }
-
 }

@@ -1,14 +1,10 @@
 package com.tech.challenge.processoseletivo.gestaoetapa.controller;
 
-import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.processoseletivo.gestaoetapa.dto.VagaEtapaDTO;
-import com.tech.challenge.processoseletivo.gestaoetapa.entity.VagaEtapa;
 import com.tech.challenge.processoseletivo.gestaoetapa.service.VagaEtapaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
 
 @RestController
 @RequestMapping("/vagaetapas")
@@ -16,8 +12,8 @@ public class VagaEtapaController {
 
     private final VagaEtapaService vagaEtapaService;
 
-    public VagaEtapaController(VagaEtapaService vagaEtapaService) {
-        this.vagaEtapaService = vagaEtapaService;
+    public VagaEtapaController(VagaEtapaService vagaEtapaCandidatoService) {
+        this.vagaEtapaService = vagaEtapaCandidatoService;
     }
 
     @PostMapping

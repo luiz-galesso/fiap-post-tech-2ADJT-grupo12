@@ -10,15 +10,16 @@ public class VagaEtapa {
    @EmbeddedId
    private VagaEtapaID vagaEtapaID;
 
+   public VagaEtapa(){}
    public VagaEtapa(VagaEtapaID vagaEtapaID) {
        this.vagaEtapaID = vagaEtapaID;
    }
 
-    public VagaEtapaID getEtapaVagaID() {
+   public VagaEtapaID getEtapaVagaID() {
         return vagaEtapaID;
     }
 
-    public void setEtapaVagaID(VagaEtapaID vagaEtapaID) {
+   public void setEtapaVagaID(VagaEtapaID vagaEtapaID) {
         this.vagaEtapaID = vagaEtapaID;
     }
 }

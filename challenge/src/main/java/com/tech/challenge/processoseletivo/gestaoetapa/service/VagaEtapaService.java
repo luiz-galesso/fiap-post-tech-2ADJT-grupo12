@@ -1,6 +1,9 @@
 package com.tech.challenge.processoseletivo.gestaoetapa.service;
 
 import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
+import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.service.VagaService;
 import com.tech.challenge.processoseletivo.gestaoetapa.dto.VagaEtapaDTO;
 import com.tech.challenge.processoseletivo.gestaoetapa.entity.VagaEtapa;
@@ -29,13 +32,17 @@ public class VagaEtapaService {
 
     public VagaEtapaDTO save(VagaEtapaDTO etapaVagaRequestDTO) {
         VagaEtapa vagaEtapa = toEntity(etapaVagaRequestDTO);
+        Optional<VagaEtapa> vagaEtapaLocal = vagaEtapaRepository.findById(vagaEtapa.getEtapaVagaID());
+        if(vagaEtapaLocal.isPresent()){
+            throw new EntityFoundException("Vaga etapa já cadastrada!");
+        }
         vagaEtapa = vagaEtapaRepository.save(vagaEtapa);
         return toEtapaVagaDTO(vagaEtapa);
     }
 
     public void delete(Long vagaId, Long etapaId, Integer ordem) {
         try {
-            VagaEtapaID vagaEtapaID = new VagaEtapaID(etapaService.findById(etapaId),vagaService.findById(vagaId),ordem);
+            VagaEtapaID vagaEtapaID = new VagaEtapaID(vagaService.findById(vagaId), etapaService.findById(etapaId),ordem);
             vagaEtapaRepository.deleteById(vagaEtapaID);
         } catch (Exception e) {
             throw new ControllerNotFoundException("Erro ao deletar etapa vaga ordem.");
@@ -44,7 +51,7 @@ public class VagaEtapaService {
 
     public VagaEtapaDTO findById(Long vagaId, Long etapaId, Integer ordem) {
         try {
-            VagaEtapaID vagaEtapaID = new VagaEtapaID(etapaService.findById(etapaId),vagaService.findById(vagaId), ordem);
+            VagaEtapaID vagaEtapaID = new VagaEtapaID(vagaService.findById(vagaId),etapaService.findById(etapaId), ordem);
             Optional<VagaEtapa> etapaVaga = vagaEtapaRepository.findById(vagaEtapaID);
 
             return toEtapaVagaDTO(etapaVaga.get());
@@ -69,9 +76,8 @@ public class VagaEtapaService {
     }
 
     private VagaEtapa toEntity(VagaEtapaDTO etapaVagaDTO) {
-        VagaEtapaID vagaEtapaID = new VagaEtapaID(etapaService.findById(etapaVagaDTO.etapa()),vagaService.findById(etapaVagaDTO.vaga()),etapaVagaDTO.ordem());
+        VagaEtapaID vagaEtapaID = new VagaEtapaID(vagaService.findById(etapaVagaDTO.vaga()), etapaService.findById(etapaVagaDTO.etapa()),etapaVagaDTO.ordem());
         return new VagaEtapa(vagaEtapaID);
     }
-
 
 }
