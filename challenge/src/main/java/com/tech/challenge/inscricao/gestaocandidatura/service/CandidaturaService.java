@@ -1,6 +1,6 @@
 package com.tech.challenge.inscricao.gestaocandidatura.service;
 
-import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
+import com.tech.challenge.exception.EntityFoundException;
 import com.tech.challenge.inscricao.gestaocandidatura.entity.Candidatura;
 import com.tech.challenge.inscricao.gestaocandidatura.repository.CandidaturaRepository;
 import com.tech.challenge.acesso.gestaousuario.service.UsuarioService;
