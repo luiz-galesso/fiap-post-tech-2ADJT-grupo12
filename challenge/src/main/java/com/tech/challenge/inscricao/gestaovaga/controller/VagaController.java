@@ -23,11 +23,20 @@ public class VagaController {
         return ResponseEntity.ok(vaga);
     }
 
+    //@GetMapping
+    //public ResponseEntity<?> listarVagasDisponiveis()
+    //{
+      //  return ResponseEntity.ok(vagaService.listaVagasDisponiveis());
+    //}
     @GetMapping
-    public ResponseEntity<?> listarVagasDisponiveis()
-    {
-        return ResponseEntity.ok(vagaService.listaVagasDisponiveis());
-    }
+    public ResponseEntity<?> getSolicitacoes(
+            @RequestParam(required = false) String idSolicitante,
+            @RequestParam(required = false) String nivel,
+            @RequestParam(required = false) String idAvaliador,
+            @RequestParam(required = false) String situacao)
 
+    {
+        return ResponseEntity.ok(vagaService.findByFiltro(idSolicitante, nivel, idAvaliador, situacao));
+    }
 
 }

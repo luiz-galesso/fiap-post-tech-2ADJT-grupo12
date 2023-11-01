@@ -27,12 +27,12 @@ public class VagaEtapaSpecification implements Specification<VagaEtapa> {
         List<Predicate> predicates = new ArrayList<>();
 
         if (Objects.nonNull(filtro.getIdVaga())) {
-            Predicate predicate = builder.equal(root.get("vagaEtapaID").get("idVaga"), filtro.getIdVaga());
+            Predicate predicate = builder.equal(root.get("vagaEtapaID").get("vaga").get("id"), filtro.getIdVaga());
             predicates.add(predicate);
         }
 
         if (Objects.nonNull(filtro.getIdEtapa())) {
-            Predicate predicate = builder.equal(root.get("vagaEtapaID").get("idEtapa"), filtro.getIdEtapa());
+            Predicate predicate = builder.equal(root.get("vagaEtapaID").get("etapa").get("idEtapa"), filtro.getIdEtapa());
             predicates.add(predicate);
         }
 
