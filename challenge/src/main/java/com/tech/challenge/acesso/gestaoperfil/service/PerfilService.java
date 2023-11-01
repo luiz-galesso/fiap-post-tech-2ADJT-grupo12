@@ -1,17 +1,19 @@
 package com.tech.challenge.acesso.gestaoperfil.service;
 
-import com.tech.challenge.acesso.gestaoperfil.controller.exception.AuthenticationException;
+import com.tech.challenge.exception.AuthenticationException;
 import com.tech.challenge.acesso.gestaoperfil.dto.PerfilRequestDTO;
 import com.tech.challenge.acesso.gestaoperfil.entity.Perfil;
 import com.tech.challenge.acesso.gestaoperfil.repository.PerfilRepository;
-import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.exception.ControllerNotFoundException;
 
 import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
+import com.tech.challenge.exception.EntityFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class PerfilService {
@@ -21,6 +23,7 @@ public class PerfilService {
 
     public PerfilRequestDTO save(PerfilRequestDTO perfilRequestDTO) {
         Perfil perfil = toEntity(perfilRequestDTO);
+        validaSeJaCadastrado(perfil);
         perfil = perfilRepository.save(perfil);
         return toPerfilRequestDTO(perfil);
     }
@@ -49,12 +52,6 @@ public class PerfilService {
     public Perfil findById(Long id) {
         try {
             return perfilRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException(
-                   /* this.getClass().toString()
-                    .replace(getClass().getPackageName(),"")
-                    .replace(".","")
-                    .replace("class","")
-                    .replace("Service","")
-                    + " não localizado")*/
                     "Perfil não localizado"
             ));
 
@@ -101,6 +98,13 @@ public class PerfilService {
     public void verificaEntidade(Usuario usuario){
         if(findById(usuario.getPerfil().getId()) == null){
             throw new EntityNotFoundException();
+        }
+    }
+
+    public void validaSeJaCadastrado(Perfil perfil){
+        Optional<Perfil> optionalPerfil = perfilRepository.findByDescricao(perfil.getDescricao());
+        if(optionalPerfil.isPresent()){
+            throw new EntityFoundException("Já cadastrado!");
         }
     }
 
