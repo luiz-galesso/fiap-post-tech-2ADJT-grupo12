@@ -1,7 +1,7 @@
 package com.tech.challenge.processoseletivo.gestaoentrevista.service;
 
 import com.tech.challenge.processoseletivo.gestaoetapa.service.EtapaService;
-import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.exception.ControllerNotFoundException;
 import com.tech.challenge.acesso.gestaoperfil.entity.Perfil;
 import com.tech.challenge.acesso.gestaoperfil.service.PerfilService;
 import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
