@@ -1,5 +1,9 @@
 package com.tech.challenge.acesso.gestaousuario.dto;
 
-public record PerfilDTO(Long id) {
+import jakarta.validation.constraints.NotBlank;
+
+public record PerfilDTO(
+        @NotBlank
+        Long id) {
 
 }

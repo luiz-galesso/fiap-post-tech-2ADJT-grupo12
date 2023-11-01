@@ -1,11 +1,11 @@
 package com.tech.challenge.acesso.gestaousuario.service;
 
 
-import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
+import com.tech.challenge.exception.ControllerNotFoundException;
 import com.tech.challenge.acesso.gestaousuario.dto.*;
 import com.tech.challenge.acesso.gestaousuario.entity.Usuario;
 import com.tech.challenge.acesso.gestaousuario.repository.UsuarioRepository;
-import com.tech.challenge.inscricao.gestaocandidatura.controller.exception.EntityFoundException;
+import com.tech.challenge.exception.EntityFoundException;
 import com.tech.challenge.acesso.gestaoperfil.service.PerfilService;
 import com.tech.challenge.acesso.gestaousuario.entity.Perfil;
 
@@ -28,11 +28,11 @@ public class UsuarioService {
     private PerfilService perfilService;
 
     public UsuarioDTO save(UsuarioDTO usuarioDTO) {
-        Usuario usuario = toEntity(usuarioDTO);
-        perfilService.verificaEntidade(usuario);
-        validaSeJaCadastrado(usuario);
-        usuario = usuarioRepository.save(usuario);
-        return toUsuarioDTO(usuario);
+            Usuario usuario = toEntity(usuarioDTO);
+            perfilService.verificaEntidade(usuario);
+            validaSeJaCadastrado(usuario);
+            usuario = usuarioRepository.save(usuario);
+            return toUsuarioDTO(usuario);
     }
 
     public UsuarioDTO update(String id, AtualizarUsuarioDTO usuarioDTO) {
@@ -63,12 +63,6 @@ public class UsuarioService {
     public Usuario findById(String id) {
         try {
             return usuarioRepository.findById(StringUtils.removeMascara(id)).orElseThrow(() -> new ControllerNotFoundException(
-                   /* this.getClass().toString()
-                    .replace(getClass().getPackageName(),"")
-                    .replace(".","")
-                    .replace("class","")
-                    .replace("Service","")
-                    + " não localizado")*/
                     "Usuário não localizado"
             ));
 
