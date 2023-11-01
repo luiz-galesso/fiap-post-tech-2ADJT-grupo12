@@ -66,9 +66,9 @@
 							"response": []
 						},
 						{
-							"name": "Consultar Usuario",
+							"name": "Deletar Usuario",
 							"request": {
-								"method": "GET",
+								"method": "DELETE",
 								"header": [],
 								"url": {
 									"raw": "{{baseEndpoint}}/usuarios/02953862072",
@@ -84,9 +84,9 @@
 							"response": []
 						},
 						{
-							"name": "Deletar Usuario",
+							"name": "Consultar Usuario",
 							"request": {
-								"method": "DELETE",
+								"method": "GET",
 								"header": [],
 								"url": {
 									"raw": "{{baseEndpoint}}/usuarios/02953862072",
@@ -339,21 +339,9 @@
 						},
 						{
 							"name": "Consultar Carreira",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nomeCompleto\": \"Testinho Teste\",\r\n\r\n    \"dadosPessoais\": {\r\n        \"estadoCivil\": \"Casado\",\r\n        \"genero\": \"Masculino\",\r\n        \"dataNascimento\": \"1995-01-02\",\r\n        \"celular\": \"(11)99999-9999\",\r\n        \"naturalidade\": \"Paraguaio\",\r\n        \"filiacao\": {\r\n            \"nomeMae\": \"TESTA A\",\r\n            \"nomePai\": \"TESTO B\"\r\n        },\r\n        \"endereco\": {\r\n            \"cep\": \"01454-000\",\r\n            \"numero\": \"14A\",\r\n            \"complemento\": \"Casa\"\r\n        }\r\n    },\r\n    \"usuario\":{\r\n        \"nomeUsuario\":\"teste12@gmail.com\"\r\n    }\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{baseEndpoint}}/carreiras/1",
 									"host": [
@@ -396,21 +384,9 @@
 						},
 						{
 							"name": "Consultar Carreiras",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nomeCompleto\": \"Testinho Teste\",\r\n\r\n    \"dadosPessoais\": {\r\n        \"estadoCivil\": \"Casado\",\r\n        \"genero\": \"Masculino\",\r\n        \"dataNascimento\": \"1995-01-02\",\r\n        \"celular\": \"(11)99999-9999\",\r\n        \"naturalidade\": \"Paraguaio\",\r\n        \"filiacao\": {\r\n            \"nomeMae\": \"TESTA A\",\r\n            \"nomePai\": \"TESTO B\"\r\n        },\r\n        \"endereco\": {\r\n            \"cep\": \"01454-000\",\r\n            \"numero\": \"14A\",\r\n            \"complemento\": \"Casa\"\r\n        }\r\n    },\r\n    \"usuario\":{\r\n        \"nomeUsuario\":\"teste12@gmail.com\"\r\n    }\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{baseEndpoint}}/carreiras",
 									"host": [
@@ -580,6 +556,87 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Deletar Vaga Etapa",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseEndpoint}}/vagaetapas/1/1/1",
+									"host": [
+										"{{baseEndpoint}}"
+									],
+									"path": [
+										"vagaetapas",
+										"1",
+										"1",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Vaga Etapa",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseEndpoint}}/vagaetapas/1/1/1",
+									"host": [
+										"{{baseEndpoint}}"
+									],
+									"path": [
+										"vagaetapas",
+										"1",
+										"1",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Vaga Etapa com filtros",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"vaga\": 1,\r\n    \"etapa\": 2,\r\n    \"ordem\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseEndpoint}}/vagaetapas",
+									"host": [
+										"{{baseEndpoint}}"
+									],
+									"path": [
+										"vagaetapas"
+									],
+									"query": [
+										{
+											"key": "idVaga",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "idEtapa",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -633,7 +690,8 @@
 										},
 										{
 											"key": "idAvaliador",
-											"value": "12345678909",
+											"value": "98353850095",
+											"description": "JUNIOR, PLENO, SENIOR, ESTAGIARIO, TRAINEE ou MESTRE",
 											"disabled": true
 										},
 										{
@@ -709,7 +767,7 @@
 							"response": []
 						},
 						{
-							"name": "Listar Vagas",
+							"name": "Consultar Vagas com filtro",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -720,6 +778,24 @@
 									],
 									"path": [
 										"vagas"
+									],
+									"query": [
+										{
+											"key": "idSolicitante",
+											"value": "98353850095",
+											"disabled": true
+										},
+										{
+											"key": "nivel",
+											"value": "PLENO",
+											"description": "JUNIOR, PLENO, SENIOR, ESTAGIARIO, TRAINEE ou MESTRE",
+											"disabled": true
+										},
+										{
+											"key": "situacao",
+											"value": "ABERTA",
+											"disabled": true
+										}
 									]
 								}
 							},
