@@ -1,8 +1,7 @@
 package com.tech.challenge.inscricao.gestaovaga.service;
 
-import com.tech.challenge.processoseletivo.gestaoetapa.entity.Etapa;
-import com.tech.challenge.acesso.gestaousuario.controller.exception.ControllerNotFoundException;
-import com.tech.challenge.inscricao.gestaovaga.controller.exception.DataExpiradaException;
+import com.tech.challenge.exception.ControllerNotFoundException;
+import com.tech.challenge.exception.DataExpiradaException;
 import com.tech.challenge.inscricao.gestaovaga.entity.Vaga;
 import com.tech.challenge.inscricao.gestaovaga.repository.VagaRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
