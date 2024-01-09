@@ -12,6 +12,18 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  pagamento-db:
+    image: postgres:latest
+    container_name: pagamento-db
+    environment:
+      POSTGRES_USER: pagamento
+      POSTGRES_PASSWORD: pass-pagamento  
+      POSTGRES_DB: pagamento-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pagamento-data:/var/lib/postgresql/data
+
   mongodb:
     image: mongo:latest
     ports:
@@ -30,17 +42,25 @@ services:
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
 
-  app2:
-    build: .
+  api-pagamento:
+    container_name: api-pagamento
+    build: ../api-pagamento/.
     ports:
-      - "8081:8081"
+      - "8081:8080"
     depends_on:
-      - postgres
+      - pagamento-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://pagamento-db:5432/pagamento-db
+      SPRING_DATASOURCE_USERNAME: pagamento
+      SPRING_DATASOURCE_PASSWORD: pass-pagamento
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8082:8080
 
 volumes:
   postgres-data:
   mongo-data:
+  pagamento-data:
