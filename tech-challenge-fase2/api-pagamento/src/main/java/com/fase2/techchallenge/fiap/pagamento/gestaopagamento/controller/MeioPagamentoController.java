@@ -3,6 +3,8 @@ package com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.dto.MeioPagamentoDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.MeioPagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.service.MeioPagamentoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,36 +16,47 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/meiospagamento")
+@Tag(name = "Meios de Pagamento", description="Serviços para manipular meios de pagamento")
 public class MeioPagamentoController {
 
     @Autowired
     private MeioPagamentoService meioPagamentoService;
 
-    @PostMapping
+    @Operation( summary= "Insere um novo meio de pagamento"
+              , description= "Serviço utilizado para inserir um meio de pagamento.")
+    @PostMapping(produces = "application/json")
     public ResponseEntity<MeioPagamentoDTO> save(@RequestBody @Valid MeioPagamentoDTO meioPagamentoDTO) {
         MeioPagamentoDTO meioPagamentoResponse = meioPagamentoService.save(meioPagamentoDTO);
         return new ResponseEntity<>(meioPagamentoResponse, HttpStatus.CREATED);
     }
-
-    @PutMapping("/{id}")
+    @Operation( summary= "Atualiza um meio de pagamento"
+              , description= "Serviço utilizado para atualizar um meio de pagamento.")
+    @PutMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<MeioPagamentoDTO> update(@PathVariable String id, @RequestBody MeioPagamentoDTO meioPagamentoDTO) {
         MeioPagamentoDTO meioPagamentoResponse = meioPagamentoService.update(id, meioPagamentoDTO);
         return ResponseEntity.ok(meioPagamentoResponse);
     }
-
+    @Operation( summary= "Remove um meio de pagamento"
+              , description= "Serviço utilizado para remover um meio de pagamento.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         meioPagamentoService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/{id}")
+    @Operation( summary= "Consulta meios de pagamento pelo identificador"
+              , description= "Serviço utilizado para consultar um meio de pagamento pelo seu identificador. </br>"
+    )
+    @GetMapping(value="/{id}", produces = "application/json")
     public ResponseEntity<MeioPagamentoDTO> findById(@PathVariable("id") String id) {
         var meioPagamento = meioPagamentoService.findById(id);
         return ResponseEntity.ok(meioPagamento);
     }
-
-    @GetMapping
+    @Operation( summary= "Consulta meios de pagamento com filtro"
+            , description= "Serviço utilizado para consultar meios de pagamento. </br>" +
+            "Filtros: </br>" +
+            "situacao -> Situação do meio de pagamento - (ATIVO ou INATIVO)"
+    )
+    @GetMapping(produces = "application/json")
     public ResponseEntity<List<MeioPagamento>> findAll() {
         var meioPagamentoList = meioPagamentoService.findAll();
         return ResponseEntity.ok(meioPagamentoList);

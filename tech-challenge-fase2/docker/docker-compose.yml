@@ -1,16 +1,17 @@
 version: '3.8'
 
 services:
-  postgres:
+  cadastro-db:
     image: postgres:latest
+    container_name: cadastro-db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: database
+      POSTGRES_USER: cadastro-db
+      POSTGRES_PASSWORD: pass-cadastro
+      POSTGRES_DB: cadastro-db
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - cadastro-data:/var/lib/postgresql/data
 
   pagamento-db:
     image: postgres:latest
@@ -24,23 +25,25 @@ services:
     volumes:
       - pagamento-data:/var/lib/postgresql/data
 
+  notificacao-db:
+    image: postgres:latest
+    container_name: notificacao-db
+    environment:
+      POSTGRES_USER: notificacao
+      POSTGRES_PASSWORD: pass-notificacao
+      POSTGRES_DB: notificacao-db
+    ports:
+      - "5434:5432"
+    volumes:
+      - notificacao-data:/var/lib/postgresql/data
+
   mongodb:
     image: mongo:latest
+    container_name: estacionamento-db
     ports:
       - '27017:27017'
     volumes:
       - mongo-data:/data/db
-
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mongodb
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
 
   api-pagamento:
     container_name: api-pagamento
@@ -56,11 +59,13 @@ services:
 
   adminer:
     image: adminer
+    container_name: adminer
     restart: always
     ports:
       - 8082:8080
 
 volumes:
-  postgres-data:
-  mongo-data:
+  cadastro-data:
   pagamento-data:
+  notificacao-data:
+  mongo-data:
