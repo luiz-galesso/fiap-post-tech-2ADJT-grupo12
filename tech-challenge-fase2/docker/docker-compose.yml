@@ -37,6 +37,18 @@ services:
     volumes:
       - notificacao-data:/var/lib/postgresql/data
 
+  tarifa-db:
+    image: postgres:latest
+    container_name: tarifa-db
+    environment:
+      POSTGRES_USER: tarifa
+      POSTGRES_PASSWORD: pass-tarifa
+      POSTGRES_DB: tarifa-db
+    ports:
+      - "5435:5432"
+    volumes:
+      - notificacao-data:/var/lib/postgresql/data
+
   mongodb:
     image: mongo:latest
     container_name: estacionamento-db
@@ -57,15 +69,28 @@ services:
       SPRING_DATASOURCE_USERNAME: pagamento
       SPRING_DATASOURCE_PASSWORD: pass-pagamento
 
+  api-tarifa:
+    container_name: api-tarifa
+    build: ../api-tarifa/.
+    ports:
+      - "8082:8080"
+    depends_on:
+      - tarifa-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tarifa-db:5432/tarifa-db
+      SPRING_DATASOURCE_USERNAME: tarifa
+      SPRING_DATASOURCE_PASSWORD: pass-tarifa
+
   adminer:
     image: adminer
     container_name: adminer
     restart: always
     ports:
-      - 8082:8080
+      - 8090:8080
 
 volumes:
   cadastro-data:
+  tarifa-data:
   pagamento-data:
   notificacao-data:
   mongo-data:
