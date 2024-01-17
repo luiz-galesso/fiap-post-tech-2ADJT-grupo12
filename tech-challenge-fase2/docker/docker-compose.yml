@@ -47,7 +47,7 @@ services:
     ports:
       - "5435:5432"
     volumes:
-      - notificacao-data:/var/lib/postgresql/data
+      - tarifa-data:/var/lib/postgresql/data
 
   mongodb:
     image: mongo:latest
@@ -80,6 +80,18 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://tarifa-db:5432/tarifa-db
       SPRING_DATASOURCE_USERNAME: tarifa
       SPRING_DATASOURCE_PASSWORD: pass-tarifa
+
+  api-notificacao:
+    container_name: api-notificacao
+    build: ../api-notificacao/.
+    ports:
+      - "8083:8080"
+    depends_on:
+      - notificacao-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://notificacao-db:5432/notificacao-db
+      SPRING_DATASOURCE_USERNAME: notificacao
+      SPRING_DATASOURCE_PASSWORD: pass-notificacao
 
   adminer:
     image: adminer
