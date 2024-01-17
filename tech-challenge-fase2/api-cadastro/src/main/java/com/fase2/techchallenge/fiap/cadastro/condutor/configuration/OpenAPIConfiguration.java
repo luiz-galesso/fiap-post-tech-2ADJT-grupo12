@@ -12,9 +12,9 @@ public class OpenAPIConfiguration {
     public OpenAPI myOpenAPI() {
 
         Info info = new Info()
-                .title("API-CADASTRO")
+                .title("API CADASTRO")
                 .version("1.0.0")
-                .description("API de cadastros do sistema de parquímetro");
+                .description("API de cadastros do condutor do sistema de parquímetro");
 
         return new OpenAPI().info(info);
     }

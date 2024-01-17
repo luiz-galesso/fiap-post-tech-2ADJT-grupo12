@@ -32,7 +32,6 @@ public class CondutorController {
     @Operation( summary= "Atualiza um condutor"
               , description= "Serviço utilizado para atualizar um condutor.")
     @PutMapping(value = "/{id}", produces = "application/json")
-    //COLOCAR @VALID
     public ResponseEntity<CondutorDTO> update(@PathVariable String id, @RequestBody CondutorDTO condutorServiceDTO) {
         CondutorDTO condutorResponse = condutorService.update(id, condutorServiceDTO);
         return ResponseEntity.ok(condutorResponse);
@@ -53,9 +52,7 @@ public class CondutorController {
         return ResponseEntity.ok(condutor);
     }
     @Operation( summary= "Consulta condutor com filtro"
-            , description= "Serviço utilizado para consultar condutor. </br>" +
-            "Filtros: </br>" +
-            "situacao -> Situação do condutor - (ATIVO ou INATIVO)"
+            , description= "Serviço utilizado para consultar condutor. </br>"
     )
     @GetMapping(produces = "application/json")
     public ResponseEntity<List<Condutor>> findAll() {
