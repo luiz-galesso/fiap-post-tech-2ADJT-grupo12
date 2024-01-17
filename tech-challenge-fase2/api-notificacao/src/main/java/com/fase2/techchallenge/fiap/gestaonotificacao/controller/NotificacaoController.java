@@ -36,7 +36,7 @@ public class NotificacaoController {
 
     @Operation(summary = "Remove a Notificação", description = "Serviço utilizado para remover a notificação.")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         notificacaoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
