@@ -25,9 +25,9 @@ public class VeiculoService
         return this.repository.save(veiculo);
     }
 
-    public Veiculo findById(Integer id)
+    public Optional<Veiculo> findById(Integer id)
     {
-        return this.repository.findById(id).orElseThrow();
+        return Optional.of(this.repository.findById(id).orElseThrow());
     }
 
     public Veiculo update(Veiculo veiculo, VeiculoDTO veiculoDTO)
@@ -35,8 +35,8 @@ public class VeiculoService
         if(!veiculoDTO.nome().isEmpty())
             veiculo.setNome(veiculo.getNome());
 
-//        if(!veiculoDTO.emailCondutor().isEmpty())
-//            veiculo.setCondutor(new Condutor(veiculoDTO.emailCondutor()));
+        if(!veiculoDTO.emailCondutor().isEmpty())
+            veiculo.setCondutor(new Condutor(veiculoDTO.emailCondutor()));
 
         if(!veiculoDTO.placa().isBlank())
             veiculo.setPlaca(veiculoDTO.placa());

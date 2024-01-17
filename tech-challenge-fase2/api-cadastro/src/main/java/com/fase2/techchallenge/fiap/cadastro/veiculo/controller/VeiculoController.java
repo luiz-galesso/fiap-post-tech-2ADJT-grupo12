@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * @author thiago-ribeiro
  * @see VeiculoService
@@ -67,12 +69,18 @@ public class VeiculoController
     {
         try
         {
-            Veiculo veiculo = this.service.findById(id);
+            Optional<Veiculo> optionalVeiculo = this.service.findById(id);
+
+            if(optionalVeiculo.isEmpty()) return ResponseEntity.noContent().build();
+
+            Veiculo veiculo = optionalVeiculo.get();
+
             veiculo = this.service.update(veiculo, veiculoDTO);
             return ResponseEntity.ok(this.service.save(veiculo));
         }
         catch (Exception e)
         {
+            System.out.println("ERRO ao atualizar veiculo: " + e.getMessage());
             return ResponseEntity.internalServerError().body("Erro ao atualizar veículo");
         }
     }

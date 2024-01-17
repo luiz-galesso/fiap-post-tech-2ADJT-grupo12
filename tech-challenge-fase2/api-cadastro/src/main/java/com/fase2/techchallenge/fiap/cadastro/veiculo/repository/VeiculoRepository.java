@@ -18,6 +18,4 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Integer>
 
     Optional<Veiculo> findByPlaca(String placa);
 
-    Optional<Veiculo> findById(Integer id) throws ControllerNotFoundException;
-
 }
