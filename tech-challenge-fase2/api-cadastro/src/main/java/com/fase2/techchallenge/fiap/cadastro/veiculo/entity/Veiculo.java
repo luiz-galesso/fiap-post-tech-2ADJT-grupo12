@@ -59,6 +59,6 @@ public class Veiculo implements Serializable {
     {
         this.placa = veiculoDTO.placa();
         this.nome = veiculoDTO.nome();
-//        this.condutor = new Condutor(veiculoDTO.emailCondutor());
+        this.condutor = new Condutor(veiculoDTO.emailCondutor());
     }
 }

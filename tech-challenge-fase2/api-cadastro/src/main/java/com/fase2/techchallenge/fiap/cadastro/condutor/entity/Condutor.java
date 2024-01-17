@@ -24,6 +24,11 @@ public class Condutor {
     public Condutor() {
     }
 
+    public Condutor(String email)
+    {
+        this.email = email;
+    }
+
     public Condutor(String email, DadosPessoais dadosPessoais, Endereco endereco, boolean ativacaoAutomatica) {
         this.email = email;
         this.dadosPessoais = dadosPessoais;
