@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name="tb_pagamento")
 public class Pagamento {
-    public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Long valor, Long idEstacionamento) {
+    public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, Long idEstacionamento) {
         this.idVeiculo = idVeiculo;
         this.idCondutor = idCondutor;
         this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;
@@ -31,7 +31,7 @@ public class Pagamento {
     private Long idMeioPagamentoCondutor;
     @NotNull(message = "O valor é obrigatório")
     @DecimalMin(value="0",inclusive = false,message = "O valor deve ser maior do que zero")
-    private Long valor;
+    private Double valor;
     private Long idEstacionamento;
     @NotNull(message = "A situação do Pagamento é obrigatória")
     private PagamentoSituacao pagamentoSituacao;
@@ -41,6 +41,10 @@ public class Pagamento {
 
     public Pagamento() {
 
+    }
+
+    public Pagamento(Long id) {
+        this.id = id;
     }
 
     public void setId(Long id) {
@@ -75,11 +79,11 @@ public class Pagamento {
         this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;
     }
 
-    public Long getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(Long valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
