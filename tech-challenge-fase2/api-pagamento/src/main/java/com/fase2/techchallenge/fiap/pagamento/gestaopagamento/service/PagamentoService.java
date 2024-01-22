@@ -16,11 +16,9 @@ public class PagamentoService {
     private final PagamentoRepository pagamentoRepository;
 
 
-
     public PagamentoService(PagamentoRepository pagamentoRepository) {
         this.pagamentoRepository = pagamentoRepository;
     }
-
 
 
     public EnvioPagamentoDTO gerarPagamento(EnvioPagamentoDTO envioPagamentoDTO) {
@@ -31,10 +29,10 @@ public class PagamentoService {
         return toEnvioPagamentoDTO(pagamento);
     }
 
-    public Pagamento findById(Long id){
+    public Pagamento findById(Long id) {
         try {
             return pagamentoRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pagamento não localizado"));
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Pagamento não localizado");
         }
     }

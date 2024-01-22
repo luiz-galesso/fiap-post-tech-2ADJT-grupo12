@@ -23,6 +23,7 @@ public class Recibo {
     private DadosCondutor dadosCondutor;
     private DadosVeiculo dadosVeiculo;
     private DadosEstacionamento dadosEstacionamento;
+
     public Recibo() {
 
     }
@@ -33,6 +34,10 @@ public class Recibo {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ReciboSituacao getReciboSituacao() {
@@ -53,10 +58,6 @@ public class Recibo {
 
     public DadosPagamento getPagamento() {
         return this.dadosPagamento;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public DadosPagamento getDadosPagamento() {

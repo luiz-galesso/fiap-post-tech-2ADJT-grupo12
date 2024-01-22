@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ReciboRepository  extends JpaRepository<Recibo,Long> {
+public interface ReciboRepository extends JpaRepository<Recibo, Long> {
 
     @Override
     Optional<Recibo> findById(Long id);

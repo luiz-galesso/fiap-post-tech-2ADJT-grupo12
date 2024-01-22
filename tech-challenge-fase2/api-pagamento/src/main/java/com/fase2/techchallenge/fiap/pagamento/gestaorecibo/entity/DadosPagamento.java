@@ -16,12 +16,23 @@ public class DadosPagamento {
     private Date dataHoraPagamento;
     private String meioPagamento;
 
-    public Long getIdPagamento() {
-        return idPagamento;
-    }
-
     public DadosPagamento(Long idPagamento) {
         this.idPagamento = idPagamento;
+    }
+
+    public DadosPagamento() {
+
+    }
+
+    public DadosPagamento(Long idPagamento, Double valor, Date dataHoraPagamento, String meioPagamento) {
+        this.idPagamento = idPagamento;
+        this.valor = valor;
+        this.dataHoraPagamento = dataHoraPagamento;
+        this.meioPagamento = meioPagamento;
+    }
+
+    public Long getIdPagamento() {
+        return idPagamento;
     }
 
     public void setIdPagamento(Long idPagamento) {
@@ -49,17 +60,6 @@ public class DadosPagamento {
     }
 
     public void setMeioPagamento(String meioPagamento) {
-        this.meioPagamento = meioPagamento;
-    }
-
-    public DadosPagamento() {
-
-    }
-
-    public DadosPagamento(Long idPagamento, Double valor, Date dataHoraPagamento, String meioPagamento) {
-        this.idPagamento = idPagamento;
-        this.valor = valor;
-        this.dataHoraPagamento = dataHoraPagamento;
         this.meioPagamento = meioPagamento;
     }
 }

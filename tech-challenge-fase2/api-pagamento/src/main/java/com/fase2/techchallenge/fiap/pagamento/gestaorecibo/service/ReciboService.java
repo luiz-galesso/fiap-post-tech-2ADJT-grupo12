@@ -1,19 +1,14 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaorecibo.service;
 
-import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.Pagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.service.PagamentoService;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.SolicitacaoReciboDTO;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosCondutor;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosPagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.Recibo;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.enumeration.ReciboSituacao;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.feign.CadastroClient;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.repository.ReciboRepository;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @EnableScheduling
