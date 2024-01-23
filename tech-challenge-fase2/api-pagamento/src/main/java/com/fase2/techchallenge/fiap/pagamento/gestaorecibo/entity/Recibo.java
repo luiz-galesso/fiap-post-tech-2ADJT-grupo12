@@ -7,56 +7,37 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name="tb_recibo")
+@Table(name = "tb_recibo")
 public class Recibo {
 
-    public Recibo() {
-    }
-
-    public Recibo(Long idPagamento) {
-        this.idPagamento = idPagamento;
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="recibo_generator")
-    @SequenceGenerator(name="vaga_generator", sequenceName="vaga_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recibo_generator")
+    @SequenceGenerator(name = "recibo_generator", sequenceName = "recibo_sequence", allocationSize = 1)
     private Long id;
-
-    @NotNull(message = "O código do pagamento do qual o recibo é referente, é obrigatório.")
-    private Long idPagamento;
-    private String nomeCondutor;
-    private Long cpf;
-    private String email;
-    private String placaVeiculo;
-    private String descricaoVeiculo;
-    private String meioPagamento;
-    private Long valor;
-    @Temporal(TemporalType.DATE)
-    private Date dataHoraPagamento;
-    private String tipoEstacionamento;
     @NotNull(message = "A situação do recibo, é obrigatório.")
     @Enumerated(EnumType.STRING)
     private ReciboSituacao reciboSituacao;
-    //@NotNull(message = "A data de inicio do estacionamento, é obrigatório.")
-    @Temporal(TemporalType.DATE)
-    private Date dataInicioEstacionamento;
-   // @NotNull(message = "A data de termino do estacionamento, é obrigatório.")
-    @Temporal(TemporalType.DATE)
-    private Date dataTerminoEstacionamento;
     @Temporal(TemporalType.DATE)
     private Date dataImpressaoRecibo;
+    private DadosPagamento dadosPagamento;
+    private DadosCondutor dadosCondutor;
+    private DadosVeiculo dadosVeiculo;
+    private DadosEstacionamento dadosEstacionamento;
 
+    public Recibo() {
+
+    }
+
+    public Recibo(DadosPagamento dadosPagamento) {
+        this.dadosPagamento = dadosPagamento;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public Long getIdPagamento() {
-        return idPagamento;
-    }
-
-    public void setIdPagamento(Long idPagamento) {
-        this.idPagamento = idPagamento;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ReciboSituacao getReciboSituacao() {
@@ -67,22 +48,6 @@ public class Recibo {
         this.reciboSituacao = reciboSituacao;
     }
 
-    public Date getDataInicioEstacionamento() {
-        return dataInicioEstacionamento;
-    }
-
-    public void setDataInicioEstacionamento(Date dataInicioEstacionamento) {
-        this.dataInicioEstacionamento = dataInicioEstacionamento;
-    }
-
-    public Date getDataTerminoEstacionamento() {
-        return dataTerminoEstacionamento;
-    }
-
-    public void setDataTerminoEstacionamento(Date dataTerminoEstacionamento) {
-        this.dataTerminoEstacionamento = dataTerminoEstacionamento;
-    }
-
     public Date getDataImpressaoRecibo() {
         return dataImpressaoRecibo;
     }
@@ -91,75 +56,39 @@ public class Recibo {
         this.dataImpressaoRecibo = dataImpressaoRecibo;
     }
 
-    public String getNomeCondutor() {
-        return nomeCondutor;
+    public DadosPagamento getPagamento() {
+        return this.dadosPagamento;
     }
 
-    public void setNomeCondutor(String nomeCondutor) {
-        this.nomeCondutor = nomeCondutor;
+    public DadosPagamento getDadosPagamento() {
+        return dadosPagamento;
     }
 
-    public Long getCpf() {
-        return cpf;
+    public void setDadosPagamento(DadosPagamento dadosPagamento) {
+        this.dadosPagamento = dadosPagamento;
     }
 
-    public void setCpf(Long cpf) {
-        this.cpf = cpf;
+    public DadosCondutor getDadosCondutor() {
+        return dadosCondutor;
     }
 
-    public String getEmail() {
-        return email;
+    public void setDadosCondutor(DadosCondutor dadosCondutor) {
+        this.dadosCondutor = dadosCondutor;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public DadosVeiculo getDadosVeiculo() {
+        return dadosVeiculo;
     }
 
-    public String getPlacaVeiculo() {
-        return placaVeiculo;
+    public void setDadosVeiculo(DadosVeiculo dadosVeiculo) {
+        this.dadosVeiculo = dadosVeiculo;
     }
 
-    public void setPlacaVeiculo(String placaVeiculo) {
-        this.placaVeiculo = placaVeiculo;
+    public DadosEstacionamento getDadosEstacionamento() {
+        return dadosEstacionamento;
     }
 
-    public String getDescricaoVeiculo() {
-        return descricaoVeiculo;
-    }
-
-    public void setDescricaoVeiculo(String descricaoVeiculo) {
-        this.descricaoVeiculo = descricaoVeiculo;
-    }
-
-    public String getMeioPagamento() {
-        return meioPagamento;
-    }
-
-    public void setMeioPagamento(String meioPagamento) {
-        this.meioPagamento = meioPagamento;
-    }
-
-    public Long getValor() {
-        return valor;
-    }
-
-    public void setValor(Long valor) {
-        this.valor = valor;
-    }
-
-    public Date getDataHoraPagamento() {
-        return dataHoraPagamento;
-    }
-
-    public void setDataHoraPagamento(Date dataHoraPagamento) {
-        this.dataHoraPagamento = dataHoraPagamento;
-    }
-
-    public String getTipoEstacionamento() {
-        return tipoEstacionamento;
-    }
-
-    public void setTipoEstacionamento(String tipoEstacionamento) {
-        this.tipoEstacionamento = tipoEstacionamento;
+    public void setDadosEstacionamento(DadosEstacionamento dadosEstacionamento) {
+        this.dadosEstacionamento = dadosEstacionamento;
     }
 }

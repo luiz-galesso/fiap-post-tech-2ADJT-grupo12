@@ -5,7 +5,7 @@ public record EnvioPagamentoDTO(
         Long idVeiculo,
         String idCondutor,
         Long idMeioPagamentoCondutor,
-        Long valor,
+        Double valor,
         Long iEstacionamento
 ) {
 }
