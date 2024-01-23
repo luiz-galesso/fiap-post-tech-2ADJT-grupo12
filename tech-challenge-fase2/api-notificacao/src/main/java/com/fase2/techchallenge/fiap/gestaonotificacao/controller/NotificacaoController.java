@@ -1,6 +1,7 @@
 package com.fase2.techchallenge.fiap.gestaonotificacao.controller;
 
 import com.fase2.techchallenge.fiap.gestaonotificacao.dto.NotificacaoDTO;
+import com.fase2.techchallenge.fiap.gestaonotificacao.dto.NotificacaoResponseDTO;
 import com.fase2.techchallenge.fiap.gestaonotificacao.service.NotificacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,14 +23,14 @@ public class NotificacaoController {
 
     @Operation(summary = "Consulta Notificações", description = "Serviço utilizado para consultar as notificações paginadas.")
     @GetMapping
-    public ResponseEntity<Page<NotificacaoDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<NotificacaoResponseDTO>> findAll(Pageable pageable) {
         var notificacoes = notificacaoService.findAll(pageable);
         return ResponseEntity.ok(notificacoes);
     }
 
     @Operation(summary = "Consulta a Notificação pelo Identificador", description = "Serviço utilizado para consultar a notificação pelo seu identificador.")
     @GetMapping("/{id}")
-    public ResponseEntity<NotificacaoDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<NotificacaoResponseDTO> findById(@PathVariable Long id) {
         var notificacao = notificacaoService.findById(id);
         return ResponseEntity.ok(notificacao);
     }
@@ -43,15 +44,15 @@ public class NotificacaoController {
 
     @Operation(summary = "Insere uma nova notificação", description = "Serviço utilizado para inserir uma notificação.")
     @PostMapping
-    public ResponseEntity<NotificacaoDTO> save(@RequestBody @Valid NotificacaoDTO notificacaoDTO) {
-        NotificacaoDTO notifacaoResponse = notificacaoService.save(notificacaoDTO);
+    public ResponseEntity<NotificacaoResponseDTO> save(@RequestBody @Valid NotificacaoDTO notificacaoDTO) {
+        NotificacaoResponseDTO notifacaoResponse = notificacaoService.save(notificacaoDTO);
         return new ResponseEntity<>(notifacaoResponse, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Atualiza a notificação", description = "Serviço utilizado para atualizar notificação.")
     @PutMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<NotificacaoDTO> update(@PathVariable Long id, @RequestBody NotificacaoDTO notificacaoDTO) {
-        NotificacaoDTO notificacaoResponse = notificacaoService.update(id, notificacaoDTO);
+    public ResponseEntity<NotificacaoResponseDTO> update(@PathVariable Long id, @RequestBody NotificacaoDTO notificacaoDTO) {
+        NotificacaoResponseDTO notificacaoResponse = notificacaoService.update(id, notificacaoDTO);
         return ResponseEntity.ok(notificacaoResponse);
     }
 }
