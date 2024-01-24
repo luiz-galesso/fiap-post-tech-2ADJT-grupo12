@@ -37,6 +37,14 @@ public class VeiculoController
         return ResponseEntity.ok(service.listAll());
     }
 
+    @GetMapping("/{id}")
+    @Operation( summary= "Retorna veículo"
+            , description= "Retorna veículo pelo ID")
+    public ResponseEntity<?> getVeiculo(@PathVariable Integer id)
+    {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
     @GetMapping("/condutor")
     @Operation( summary= "Lista veículos"
             , description= "Lista todos os veículos salvos por condutor")
