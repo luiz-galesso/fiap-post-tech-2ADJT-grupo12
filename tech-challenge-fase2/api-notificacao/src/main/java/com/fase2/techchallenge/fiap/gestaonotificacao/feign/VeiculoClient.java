@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "api-cadastro", url = "http://localhost:8083/api-cadastro/veiculos")
-public interface ConsultaVeiculo {
+@FeignClient(name = "api-cadastro", url = "${feign.cadastro.url}")
+public interface VeiculoClient {
 
-    @GetMapping("/{id}")
+    @GetMapping("/veiculos/{id}")
     ResponseEntity<VeiculoDTO> getVeiculoPorId(@PathVariable("id") Integer id);
 
 }
