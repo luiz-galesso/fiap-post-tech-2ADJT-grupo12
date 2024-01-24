@@ -51,7 +51,7 @@ public class PagamentoService {
                 envioPagamentoDTO.idCondutor(),
                 envioPagamentoDTO.idMeioPagamentoCondutor(),
                 envioPagamentoDTO.valor(),
-                envioPagamentoDTO.iEstacionamento()
+                envioPagamentoDTO.idEstacionamento()
         );
     }
 

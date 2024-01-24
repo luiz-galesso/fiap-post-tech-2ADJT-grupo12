@@ -1,14 +1,22 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaorecibo.service;
 
+import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.Pagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.service.PagamentoService;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.CondutorDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.SolicitacaoReciboDTO;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.VeiculoDTO;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosCondutor;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosPagamento;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosVeiculo;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.Recibo;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.enumeration.ReciboSituacao;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.feign.CadastroClient;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.repository.ReciboRepository;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @EnableScheduling
@@ -49,7 +57,7 @@ public class ReciboService {
         return toReciboDTO(recibo);
     }
 
-    /*@Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 1000)
     public void preencherDetalhes() {
         List<Recibo> recibos = reciboRepository.findByReciboSituacao(ReciboSituacao.SOLICITADO);
         for (Recibo recibo : recibos) {
@@ -57,15 +65,23 @@ public class ReciboService {
             recibo.getPagamento().setValor(pagamento.getValor());
             recibo.getPagamento().setDataHoraPagamento(pagamento.getDataPagamento());
 
-           // if (recibo.getDadosCondutor().getNomeCondutor() == null) {
-                //recibo.setDadosCondutor(new DadosCondutor(cadastroClient.getCondutor(pagamento.getIdCondutor())));
-            //}
+            if (recibo.getDadosCondutor() == null) {
+                CondutorDTO condutorDTO = cadastroClient.getCondutor(pagamento.getIdCondutor());
+                recibo.setDadosCondutor(new DadosCondutor(condutorDTO.email(), condutorDTO.dadosPessoais().nome(), condutorDTO.dadosPessoais().cpf()));
+            }
+
+            if (recibo.getDadosVeiculo() == null ){
+                VeiculoDTO veiculoDTO = cadastroClient.getVeiculo(pagamento.getIdVeiculo());
+                recibo.setDadosVeiculo(new DadosVeiculo(veiculoDTO.placa(), veiculoDTO.nome()));
+            }
+
 
             recibo.setReciboSituacao(ReciboSituacao.GERADO);
             reciboRepository.save(recibo);
+            System.out.println(recibo);
 
         }
 
-    }*/
+    }
 
 }
