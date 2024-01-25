@@ -1,8 +1,6 @@
 package com.fase2.techchallenge.fiap.gestaonotificacao.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -14,11 +12,11 @@ import java.time.LocalDateTime;
 public class Notificacao {
 
     @Id
-    @NotNull(message = "O id da notificação é obrigatório")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "O id do veiculo da notificação é obrigatório")
-    private Long idVeiculo;
+    private Integer idVeiculo;
 
     @NotNull(message = "A data e hora da notificação é obrigatório")
     private LocalDateTime dataHora;
@@ -32,7 +30,7 @@ public class Notificacao {
     public Notificacao() {
     }
 
-    public Notificacao(Long id, Long idVeiculo, LocalDateTime dataHora, String conteudo, String situacao) {
+    public Notificacao(Long id, Integer idVeiculo, LocalDateTime dataHora, String conteudo, String situacao) {
         this.id = id;
         this.idVeiculo = idVeiculo;
         this.dataHora = dataHora;
