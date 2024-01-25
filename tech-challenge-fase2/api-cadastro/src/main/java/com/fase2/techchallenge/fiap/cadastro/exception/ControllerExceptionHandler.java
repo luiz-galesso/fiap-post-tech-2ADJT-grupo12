@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception;
+package com.fase2.techchallenge.fiap.cadastro.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

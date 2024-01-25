@@ -1,7 +1,7 @@
 package com.fase2.techchallenge.fiap.cadastro.condutor.service;
 
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.EntityFoundException;
+import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
+import com.fase2.techchallenge.fiap.cadastro.exception.EntityFoundException;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.CondutorDTO;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.DadosPessoaisDTO;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.EnderecoDTO;

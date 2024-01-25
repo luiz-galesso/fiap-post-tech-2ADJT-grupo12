@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception;
+package com.fase2.techchallenge.fiap.cadastro.exception;
 
 import java.util.ArrayList;
 import java.util.List;

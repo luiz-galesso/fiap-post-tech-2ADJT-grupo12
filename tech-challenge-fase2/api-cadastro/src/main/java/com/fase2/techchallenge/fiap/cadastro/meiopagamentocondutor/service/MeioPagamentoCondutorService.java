@@ -1,7 +1,7 @@
 package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.service;
 
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.EntityFoundException;
+import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
+import com.fase2.techchallenge.fiap.cadastro.exception.EntityFoundException;
 
 import com.fase2.techchallenge.fiap.cadastro.condutor.service.CondutorService;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorDTO;
@@ -10,8 +10,6 @@ import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.repository.Me
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class MeioPagamentoCondutorService {

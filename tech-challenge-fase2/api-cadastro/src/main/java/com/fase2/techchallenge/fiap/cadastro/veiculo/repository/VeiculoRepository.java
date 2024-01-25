@@ -1,6 +1,5 @@
 package com.fase2.techchallenge.fiap.cadastro.veiculo.repository;
 
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
 import com.fase2.techchallenge.fiap.cadastro.veiculo.entity.Veiculo;
 import org.springframework.data.jpa.repository.JpaRepository;

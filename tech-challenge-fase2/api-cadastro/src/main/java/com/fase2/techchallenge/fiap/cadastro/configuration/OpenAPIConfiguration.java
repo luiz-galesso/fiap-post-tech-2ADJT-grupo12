@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.cadastro.condutor.configuration;
+package com.fase2.techchallenge.fiap.cadastro.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Configuration;

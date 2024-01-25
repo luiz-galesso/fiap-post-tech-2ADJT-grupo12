@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception;
+package com.fase2.techchallenge.fiap.cadastro.exception;
 
 public class ValidateMessage {
     private String campo;

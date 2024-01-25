@@ -90,7 +90,7 @@ services:
       - cadastro-db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://cadastro-db:5432/cadastro-db
-      SPRING_DATASOURCE_USERNAME: cadastro-db
+      SPRING_DATASOURCE_USERNAME: cadastro
       SPRING_DATASOURCE_PASSWORD: pass-cadastro
 
   api-notificacao:
