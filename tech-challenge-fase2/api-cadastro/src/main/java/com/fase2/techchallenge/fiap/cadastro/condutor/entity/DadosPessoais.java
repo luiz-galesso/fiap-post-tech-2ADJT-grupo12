@@ -3,8 +3,10 @@ package com.fase2.techchallenge.fiap.cadastro.condutor.entity;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.DadosPessoaisDTO;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
+@Data
 @Embeddable
 public class DadosPessoais {
 
@@ -35,30 +37,6 @@ public class DadosPessoais {
         this.nome = dadosPessoaisDTO.nome();
         this.cpf = dadosPessoaisDTO.cpf();
         this.nrCelular = dadosPessoaisDTO.nrCelular();
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getNrCelular() {
-        return this.nrCelular;
-    }
-
-    public void setNrCelular(String nrCelular) {
-        this.nrCelular = nrCelular;
     }
 
     private DadosPessoais toEntity(DadosPessoaisDTO dadosPessoaisDTO) {

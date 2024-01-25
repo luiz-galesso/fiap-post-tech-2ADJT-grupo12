@@ -1,9 +1,7 @@
 package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.service;
 
-import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.cadastro.exception.EntityFoundException;
-
 import com.fase2.techchallenge.fiap.cadastro.condutor.service.CondutorService;
+import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorDTO;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity.MeioPagamentoCondutor;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.repository.MeioPagamentoCondutorRepository;
@@ -22,18 +20,16 @@ public class MeioPagamentoCondutorService {
 
     public MeioPagamentoCondutorDTO save(MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
         MeioPagamentoCondutor meioPagamentoCondutor = toEntity(meioPagamentoCondutorDTO);
-        condutorNaoCadastrado(meioPagamentoCondutorDTO);
-        metodoJaCadastrado(meioPagamentoCondutor.getEmailCondutor());
+        condutorNaoCadastrado(meioPagamentoCondutorDTO.emailCondutor());
         meioPagamentoCondutor = meioPagamentoCondutorRepository.save(meioPagamentoCondutor);
         return toMeioPagamentoDTO(meioPagamentoCondutor);
     }
 
-
-    public MeioPagamentoCondutorDTO update(String id, MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
+    public MeioPagamentoCondutorDTO update(Long id, MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
         try {
-            MeioPagamentoCondutor meioPagamentoCondutor = meioPagamentoCondutorRepository.findByEmailCondutor(id);
-            condutorNaoExistente(meioPagamentoCondutor);
-            meioPagamentoCondutor.setMeioPagamentoFavorito(meioPagamentoCondutorDTO.meioPagamento());
+            MeioPagamentoCondutor meioPagamentoCondutor = meioPagamentoCondutorRepository.getReferenceById(id);
+            condutorNaoCadastrado(meioPagamentoCondutorDTO.emailCondutor());
+            meioPagamentoCondutor.setTipoMeioPagamento(meioPagamentoCondutorDTO.tipoMeioPagamento());
             meioPagamentoCondutor = meioPagamentoCondutorRepository.save(meioPagamentoCondutor);
             return toMeioPagamentoDTO(meioPagamentoCondutor);
         } catch (EntityNotFoundException e) {
@@ -41,50 +37,44 @@ public class MeioPagamentoCondutorService {
         }
     }
 
-    public MeioPagamentoCondutorDTO findByEmailCondutor(String id) {
+    public void deleteById(Long id) {
         try {
+            meioPagamentoCondutorRepository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ControllerNotFoundException("Meio de Pagamento não localizada");
+        }
+    }
 
-            MeioPagamentoCondutor meioPagamentoCondutor =
-                    meioPagamentoCondutorRepository.findByEmailCondutor(id);
-            condutorNaoExistente(meioPagamentoCondutor);
-            return toMeioPagamentoDTO(
-                    meioPagamentoCondutor);
+    public MeioPagamentoCondutorDTO findByEmailCondutor(String emailCondutor) {
+        try {
+            condutorNaoCadastrado(emailCondutor);
+            MeioPagamentoCondutor meioPagamentoCondutor = meioPagamentoCondutorRepository.findByCondutor(condutorService.findCondutorById(emailCondutor));
+            return toMeioPagamentoDTO(meioPagamentoCondutor);
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Condutor não localizado");
         }
     }
 
-    private void metodoJaCadastrado(String emailCondutor) {
-        if ( meioPagamentoCondutorRepository.findByEmailCondutor(emailCondutor) != null) {
-            throw new EntityFoundException("Meio de Pagamento já cadastrado!");
-        }
-    }
-
-    private void condutorNaoCadastrado(MeioPagamentoCondutorDTO meioPagamentoCondutorDTO){
-        if(condutorService.findById(meioPagamentoCondutorDTO.email()) == null){
-            throw new EntityFoundException("Condutor não cadastrado no sistema!");
-        }
-    }
-
-
-    private void condutorNaoExistente(MeioPagamentoCondutor meioPagamentoCondutor) {
-        if (meioPagamentoCondutor == null) {
-            throw new EntityNotFoundException("Condutor não localizado");
+    private void condutorNaoCadastrado(String idCondutor) {
+        if (condutorService.findById(idCondutor) == null) {
+            throw new ControllerNotFoundException("Condutor não cadastrado no sistema!");
         }
     }
 
 
     public MeioPagamentoCondutor toEntity(MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
         return new MeioPagamentoCondutor(
-                meioPagamentoCondutorDTO.email(),
-                meioPagamentoCondutorDTO.meioPagamento()
+                meioPagamentoCondutorDTO.id(),
+                meioPagamentoCondutorDTO.tipoMeioPagamento(),
+                condutorService.findCondutorById(meioPagamentoCondutorDTO.emailCondutor())
         );
     }
 
     public MeioPagamentoCondutorDTO toMeioPagamentoDTO(MeioPagamentoCondutor meioPagamentoCondutor) {
         return new MeioPagamentoCondutorDTO(
-                meioPagamentoCondutor.getMeioPagamentoFavorito(),
-                meioPagamentoCondutor.getEmailCondutor()
+                meioPagamentoCondutor.getId(),
+                meioPagamentoCondutor.getTipoMeioPagamento(),
+                meioPagamentoCondutor.getCondutor().getEmail()
         );
     }
 }
