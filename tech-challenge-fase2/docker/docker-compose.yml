@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     container_name: cadastro-db
     environment:
-      POSTGRES_USER: cadastro-db
+      POSTGRES_USER: cadastro
       POSTGRES_PASSWORD: pass-cadastro
       POSTGRES_DB: cadastro-db
     ports:
