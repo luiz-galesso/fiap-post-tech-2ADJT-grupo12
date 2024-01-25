@@ -1,6 +1,8 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaorecibo.controller;
 
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.SolicitacaoReciboDTO;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosPagamento;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.Recibo;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.service.ReciboService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,5 +30,21 @@ public class ReciboController {
     public ResponseEntity<SolicitacaoReciboDTO> gerarRecibo(@RequestBody @Valid SolicitacaoReciboDTO solicitacaoReciboDTO) {
         SolicitacaoReciboDTO reciboResponse = reciboService.gerarRecibo(solicitacaoReciboDTO);
         return new ResponseEntity<>(reciboResponse, HttpStatus.CREATED);
+    }
+
+    @Operation( summary= "Retorna conteúdo do Recibo para Impressão"
+            , description= "Serviço utilizado retornar o conteúdo de um recibo previamente solicitado geração. </br>"
+    )
+    @GetMapping(value="/{id}", produces = "application/json")
+    public ResponseEntity<Recibo> findById(@PathVariable("id") Long id) {
+        var recibo = reciboService.imprimirRecibo(id);
+        return ResponseEntity.ok(recibo);
+    }
+
+    @Operation( summary = "Cancela um recibo", description = "Serviço para cancelamento de Recibos")
+    @PutMapping(value ="/cancelar/{idPagamento}" , produces = "application/json")
+    public ResponseEntity<Recibo> cancelarRecibo(@PathVariable Long idPagamento){
+        Recibo recibo = reciboService.cancelarRecibo(idPagamento);
+        return ResponseEntity.ok(recibo);
     }
 }

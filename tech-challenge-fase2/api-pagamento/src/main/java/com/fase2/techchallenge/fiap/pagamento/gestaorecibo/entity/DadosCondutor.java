@@ -6,12 +6,12 @@ import jakarta.persistence.Embeddable;
 public class DadosCondutor {
     private String email;
     private String nomeCondutor;
-    private Long cpf;
+    private String cpf;
 
     public DadosCondutor() {
     }
 
-    public DadosCondutor(String email, String nomeCondutor, Long cpf) {
+    public DadosCondutor(String email, String nomeCondutor, String cpf) {
         this.email = email;
         this.nomeCondutor = nomeCondutor;
         this.cpf = cpf;
@@ -33,11 +33,11 @@ public class DadosCondutor {
         this.nomeCondutor = nomeCondutor;
     }
 
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 }

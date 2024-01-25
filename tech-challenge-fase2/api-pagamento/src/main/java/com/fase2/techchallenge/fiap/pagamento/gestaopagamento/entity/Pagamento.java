@@ -29,7 +29,12 @@ public class Pagamento {
     private PagamentoSituacao pagamentoSituacao;
     @NotNull(message = "A data do Pagamento é obrigatória")
     @Temporal(TemporalType.DATE)
-    private Date dataPagamento;
+    private Date dataHoraPagamento;
+
+    private String motivoEstorno;
+    @Temporal(TemporalType.DATE)
+    private Date dataHoraEstorno;
+
     public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, Long idEstacionamento) {
         this.idVeiculo = idVeiculo;
         this.idCondutor = idCondutor;
@@ -102,11 +107,27 @@ public class Pagamento {
         this.pagamentoSituacao = pagamentoSituacao;
     }
 
-    public Date getDataPagamento() {
-        return dataPagamento;
+    public Date getDataHoraPagamento() {
+        return dataHoraPagamento;
     }
 
-    public void setDataPagamento(Date dataPagamento) {
-        this.dataPagamento = dataPagamento;
+    public void setDataHoraPagamento(Date dataHoraPagamento) {
+        this.dataHoraPagamento = dataHoraPagamento;
+    }
+
+    public String getMotivoEstorno() {
+        return motivoEstorno;
+    }
+
+    public void setMotivoEstorno(String motivoEstorno) {
+        this.motivoEstorno = motivoEstorno;
+    }
+
+    public Date getDataHoraEstorno() {
+        return dataHoraEstorno;
+    }
+
+    public void setDataHoraEstorno(Date dataHoraEstorno) {
+        this.dataHoraEstorno = dataHoraEstorno;
     }
 }
