@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.cadastro.condutor.service;
 
+import com.fase2.techchallenge.fiap.cadastro.condutor.dto.CondutorUpdateDTO;
 import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.cadastro.exception.EntityFoundException;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.CondutorDTO;
@@ -29,12 +30,11 @@ public class CondutorService {
         return toCondutorDTO(condutor);
     }
 
-    public CondutorDTO update(String email, CondutorDTO condutorDTO) {
+    public CondutorDTO update(String email, CondutorUpdateDTO condutorUpdateDTO) {
         try {
             Condutor condutor = condutorRepository.getReferenceById(email);
-            condutor.setDadosPessoais(new DadosPessoais(condutorDTO.dadosPessoais()));
-            condutor.setLogradouro(new Endereco(condutorDTO.endereco()));
-            condutor.setAtivacaoAutomatica(condutor.isAtivacaoAutomatica());
+            condutor.setDadosPessoais(new DadosPessoais(condutorUpdateDTO.dadosPessoais()));
+            condutor.setLogradouro(new Endereco(condutorUpdateDTO.endereco()));
             condutor = condutorRepository.save(condutor);
 
             return toCondutorDTO(condutor);

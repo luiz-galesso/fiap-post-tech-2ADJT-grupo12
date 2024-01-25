@@ -7,10 +7,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "tb_veiculo")
 public class Veiculo implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="veiculo_generator")
+    @SequenceGenerator(name="veiculo_generator", sequenceName="veiculo_sequence", allocationSize = 1)
     private Integer id;
 
     private String placa;
