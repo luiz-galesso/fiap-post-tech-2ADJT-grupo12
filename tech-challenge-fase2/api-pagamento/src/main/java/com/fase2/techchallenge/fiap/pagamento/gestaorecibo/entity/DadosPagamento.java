@@ -24,6 +24,7 @@ public class DadosPagamento {
 
     }
 
+
     public DadosPagamento(Long idPagamento, Double valor, Date dataHoraPagamento, String meioPagamento) {
         this.idPagamento = idPagamento;
         this.valor = valor;

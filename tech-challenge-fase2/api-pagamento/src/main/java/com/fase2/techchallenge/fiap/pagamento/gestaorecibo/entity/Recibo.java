@@ -56,10 +56,6 @@ public class Recibo {
         this.dataImpressaoRecibo = dataImpressaoRecibo;
     }
 
-    public DadosPagamento getPagamento() {
-        return this.dadosPagamento;
-    }
-
     public DadosPagamento getDadosPagamento() {
         return dadosPagamento;
     }

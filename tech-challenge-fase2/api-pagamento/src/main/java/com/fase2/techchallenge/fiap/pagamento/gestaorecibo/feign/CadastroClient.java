@@ -11,6 +11,6 @@ public interface CadastroClient {
     @GetMapping("/condutor/{idCondutor}")
     CondutorDTO getCondutor(@PathVariable String idCondutor);
 
-    @GetMapping("/veiculo/{idVeiculo}")
+    @GetMapping("/veiculos/{idVeiculo}")
     VeiculoDTO getVeiculo(@PathVariable Long idVeiculo);
 }
