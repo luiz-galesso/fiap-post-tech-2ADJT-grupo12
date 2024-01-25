@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.configuration;
+package com.fase2.techchallenge.fiap.estacionamento.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Configuration;
