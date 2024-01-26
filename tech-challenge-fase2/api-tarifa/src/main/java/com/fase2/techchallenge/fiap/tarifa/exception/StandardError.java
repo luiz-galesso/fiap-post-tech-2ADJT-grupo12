@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.tarifa.gestaotarifa.controller.exception;
+package com.fase2.techchallenge.fiap.tarifa.exception;
 
 import java.time.Instant;
 
