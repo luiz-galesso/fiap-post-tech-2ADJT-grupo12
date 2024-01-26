@@ -1,6 +1,8 @@
 package com.fase2.techchallenge.fiap.cadastro.veiculo.controller;
 
-import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoDTO;
+import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
+import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoRequestDTO;
+import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoUpdateDTO;
 import com.fase2.techchallenge.fiap.cadastro.veiculo.entity.Veiculo;
 import com.fase2.techchallenge.fiap.cadastro.veiculo.service.VeiculoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +18,7 @@ import java.util.Optional;
  * @author thiago-ribeiro
  * @see VeiculoService
  * @see Veiculo
- * @see VeiculoDTO
+ * @see VeiculoRequestDTO
  */
 @RestController
 @RequestMapping("/veiculos")
@@ -56,13 +58,16 @@ public class VeiculoController
     @PostMapping
     @Operation( summary= "Salva veículo"
             , description= "Salva um novo veículo vinculado ao condutor")
-    public ResponseEntity<?> postVeiculo(@RequestBody VeiculoDTO veiculoDTO)
+    public ResponseEntity<?> postVeiculo(@RequestBody VeiculoRequestDTO veiculoRequestDTO)
     {
+        Condutor condutor = new Condutor();
         try
         {
-            Veiculo veiculo = new Veiculo(veiculoDTO);
-            veiculo = this.service.save(veiculo);
-            return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(this.service.toVeiculoResponseDTO(veiculo));
+            Veiculo veiculo = new Veiculo();
+            condutor.setEmail(veiculoRequestDTO.emailCondutor());
+            veiculo.setPlaca(veiculoRequestDTO.placa());
+            veiculo.setCondutor(condutor);
+            return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(this.service.save(veiculo));
         }
         catch (TransactionalException t)
         {
@@ -73,18 +78,13 @@ public class VeiculoController
     @PutMapping("/{id}")
     @Operation( summary= "Atualiza veículo"
             , description= "Atualiza um veículo vinculado ao condutor")
-    public ResponseEntity<?> putVeiculo(@PathVariable Integer id, @RequestBody VeiculoDTO veiculoDTO)
+    public ResponseEntity<?> putVeiculo(@PathVariable Integer id, @RequestBody VeiculoUpdateDTO veiculoUpdateDTO)
     {
         try
         {
             Optional<Veiculo> optionalVeiculo = this.service.findById(id);
-
             if(optionalVeiculo.isEmpty()) return ResponseEntity.noContent().build();
-
-            Veiculo veiculo = optionalVeiculo.get();
-
-            veiculo = this.service.update(veiculo, veiculoDTO);
-            return ResponseEntity.ok(this.service.save(veiculo));
+            return ResponseEntity.ok(this.service.update(optionalVeiculo.get(), veiculoUpdateDTO));
         }
         catch (Exception e)
         {
