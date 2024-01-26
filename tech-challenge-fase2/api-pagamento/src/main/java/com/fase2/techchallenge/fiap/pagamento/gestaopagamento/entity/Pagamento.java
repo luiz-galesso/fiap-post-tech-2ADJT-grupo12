@@ -28,11 +28,11 @@ public class Pagamento {
     @NotNull(message = "A situação do Pagamento é obrigatória")
     private PagamentoSituacao pagamentoSituacao;
     @NotNull(message = "A data do Pagamento é obrigatória")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraPagamento;
 
     private String motivoEstorno;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraEstorno;
 
     public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, Long idEstacionamento) {

@@ -9,10 +9,10 @@ import java.util.Date;
 @Embeddable
 public class DadosEstacionamento {
     private String tipoEstacionamento;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataInicioEstacionamento;
     // @NotNull(message = "A data de termino do estacionamento, é obrigatório.")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataTerminoEstacionamento;
 
     public DadosEstacionamento() {
