@@ -21,8 +21,12 @@ public class MeioPagamentoCondutorService {
     @Autowired
     private CondutorService condutorService;
 
+    @Autowired
+    private MeioPagamentoService meioPagamentoService;
+
     public MeioPagamentoCondutor save(MeioPagamentoCondutorRequestDTO meioPagamentoCondutorRequestDTO) {
         MeioPagamentoCondutor meioPagamentoCondutor = toEntity(meioPagamentoCondutorRequestDTO);
+        meioPagamentoService.findByIdMeioPagamento(meioPagamentoCondutorRequestDTO.tipoMeioPagamento());
         condutorNaoCadastrado(meioPagamentoCondutorRequestDTO.emailCondutor());
         meioPagamentoCondutor = meioPagamentoCondutorRepository.save(meioPagamentoCondutor);
         return meioPagamentoCondutor;
@@ -31,6 +35,7 @@ public class MeioPagamentoCondutorService {
     public MeioPagamentoCondutor update(Long id, MeioPagamentoCondutorUpdateDTO meioPagamentoCondutorUpdateDTO) {
         try {
             MeioPagamentoCondutor meioPagamentoCondutor = meioPagamentoCondutorRepository.getReferenceById(id);
+            meioPagamentoService.findByIdMeioPagamento(meioPagamentoCondutorUpdateDTO.tipoMeioPagamento());
             meioPagamentoCondutor.setTipoMeioPagamento(meioPagamentoCondutorUpdateDTO.tipoMeioPagamento());
             meioPagamentoCondutor.setNumeroCartao(meioPagamentoCondutorUpdateDTO.numeroCartao());
             meioPagamentoCondutor.setValidadeCartao(meioPagamentoCondutorUpdateDTO.validadeCartao());
