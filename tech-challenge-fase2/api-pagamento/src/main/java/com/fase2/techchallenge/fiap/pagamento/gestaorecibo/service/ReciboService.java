@@ -66,6 +66,7 @@ public class ReciboService {
             Pagamento pagamento = pagamentoRepository.findById(recibo.getDadosPagamento().getIdPagamento()).orElseThrow(() -> new ControllerNotFoundException("Pagamento não localizado"));
             ;
             recibo.getDadosPagamento().setValor(pagamento.getValor());
+            System.out.println("......................DataPagamento:" + pagamento.getDataHoraPagamento());
             recibo.getDadosPagamento().setDataHoraPagamento(pagamento.getDataHoraPagamento());
 
             if (recibo.getDadosCondutor() == null) {
