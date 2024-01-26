@@ -5,7 +5,9 @@ import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity.MeioPa
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MeioPagamentoCondutorRepository extends JpaRepository<MeioPagamentoCondutor, Long> {
-    MeioPagamentoCondutor findByCondutor(Condutor condutor);
+    List<MeioPagamentoCondutor> findByCondutor(Condutor condutor);
 }

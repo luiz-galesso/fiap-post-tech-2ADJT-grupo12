@@ -49,4 +49,12 @@ public class DadosPessoais {
                 dadosPessoais.getNrCelular()
         );
     }
+
+    public DadosPessoaisDTO toDadosPessoaisDTO() {
+        return new DadosPessoaisDTO(
+                this.nome,
+                this.cpf,
+                this.nrCelular
+        );
+    }
 }

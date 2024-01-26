@@ -23,21 +23,22 @@ public class CondutorService {
     @Autowired
     private CondutorRepository condutorRepository;
 
-    public CondutorDTO save(CondutorDTO condutorDTO) {
+    public Condutor save(CondutorDTO condutorDTO) {
         Condutor condutor = toEntity(condutorDTO);
         condutorExistente(condutor);
         condutor = condutorRepository.save(condutor);
-        return toCondutorDTO(condutor);
+        return condutor;
     }
 
-    public CondutorDTO update(String email, CondutorUpdateDTO condutorUpdateDTO) {
+    public Condutor update(String email, CondutorUpdateDTO condutorUpdateDTO) {
         try {
             Condutor condutor = condutorRepository.getReferenceById(email);
             condutor.setDadosPessoais(new DadosPessoais(condutorUpdateDTO.dadosPessoais()));
             condutor.setEndereco(new Endereco(condutorUpdateDTO.endereco()));
+            condutor.setAtivacaoAutomatica(condutorUpdateDTO.ativacaoAutomatica());
             condutor = condutorRepository.save(condutor);
 
-            return toCondutorDTO(condutor);
+            return condutor;
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Condutor não localizado");
         }
@@ -51,15 +52,7 @@ public class CondutorService {
         }
     }
 
-    public CondutorDTO findById(String id) {
-        try {
-            return toCondutorDTO(condutorRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Condutor não localizado")));
-        } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Condutor não localizado");
-        }
-    }
-
-    public Condutor findCondutorById(String id) {
+    public Condutor findById(String id) {
         try {
             return condutorRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Condutor não localizado"));
         } catch (EntityNotFoundException e) {
@@ -102,23 +95,4 @@ public class CondutorService {
         );
     }
 
-    private CondutorDTO toCondutorDTO(Condutor condutor) {
-        return new CondutorDTO(
-                condutor.getEmail(),
-                new DadosPessoaisDTO(
-                        condutor.getDadosPessoais().getNome(),
-                        condutor.getDadosPessoais().getCpf(),
-                        condutor.getDadosPessoais().getNrCelular()
-                ),
-                new EnderecoDTO(
-                        condutor.getEndereco().getDescricao(),
-                        condutor.getEndereco().getNumero(),
-                        condutor.getEndereco().getCidade(),
-                        condutor.getEndereco().getEstado(),
-                        condutor.getEndereco().getCEP(),
-                        condutor.getEndereco().getComplemento()
-                ),
-                condutor.isAtivacaoAutomatica()
-        );
-    }
 }

@@ -27,14 +27,14 @@ public class CondutorController {
               , description= "Serviço utilizado para inserir um condutor.")
     @PostMapping(produces = "application/json")
     public ResponseEntity<CondutorDTO> save(@Valid @RequestBody CondutorDTO condutorServiceDTO) {
-        CondutorDTO condutorResponse = condutorService.save(condutorServiceDTO);
+        CondutorDTO condutorResponse = condutorService.save(condutorServiceDTO).toCondutorResponseDTO();
         return new ResponseEntity<>(condutorResponse, HttpStatus.CREATED);
     }
     @Operation( summary= "Atualiza um condutor"
               , description= "Serviço utilizado para atualizar um condutor.")
     @PutMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<CondutorDTO> update(@PathVariable String id, @RequestBody CondutorUpdateDTO condutorUpdateDTO) {
-        CondutorDTO condutorResponse = condutorService.update(id, condutorUpdateDTO);
+        CondutorDTO condutorResponse = condutorService.update(id, condutorUpdateDTO).toCondutorResponseDTO();
         return ResponseEntity.ok(condutorResponse);
     }
     @Operation( summary= "Remove um condutor"
@@ -50,14 +50,14 @@ public class CondutorController {
     @GetMapping(value="/{id}", produces = "application/json")
     public ResponseEntity<CondutorDTO> findById(@PathVariable("id") String id) {
         var condutor = condutorService.findById(id);
-        return ResponseEntity.ok(condutor);
+        return ResponseEntity.ok(condutor.toCondutorResponseDTO());
     }
     @Operation( summary= "Consulta todos condutores"
             , description= "Serviço utilizado para consultar todos condutor. </br>"
     )
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Condutor>> findAll() {
-        var condutorList = condutorService.findAll();
+    public ResponseEntity<List<CondutorDTO>> findAll() {
+        var condutorList = condutorService.findAll().stream().map(Condutor::toCondutorResponseDTO).toList();
         return ResponseEntity.ok(condutorList);
     }
 

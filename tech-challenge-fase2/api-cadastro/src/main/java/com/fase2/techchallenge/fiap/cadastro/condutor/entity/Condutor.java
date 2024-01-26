@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.cadastro.condutor.entity;
 
+import com.fase2.techchallenge.fiap.cadastro.condutor.dto.CondutorDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -29,4 +30,12 @@ public class Condutor {
         this.email = email;
     }
 
+    public CondutorDTO toCondutorResponseDTO(){
+        return new CondutorDTO(
+                this.email,
+                this.dadosPessoais.toDadosPessoaisDTO(),
+                this.endereco.toEnderecoDTO(),
+                this.ativacaoAutomatica
+        );
+    }
 }

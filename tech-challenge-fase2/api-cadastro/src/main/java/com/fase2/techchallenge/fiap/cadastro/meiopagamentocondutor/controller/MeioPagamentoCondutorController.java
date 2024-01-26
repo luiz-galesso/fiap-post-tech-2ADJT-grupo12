@@ -2,6 +2,8 @@ package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.controller;
 
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorRequestDTO;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorResponseDTO;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorUpdateDTO;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity.MeioPagamentoCondutor;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.service.MeioPagamentoCondutorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,22 +24,22 @@ public class MeioPagamentoCondutorController {
             , description = "Serviço utilizado para inserir um novo meio de pagamento para o condutor.")
     @PostMapping(produces = "application/json")
     public ResponseEntity<MeioPagamentoCondutorResponseDTO> save(@RequestBody MeioPagamentoCondutorRequestDTO meioPagamentoCondutorRequestDTO) {
-        return new ResponseEntity<>(meioPagamentoCondutorService.save(meioPagamentoCondutorRequestDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(meioPagamentoCondutorService.save(meioPagamentoCondutorRequestDTO).toMeioPagamentoCondutorResponseDTO(), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Atualiza o meio de pagamento"
             , description = "Serviço utilizado para atualizar o meio de pagamento.")
     @PutMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<MeioPagamentoCondutorResponseDTO> update(@PathVariable Long id, @RequestBody MeioPagamentoCondutorRequestDTO meioPagamentoCondutorRequestDTO) {
-        return ResponseEntity.ok(meioPagamentoCondutorService.update(id, meioPagamentoCondutorRequestDTO));
+    public ResponseEntity<MeioPagamentoCondutorResponseDTO> update(@PathVariable Long id, @RequestBody MeioPagamentoCondutorUpdateDTO meioPagamentoCondutorUpdateDTO) {
+        return ResponseEntity.ok(meioPagamentoCondutorService.update(id, meioPagamentoCondutorUpdateDTO).toMeioPagamentoCondutorResponseDTO());
     }
 
     @Operation(summary = "Consulta meio pagamento pelo condutor"
             , description = "Serviço utilizado para consultar um meio de pagamento pelo seu condutor. </br>"
     )
-    @GetMapping(value = "/{emailCondutor}", produces = "application/json")
-    public ResponseEntity<MeioPagamentoCondutorResponseDTO> findByCondutor(@PathVariable("emailCondutor") String emailCondutor) {
-        return ResponseEntity.ok(meioPagamentoCondutorService.findByEmailCondutor(emailCondutor));
+    @GetMapping(value = "/condutor/{emailCondutor}", produces = "application/json")
+    public ResponseEntity<?> findByCondutor(@PathVariable("emailCondutor") String emailCondutor) {
+        return ResponseEntity.ok(meioPagamentoCondutorService.findByEmailCondutor(emailCondutor).stream().map(MeioPagamentoCondutor::toMeioPagamentoCondutorResponseDTO));
     }
 
     @Operation(summary = "Remove o meio de pagamento", description = "Serviço utilizado para remover o meio de pagamento.")

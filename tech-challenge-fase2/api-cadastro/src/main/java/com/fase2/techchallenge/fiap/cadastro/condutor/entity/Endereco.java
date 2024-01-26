@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.cadastro.condutor.entity;
 
+import com.fase2.techchallenge.fiap.cadastro.condutor.dto.DadosPessoaisDTO;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.EnderecoDTO;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.Valid;
@@ -63,6 +64,17 @@ public class Endereco {
                 endereco.getEstado(),
                 endereco.getCEP(),
                 endereco.getComplemento()
+        );
+    }
+
+    public EnderecoDTO toEnderecoDTO() {
+        return new EnderecoDTO(
+                this.descricao,
+                this.numero,
+                this.cidade,
+                this.estado,
+                this.CEP,
+                this.complemento
         );
     }
 }

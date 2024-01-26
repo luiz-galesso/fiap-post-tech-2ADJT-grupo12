@@ -1,6 +1,7 @@
 package com.fase2.techchallenge.fiap.cadastro.veiculo.entity;
 
 import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
+import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoResponseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +27,14 @@ public class Veiculo implements Serializable {
 
     @ManyToOne
     private Condutor condutor;
+
+    public VeiculoResponseDTO toVeiculoResponseDTO(){
+        return new VeiculoResponseDTO(
+                this.id,
+                this.placa,
+                this.nome,
+                this.condutor.getEmail()
+        );
+    }
 
 }

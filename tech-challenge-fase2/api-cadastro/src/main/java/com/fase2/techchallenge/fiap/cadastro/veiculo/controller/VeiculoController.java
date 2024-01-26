@@ -36,7 +36,7 @@ public class VeiculoController
             , description= "Lista todos os veículos salvos.")
     public ResponseEntity<?> getVeiculos()
     {
-        return ResponseEntity.ok(service.listAll());
+        return ResponseEntity.ok(service.listAll().stream().map(Veiculo::toVeiculoResponseDTO));
     }
 
     @GetMapping("/{id}")
@@ -44,7 +44,7 @@ public class VeiculoController
             , description= "Retorna veículo pelo ID")
     public ResponseEntity<?> getVeiculo(@PathVariable Integer id)
     {
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.findById(id).get().toVeiculoResponseDTO());
     }
 
     @GetMapping("/condutor")
@@ -52,7 +52,7 @@ public class VeiculoController
             , description= "Lista todos os veículos salvos por condutor")
     public ResponseEntity<?> getVeiculosPorCondutor(@RequestParam String email)
     {
-        return ResponseEntity.ok(this.service.listAllByCondutor(email));
+        return ResponseEntity.ok(this.service.listAllByCondutor(email).stream().map(Veiculo::toVeiculoResponseDTO));
     }
 
     @PostMapping
@@ -66,8 +66,9 @@ public class VeiculoController
             Veiculo veiculo = new Veiculo();
             condutor.setEmail(veiculoRequestDTO.emailCondutor());
             veiculo.setPlaca(veiculoRequestDTO.placa());
+            veiculo.setNome(veiculoRequestDTO.nome());
             veiculo.setCondutor(condutor);
-            return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(this.service.save(veiculo));
+            return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(this.service.save(veiculo).toVeiculoResponseDTO());
         }
         catch (TransactionalException t)
         {
@@ -84,7 +85,7 @@ public class VeiculoController
         {
             Optional<Veiculo> optionalVeiculo = this.service.findById(id);
             if(optionalVeiculo.isEmpty()) return ResponseEntity.noContent().build();
-            return ResponseEntity.ok(this.service.update(optionalVeiculo.get(), veiculoUpdateDTO));
+            return ResponseEntity.ok(this.service.update(optionalVeiculo.get(), veiculoUpdateDTO).toVeiculoResponseDTO());
         }
         catch (Exception e)
         {

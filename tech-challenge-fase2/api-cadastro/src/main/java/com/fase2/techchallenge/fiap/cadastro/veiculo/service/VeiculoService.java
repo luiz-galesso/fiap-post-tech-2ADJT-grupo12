@@ -20,10 +20,9 @@ public class VeiculoService
         this.repository = repository;
     }
 
-    public VeiculoResponseDTO save(Veiculo veiculo)
+    public Veiculo save(Veiculo veiculo)
     {
-
-        return toVeiculoResponseDTO(this.repository.save(veiculo));
+        return this.repository.save(veiculo);
     }
 
     public Optional<Veiculo> findById(Integer id)
@@ -31,13 +30,13 @@ public class VeiculoService
         return Optional.of(this.repository.findById(id).orElseThrow());
     }
 
-    public VeiculoResponseDTO update(Veiculo veiculo, VeiculoUpdateDTO veiculoUpdateDTO) {
+    public Veiculo update(Veiculo veiculo, VeiculoUpdateDTO veiculoUpdateDTO) {
         if (!veiculoUpdateDTO.nome().isBlank())
             veiculo.setNome(veiculoUpdateDTO.nome());
 
         if (!veiculoUpdateDTO.placa().isBlank())
             veiculo.setPlaca(veiculoUpdateDTO.placa());
-        return toVeiculoResponseDTO(this.repository.save(veiculo));
+        return this.repository.save(veiculo);
     }
 
     public Optional<Veiculo> findByPlaca(String placa)
@@ -63,16 +62,6 @@ public class VeiculoService
     public void delete(Integer id)
     {
         this.repository.deleteById(id);
-    }
-
-    public VeiculoResponseDTO toVeiculoResponseDTO(Veiculo veiculo)
-    {
-        return new VeiculoResponseDTO(
-                veiculo.getId(),
-                veiculo.getPlaca(),
-                veiculo.getNome(),
-                veiculo.getCondutor().getEmail()
-        );
     }
 
 }
