@@ -1,8 +1,15 @@
 package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto;
 
-public record MeioPagamentoCondutorDTO(
+import java.util.Date;
+
+public record MeioPagamentoCondutorResponseDTO(
         Long id,
         String tipoMeioPagamento,
+
+        Long numeroCartao,
+
+        Date validadeCartao,
+
         String emailCondutor
 
 ) {

@@ -3,11 +3,15 @@ package com.fase2.techchallenge.fiap.cadastro.condutor.entity;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.DadosPessoaisDTO;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Data
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class DadosPessoais {
 
 
@@ -23,15 +27,6 @@ public class DadosPessoais {
     @NotNull(message = "O número de celular do Condutor é obrigatório")
     //Precisamos ter como mandar notificação
     private String nrCelular;
-
-    public DadosPessoais() {
-    }
-
-    public DadosPessoais(String nome, String cpf, String nrCelular) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.nrCelular = nrCelular;
-    }
 
     public DadosPessoais(DadosPessoaisDTO dadosPessoaisDTO) {
         this.nome = dadosPessoaisDTO.nome();

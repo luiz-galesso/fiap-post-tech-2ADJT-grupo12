@@ -4,11 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "tb_condutor")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Condutor {
 
     @Id
@@ -21,18 +25,8 @@ public class Condutor {
     // fazer um método para alterar este valor no controler
     private boolean ativacaoAutomatica;
 
-    public Condutor() {
-    }
-
     public Condutor(String email) {
         this.email = email;
-    }
-
-    public Condutor(String email, DadosPessoais dadosPessoais, Endereco endereco, boolean ativacaoAutomatica) {
-        this.email = email;
-        this.dadosPessoais = dadosPessoais;
-        this.endereco = endereco;
-        this.ativacaoAutomatica = ativacaoAutomatica;
     }
 
 }

@@ -1,15 +1,18 @@
 package com.fase2.techchallenge.fiap.cadastro.veiculo.entity;
 
 import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
-import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "tb_veiculo")
+@Table(name = "tb_veiculo", uniqueConstraints = @UniqueConstraint(columnNames={"placa","condutor_email"}))
+@AllArgsConstructor
+@NoArgsConstructor
 public class Veiculo implements Serializable {
 
     @Id
@@ -24,12 +27,4 @@ public class Veiculo implements Serializable {
     @ManyToOne
     private Condutor condutor;
 
-    public Veiculo() {
-    }
-
-    public Veiculo(VeiculoDTO veiculoDTO) {
-        this.placa = veiculoDTO.placa();
-        this.nome = veiculoDTO.nome();
-        this.condutor = new Condutor(veiculoDTO.emailCondutor());
-    }
 }

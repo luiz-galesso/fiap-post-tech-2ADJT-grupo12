@@ -8,7 +8,9 @@ public record CondutorUpdateDTO(
         @Valid
         DadosPessoaisDTO dadosPessoais,
         @Valid
-        EnderecoDTO endereco
+        EnderecoDTO endereco,
+
+        Boolean ativacaoAutomatica
 
 ) {
 }
