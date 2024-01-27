@@ -1,7 +1,7 @@
 package com.fase2.techchallenge.fiap.gestaonotificacao.service;
 
 import com.fase2.techchallenge.fiap.gestaonotificacao.controller.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.gestaonotificacao.dto.NotificacaoDTO;
+import com.fase2.techchallenge.fiap.gestaonotificacao.dto.NotificacaoRequestDTO;
 import com.fase2.techchallenge.fiap.gestaonotificacao.dto.NotificacaoResponseDTO;
 import com.fase2.techchallenge.fiap.gestaonotificacao.entity.Notificacao;
 import com.fase2.techchallenge.fiap.gestaonotificacao.repository.NotificacaoRepository;
@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NotificacaoService {
@@ -35,6 +37,12 @@ public class NotificacaoService {
         }
     }
 
+    public List<NotificacaoResponseDTO> findByIdVeiculo(Integer idVeiculo) {
+        List<Notificacao> notificacoes = notificacaoRepository.findByidVeiculo(idVeiculo);
+        return notificacoes.stream().map(this::toNotificacaoResponseDTO).toList();
+    }
+
+
     public void deleteById(Long id) {
         try {
             notificacaoRepository.deleteById(id);
@@ -43,20 +51,20 @@ public class NotificacaoService {
         }
     }
 
-    public NotificacaoResponseDTO save(NotificacaoDTO notificacaoDTO) {
-        Notificacao notificacao = toEntity(notificacaoDTO);
-        veiculoService.getVeiculoPorId(notificacaoDTO.idVeiculo());
+    public NotificacaoResponseDTO save(NotificacaoRequestDTO notificacaoRequestDTO) {
+        Notificacao notificacao = toEntity(notificacaoRequestDTO);
+        veiculoService.getVeiculoPorId(notificacaoRequestDTO.idVeiculo());
         notificacao = notificacaoRepository.save(notificacao);
         return toNotificacaoResponseDTO(notificacao);
     }
 
-    public NotificacaoResponseDTO update(Long id, NotificacaoDTO notificacaoDTO) {
+    public NotificacaoResponseDTO update(Long id, NotificacaoRequestDTO notificacaoRequestDTO) {
         try {
             Notificacao notificacao = notificacaoRepository.getReferenceById(id);
-            notificacao.setIdVeiculo(notificacaoDTO.idVeiculo());
-            notificacao.setDataHora(notificacaoDTO.dataHora());
-            notificacao.setConteudo(notificacaoDTO.conteudo());
-            notificacao.setSituacao(notificacaoDTO.situacao());
+            notificacao.setIdVeiculo(notificacaoRequestDTO.idVeiculo());
+            notificacao.setDataHora(notificacaoRequestDTO.dataHora());
+            notificacao.setConteudo(notificacaoRequestDTO.conteudo());
+            notificacao.setSituacao(notificacaoRequestDTO.situacao());
             notificacao = notificacaoRepository.save(notificacao);
             return toNotificacaoResponseDTO(notificacao);
         } catch (EntityNotFoundException e) {
@@ -64,12 +72,12 @@ public class NotificacaoService {
         }
     }
 
-    private Notificacao toEntity(NotificacaoDTO notificacaoDTO) {
-        return new Notificacao(notificacaoDTO.id(),
-                notificacaoDTO.idVeiculo(),
-                notificacaoDTO.dataHora(),
-                notificacaoDTO.conteudo(),
-                notificacaoDTO.situacao());
+    private Notificacao toEntity(NotificacaoRequestDTO notificacaoRequestDTO) {
+        return new Notificacao(notificacaoRequestDTO.id(),
+                notificacaoRequestDTO.idVeiculo(),
+                notificacaoRequestDTO.dataHora(),
+                notificacaoRequestDTO.conteudo(),
+                notificacaoRequestDTO.situacao());
     }
 
     private NotificacaoResponseDTO toNotificacaoResponseDTO(Notificacao notificacao) {

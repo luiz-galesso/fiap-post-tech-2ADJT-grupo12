@@ -4,11 +4,17 @@ import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.enumeration.Pagame
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "tb_pagamento")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pagamento {
     @Id
     @NotNull(message = "O id do pagamento é obrigatório")
@@ -41,93 +47,5 @@ public class Pagamento {
         this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;
         this.valor = valor;
         this.idEstacionamento = idEstacionamento;
-    }
-
-    public Pagamento() {
-
-    }
-
-    public Pagamento(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getIdVeiculo() {
-        return idVeiculo;
-    }
-
-    public void setIdVeiculo(Long idVeiculo) {
-        this.idVeiculo = idVeiculo;
-    }
-
-    public String getIdCondutor() {
-        return idCondutor;
-    }
-
-    public void setIdCondutor(String idCondutor) {
-        this.idCondutor = idCondutor;
-    }
-
-    public Long getIdMeioPagamentoCondutor() {
-        return idMeioPagamentoCondutor;
-    }
-
-    public void setIdMeioPagamentoCondutor(Long idMeioPagamentoCondutor) {
-        this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public Long getIdEstacionamento() {
-        return idEstacionamento;
-    }
-
-    public void setIdEstacionamento(Long idEstacionamento) {
-        this.idEstacionamento = idEstacionamento;
-    }
-
-    public PagamentoSituacao getPagamentoSituacao() {
-        return pagamentoSituacao;
-    }
-
-    public void setPagamentoSituacao(PagamentoSituacao pagamentoSituacao) {
-        this.pagamentoSituacao = pagamentoSituacao;
-    }
-
-    public Date getDataHoraPagamento() {
-        return dataHoraPagamento;
-    }
-
-    public void setDataHoraPagamento(Date dataHoraPagamento) {
-        this.dataHoraPagamento = dataHoraPagamento;
-    }
-
-    public String getMotivoEstorno() {
-        return motivoEstorno;
-    }
-
-    public void setMotivoEstorno(String motivoEstorno) {
-        this.motivoEstorno = motivoEstorno;
-    }
-
-    public Date getDataHoraEstorno() {
-        return dataHoraEstorno;
-    }
-
-    public void setDataHoraEstorno(Date dataHoraEstorno) {
-        this.dataHoraEstorno = dataHoraEstorno;
     }
 }

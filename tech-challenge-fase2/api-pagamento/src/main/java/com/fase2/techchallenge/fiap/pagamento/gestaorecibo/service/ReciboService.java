@@ -1,7 +1,6 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaorecibo.service;
 
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.EntityFoundException;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.Pagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.repository.PagamentoRepository;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.CondutorDTO;

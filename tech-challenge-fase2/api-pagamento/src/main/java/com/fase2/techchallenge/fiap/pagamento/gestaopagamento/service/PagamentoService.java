@@ -21,9 +21,7 @@ public class PagamentoService {
     public PagamentoService(PagamentoRepository pagamentoRepository, ReciboClient reciboClient) {
         this.pagamentoRepository = pagamentoRepository;
         this.reciboClient = reciboClient;
-
     }
-
 
     public RetornoPagamentoDTO gerarPagamento(EnvioPagamentoDTO envioPagamentoDTO) {
         RetornoPagamentoDTO retornoPagamentoDTO;
@@ -32,8 +30,6 @@ public class PagamentoService {
         if (realizaPagamento(pagamento)) {
             pagamento.setDataHoraPagamento(Date.from(Instant.now()));
             pagamento.setPagamentoSituacao(PagamentoSituacao.APROVADO);
-
-
         } else {
             pagamento.setPagamentoSituacao(PagamentoSituacao.RECUSADO);
         }
@@ -41,7 +37,7 @@ public class PagamentoService {
         pagamento = pagamentoRepository.save(pagamento);
 
         if (pagamento.getPagamentoSituacao() == PagamentoSituacao.APROVADO) {
-            RetornoSolicitacaoReciboDTO retornoSolicitacaoReciboDTO = reciboClient.solicitaRecibo(new SolicitacaReciboDTO(pagamento.getId()));
+            RetornoSolicitacaoReciboDTO retornoSolicitacaoReciboDTO = reciboClient.solicitaRecibo(new SolicitaReciboDTO(pagamento.getId()));
             retornoPagamentoDTO = toRetornoPagamentoDTO(pagamento, retornoSolicitacaoReciboDTO.idRecibo());
         } else {
             retornoPagamentoDTO = toRetornoPagamentoDTO(pagamento, null);
@@ -91,7 +87,7 @@ public class PagamentoService {
                 envioPagamentoDTO.idMeioPagamentoCondutor(),
                 envioPagamentoDTO.valor(),
                 envioPagamentoDTO.idEstacionamento()
-        );
+                );
     }
 
 

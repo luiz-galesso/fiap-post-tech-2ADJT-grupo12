@@ -1,6 +1,5 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception;
 
-import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.LogError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
