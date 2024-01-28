@@ -49,7 +49,7 @@ services:
     volumes:
       - tarifa-data:/var/lib/postgresql/data
 
-  mongodb:
+  estacionamento-db:
     image: mongo:latest
     container_name: estacionamento-db
     ports:
@@ -113,7 +113,8 @@ services:
     depends_on:
       - mongodb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mongodb://estacionamento-db:27017/
+      SPRING_MONGODB_URL: estacionamento-db
+      SPRING_MONGODB_PORT: 27017
       TARIFA_URL: http://api-tarifa:8080/api-tarifa/
       NOTIFICACAO_URL: http://api-notificacao:8080/api-notificacao/  
 
