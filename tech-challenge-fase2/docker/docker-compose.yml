@@ -113,9 +113,9 @@ services:
     depends_on:
       - mongodb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://notificacao-db:5432/notificacao-db
-      SPRING_DATASOURCE_USERNAME: notificacao
-      SPRING_DATASOURCE_PASSWORD: pass-notificacao
+      SPRING_DATASOURCE_URL: jdbc:mongodb://estacionamento-db:27017/
+      TARIFA_URL: http://api-tarifa:8080/api-tarifa/
+      NOTIFICACAO_URL: http://api-notificacao:8080/api-notificacao/  
 
   adminer:
     image: adminer

@@ -51,11 +51,9 @@ public class EstacionamentoService {
     @Scheduled(fixedDelay = 60000)
     public void NotificaAVencer()
     {
-        System.out.println("MOBRALITE");
         List<Estacionamento> estacionamentoList = estacionamentoRepository.findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimento(LocalDateTime.now().plusMinutes(5), LocalDateTime.now(), false );
         estacionamentoList.stream().forEach(estacionamento ->
             {   try {
-                System.out.println("MOBRALITE DENTRO");
                 notificacaoService.enviaNotificacao(estacionamento.getIdVeiculo(),"Seu tempo de estacionamento irá vencer em "
                         + estacionamento.getDataHoraVencimento());
                 atualizaNotificadoVencimento(estacionamento, true);

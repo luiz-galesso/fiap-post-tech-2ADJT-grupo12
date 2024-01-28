@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/parquimetro")
-@Tag(name = "Meios de Pagamento", description="Serviços para manipular meios de pagamento")
+@RequestMapping("/estacionamento")
+@Tag(name = "Estacionamento", description="Serviços para manipular os estacionamentos")
 public class EstacionamentoController {
 
     @Autowired
@@ -33,12 +33,12 @@ public class EstacionamentoController {
         return new ResponseEntity<>(estacionamentoService.inserir(estacionamentoRequestDTO), HttpStatus.OK);
     }
 
-    @GetMapping(path="/teste/{id}")
+    @GetMapping(path="/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {
         return new ResponseEntity<>(estacionamentoService.get(id), HttpStatus.OK);
     }
 
-    @GetMapping(path="/mobral")
+    @GetMapping
     public ResponseEntity<?> getParaVencer() {
         return new ResponseEntity<>(estacionamentoService.getParaVencerNaoNotificado(), HttpStatus.OK);
     }
