@@ -105,6 +105,18 @@ services:
       SPRING_DATASOURCE_USERNAME: notificacao
       SPRING_DATASOURCE_PASSWORD: pass-notificacao
 
+  api-estacionamento:
+    container_name: api-estacionamento
+    build: ../api-estacionamento/.
+    ports:
+      - "8085:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://notificacao-db:5432/notificacao-db
+      SPRING_DATASOURCE_USERNAME: notificacao
+      SPRING_DATASOURCE_PASSWORD: pass-notificacao
+
   adminer:
     image: adminer
     container_name: adminer

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notificoes")
+@RequestMapping("/notificacao")
 @Tag(name = "Notificacao", description = "Serviços para manipular as notificações")
 public class NotificacaoController {
 
@@ -62,6 +62,13 @@ public class NotificacaoController {
     @PutMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<NotificacaoResponseDTO> update(@PathVariable Long id, @RequestBody NotificacaoRequestDTO notificacaoRequestDTO) {
         NotificacaoResponseDTO notificacaoResponse = notificacaoService.update(id, notificacaoRequestDTO);
+        return ResponseEntity.ok(notificacaoResponse);
+    }
+
+    @Operation(summary = "Finaliza a notificação", description = "Serviço utilizado para finalizar a notificação.")
+    @PutMapping(value = "/finaliza-notificacao/{id}", produces = "application/json")
+    public ResponseEntity<NotificacaoResponseDTO> finalizaNotificacao(@PathVariable Long id, @RequestBody NotificacaoRequestDTO notificacaoRequestDTO) {
+        NotificacaoResponseDTO notificacaoResponse = notificacaoService.finaliza(id, notificacaoRequestDTO);
         return ResponseEntity.ok(notificacaoResponse);
     }
 }

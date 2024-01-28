@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.controller.exception;
+package com.fase2.techchallenge.fiap.estacionamento.exception;
 
 import java.time.Instant;
 
