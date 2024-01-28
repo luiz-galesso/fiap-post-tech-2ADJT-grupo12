@@ -64,7 +64,21 @@ public class NotificacaoService {
             notificacao.setIdVeiculo(notificacaoRequestDTO.idVeiculo());
             notificacao.setDataHora(notificacaoRequestDTO.dataHora());
             notificacao.setConteudo(notificacaoRequestDTO.conteudo());
-            notificacao.setSituacao(notificacaoRequestDTO.situacao());
+            notificacao.setSituacao("ENVIADA");
+            notificacao = notificacaoRepository.save(notificacao);
+            return toNotificacaoResponseDTO(notificacao);
+        } catch (EntityNotFoundException e) {
+            throw new ControllerNotFoundException("Notificação não localizada");
+        }
+    }
+
+    public NotificacaoResponseDTO finaliza(Long id, NotificacaoRequestDTO notificacaoRequestDTO) {
+        try {
+            Notificacao notificacao = notificacaoRepository.getReferenceById(id);
+            notificacao.setIdVeiculo(notificacaoRequestDTO.idVeiculo());
+            notificacao.setDataHora(notificacaoRequestDTO.dataHora());
+            notificacao.setConteudo(notificacaoRequestDTO.conteudo());
+            notificacao.setSituacao("FINALIZADA");
             notificacao = notificacaoRepository.save(notificacao);
             return toNotificacaoResponseDTO(notificacao);
         } catch (EntityNotFoundException e) {
@@ -77,7 +91,7 @@ public class NotificacaoService {
                 notificacaoRequestDTO.idVeiculo(),
                 notificacaoRequestDTO.dataHora(),
                 notificacaoRequestDTO.conteudo(),
-                notificacaoRequestDTO.situacao());
+                "ABERTA");
     }
 
     private NotificacaoResponseDTO toNotificacaoResponseDTO(Notificacao notificacao) {

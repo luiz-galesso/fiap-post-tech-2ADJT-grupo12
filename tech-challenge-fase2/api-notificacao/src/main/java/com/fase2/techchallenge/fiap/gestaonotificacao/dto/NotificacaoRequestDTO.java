@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public record NotificacaoRequestDTO(Long id,
                                     Integer idVeiculo,
                                     LocalDateTime dataHora,
-                                    String conteudo,
-                                    String situacao
+                                    String conteudo
 ) {
 }
