@@ -125,6 +125,11 @@ public class ReciboService {
 
     }
 
+    public List<Recibo> listarRecibos(String idCondutor) {
+        return reciboRepository.findByDadosCondutor_email(idCondutor);
+    }
+
+
     public Recibo cancelarRecibo(Long idPagamento) {
         try {
 
