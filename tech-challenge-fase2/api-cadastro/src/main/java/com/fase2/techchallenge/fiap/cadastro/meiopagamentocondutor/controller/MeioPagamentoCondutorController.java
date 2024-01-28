@@ -49,4 +49,12 @@ public class MeioPagamentoCondutorController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Consulta meio pagamento pelo id"
+    , description = "Serviço utilizado para consultar um meio de pagamento de condutor pelo id.")
+    @GetMapping("/{id}")
+    public ResponseEntity<MeioPagamentoCondutorResponseDTO> findById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(meioPagamentoCondutorService.findById(id));
+    }
+
+
 }

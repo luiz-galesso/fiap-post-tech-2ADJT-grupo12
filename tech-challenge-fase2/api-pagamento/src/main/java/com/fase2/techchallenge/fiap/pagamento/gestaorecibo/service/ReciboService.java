@@ -4,6 +4,7 @@ import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.excepti
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.Pagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.repository.PagamentoRepository;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.CondutorDTO;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.MeioPagamentoCondutorDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.SolicitacaoReciboDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.VeiculoDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosCondutor;
@@ -76,6 +77,12 @@ public class ReciboService {
             if (recibo.getDadosVeiculo() == null) {
                 VeiculoDTO veiculoDTO = cadastroClient.getVeiculo(pagamento.getIdVeiculo());
                 recibo.setDadosVeiculo(new DadosVeiculo(veiculoDTO.placa(), veiculoDTO.nome()));
+            }
+            if (recibo.getDadosPagamento() != null){
+                if (recibo.getDadosPagamento().getMeioPagamento() == null){
+                    MeioPagamentoCondutorDTO meioPagamentoCondutorDTO = cadastroClient.getMeioPagamentoCondutor(pagamento.getIdMeioPagamentoCondutor());
+                    recibo.getDadosPagamento().setMeioPagamento(meioPagamentoCondutorDTO.tipoMeioPagamento());
+                }
             }
 
 

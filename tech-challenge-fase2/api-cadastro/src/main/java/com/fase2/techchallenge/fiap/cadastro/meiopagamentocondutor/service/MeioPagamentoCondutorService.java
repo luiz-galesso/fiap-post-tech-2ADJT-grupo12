@@ -3,9 +3,11 @@ package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.service;
 import com.fase2.techchallenge.fiap.cadastro.condutor.service.CondutorService;
 import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorRequestDTO;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorResponseDTO;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorUpdateDTO;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity.MeioPagamentoCondutor;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.repository.MeioPagamentoCondutorRepository;
+import io.micrometer.observation.ObservationFilter;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,5 +81,15 @@ public class MeioPagamentoCondutorService {
                 condutorService.findById(meioPagamentoCondutorRequestDTO.emailCondutor())
         );
     }
+
+    public MeioPagamentoCondutorResponseDTO findById(Long id) {
+        try {
+
+            return meioPagamentoCondutorRepository.findMeioPagamentoCondutorById(id).toMeioPagamentoCondutorResponseDTO();
+        } catch (RuntimeException e) {
+            throw new ControllerNotFoundException("Meio de Pagamento do Condutor não Encontrado");
+        }
+    }
+
 
 }
