@@ -85,7 +85,20 @@ public class ReciboService {
 
             if (recibo.getDadosEstacionamento() == null) {
                 EstacionamentoDTO estacionamentoDTO = estacionamentoClient.getEstacionamento(pagamento.getIdEstacionamento());
-                recibo.setDadosEstacionamento(new DadosEstacionamento(estacionamentoDTO.tipo(), Date.from(estacionamentoDTO.dataHoraInicio().toInstant(ZoneOffset.UTC)), Date.from(estacionamentoDTO.dataHoraTermino().toInstant(ZoneOffset.UTC))));
+                Date dataHoraInicio;
+                Date dataHoraTermino;
+                if (estacionamentoDTO.dataHoraInicio() != null){
+                    dataHoraInicio = Date.from(estacionamentoDTO.dataHoraInicio().toInstant(ZoneOffset.UTC));
+                } else {
+                    dataHoraInicio = null;
+                }
+                if (estacionamentoDTO.dataHoraTermino() != null){
+                    dataHoraTermino = Date.from(estacionamentoDTO.dataHoraTermino().toInstant(ZoneOffset.UTC));
+                } else {
+                    dataHoraTermino = null;
+                }
+
+                recibo.setDadosEstacionamento(new DadosEstacionamento(estacionamentoDTO.tipo(),dataHoraInicio , dataHoraTermino));
             }
 
 
