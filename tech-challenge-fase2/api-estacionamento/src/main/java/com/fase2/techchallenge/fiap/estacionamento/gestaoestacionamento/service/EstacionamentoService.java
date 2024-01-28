@@ -39,6 +39,11 @@ public class EstacionamentoService {
         Estacionamento estacionamentoLocal = estacionamentoRepository.save(estacionamento);
     }
 
+    public void atualizaDataHoraVencimento(Estacionamento estacionamento, LocalDateTime dataHoraVencimento){
+        estacionamento.setDataHoraVencimento(dataHoraVencimento);
+        Estacionamento estacionamentoLocal = estacionamentoRepository.save(estacionamento);
+    }
+
     public Estacionamento get(String id){
         return estacionamentoRepository.findById(id).get();
     }
@@ -51,7 +56,9 @@ public class EstacionamentoService {
     @Scheduled(fixedDelay = 60000)
     public void NotificaAVencer()
     {
-        List<Estacionamento> estacionamentoList = estacionamentoRepository.findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimento(LocalDateTime.now().plusMinutes(5), LocalDateTime.now(), false );
+        List<Estacionamento> estacionamentoList =
+                estacionamentoRepository.findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimentoAndRenovacaoAutomatica
+                    (LocalDateTime.now().plusMinutes(5), LocalDateTime.now(), false , false);
         estacionamentoList.stream().forEach(estacionamento ->
             {   try {
                 notificacaoService.enviaNotificacao(estacionamento.getIdVeiculo(),"Seu tempo de estacionamento irá vencer em "
@@ -60,6 +67,25 @@ public class EstacionamentoService {
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
+        });
+    }
+
+    @Scheduled(fixedDelay = 60000)
+    public void RenovaAuto()
+    {
+        List<Estacionamento> estacionamentoList =
+                estacionamentoRepository.findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimentoAndRenovacaoAutomatica
+                        (LocalDateTime.now().plusMinutes(1), LocalDateTime.now().plusMinutes(10), false , true);
+        estacionamentoList.stream().forEach(estacionamento ->
+        {   try {
+            LocalDateTime novaDataHoraVencimento = estacionamento.getDataHoraVencimento().plusHours(1);
+            atualizaDataHoraVencimento(estacionamento, novaDataHoraVencimento);
+            notificacaoService.enviaNotificacao(estacionamento.getIdVeiculo(),"Seu tempo de estacionamento foi renovado automaticamente em 1 hora "
+                    + novaDataHoraVencimento);
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         });
     }
 
