@@ -72,12 +72,9 @@ public class NotificacaoService {
         }
     }
 
-    public NotificacaoResponseDTO finaliza(Long id, NotificacaoRequestDTO notificacaoRequestDTO) {
+    public NotificacaoResponseDTO finaliza(Long id) {
         try {
             Notificacao notificacao = notificacaoRepository.getReferenceById(id);
-            notificacao.setIdVeiculo(notificacaoRequestDTO.idVeiculo());
-            notificacao.setDataHora(notificacaoRequestDTO.dataHora());
-            notificacao.setConteudo(notificacaoRequestDTO.conteudo());
             notificacao.setSituacao("FINALIZADA");
             notificacao = notificacaoRepository.save(notificacao);
             return toNotificacaoResponseDTO(notificacao);
