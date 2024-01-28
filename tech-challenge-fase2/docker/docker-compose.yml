@@ -111,7 +111,7 @@ services:
     ports:
       - "8085:8080"
     depends_on:
-      - mongodb
+      - estacionamento-db
     environment:
       SPRING_MONGODB_URL: estacionamento-db
       SPRING_MONGODB_PORT: 27017
