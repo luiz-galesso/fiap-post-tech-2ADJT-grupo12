@@ -10,6 +10,10 @@ import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Endereco;
 import com.fase2.techchallenge.fiap.cadastro.condutor.repository.CondutorRepository;
 import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.cadastro.exception.EntityFoundException;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorRequestDTO;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity.MeioPagamentoCondutor;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.repository.MeioPagamentoCondutorRepository;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.service.MeioPagamentoCondutorService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +27,14 @@ public class CondutorService {
     @Autowired
     private CondutorRepository condutorRepository;
 
+    @Autowired
+    private MeioPagamentoCondutorRepository meioPagamentoCondutorRepository;
+
     public Condutor save(CondutorDTO condutorDTO) {
         Condutor condutor = toEntity(condutorDTO);
         condutorExistente(condutor);
         condutor = condutorRepository.save(condutor);
+        MeioPagamentoCondutor meioPagamento = meioPagamentoCondutorRepository.save(new MeioPagamentoCondutor(null, "PIX", null,null ,condutor, true));
         return condutor;
     }
 

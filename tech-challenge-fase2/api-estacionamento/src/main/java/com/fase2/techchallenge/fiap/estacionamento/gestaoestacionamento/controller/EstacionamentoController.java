@@ -21,18 +21,13 @@ public class EstacionamentoController {
     EstacionamentoService estacionamentoService;
 
     @PostMapping
-    public ResponseEntity<?> iniciaParquimetro2(@RequestBody EstacionamentoRequestDTO estacionamentoRequestDTO){
+    public ResponseEntity<?> insere(@RequestBody EstacionamentoRequestDTO estacionamentoRequestDTO){
         return new ResponseEntity<>(estacionamentoService.inserir(estacionamentoRequestDTO), HttpStatus.OK);
     }
 
     @GetMapping(path="/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {
         return new ResponseEntity<>(estacionamentoService.get(id), HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<?> getParaVencer() {
-        return new ResponseEntity<>(estacionamentoService.getParaVencerNaoNotificado(), HttpStatus.OK);
     }
 
 }

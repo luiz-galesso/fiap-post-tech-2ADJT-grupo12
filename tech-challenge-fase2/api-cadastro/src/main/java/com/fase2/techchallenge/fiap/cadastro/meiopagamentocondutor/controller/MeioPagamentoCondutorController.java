@@ -56,5 +56,10 @@ public class MeioPagamentoCondutorController {
         return ResponseEntity.ok(meioPagamentoCondutorService.findById(id));
     }
 
-
+    @Operation(summary = "Favorita um meio de pagamento pelo id"
+            , description = "Serviço utilizado para consultar um meio de pagamento de condutor pelo id.")
+    @PutMapping("/{id}/favorito")
+    public ResponseEntity<MeioPagamentoCondutorResponseDTO> favorita(@PathVariable("id") Long id){
+        return ResponseEntity.ok(meioPagamentoCondutorService.favorita(id).toMeioPagamentoCondutorResponseDTO());
+    }
 }

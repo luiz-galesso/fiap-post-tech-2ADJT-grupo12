@@ -71,14 +71,25 @@ public class MeioPagamentoCondutorService {
         }
     }
 
-
+    public MeioPagamentoCondutor favorita(Long id) {
+        MeioPagamentoCondutor meioPagamentoCondutorFavorito = meioPagamentoCondutorRepository.getReferenceById(id);
+        List<MeioPagamentoCondutor> meioPagamentoCondutorList = meioPagamentoCondutorRepository.findByCondutor(condutorService.findById(meioPagamentoCondutorFavorito.getCondutor().getEmail()));
+        meioPagamentoCondutorList.stream().forEach(meioPagamento ->
+            {
+                meioPagamento.setFavorito(false);
+                meioPagamentoCondutorRepository.save(meioPagamento);
+            });
+        meioPagamentoCondutorFavorito.setFavorito(true);
+        return meioPagamentoCondutorRepository.save(meioPagamentoCondutorFavorito);
+    }
     public MeioPagamentoCondutor toEntity(MeioPagamentoCondutorRequestDTO meioPagamentoCondutorRequestDTO) {
         return new MeioPagamentoCondutor(
                 null,
                 meioPagamentoCondutorRequestDTO.tipoMeioPagamento(),
                 meioPagamentoCondutorRequestDTO.numeroCartao(),
                 meioPagamentoCondutorRequestDTO.validadeCartao(),
-                condutorService.findById(meioPagamentoCondutorRequestDTO.emailCondutor())
+                condutorService.findById(meioPagamentoCondutorRequestDTO.emailCondutor()),
+                false
         );
     }
 

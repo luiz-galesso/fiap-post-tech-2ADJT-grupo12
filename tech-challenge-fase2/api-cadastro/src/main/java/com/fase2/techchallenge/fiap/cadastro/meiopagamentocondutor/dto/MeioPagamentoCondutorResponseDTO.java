@@ -10,7 +10,9 @@ public record MeioPagamentoCondutorResponseDTO(
 
         Date validadeCartao,
 
-        String emailCondutor
+        String emailCondutor,
+
+        boolean favorito
 
 ) {
 }

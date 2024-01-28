@@ -20,6 +20,9 @@ services:
       POSTGRES_USER: pagamento
       POSTGRES_PASSWORD: pass-pagamento  
       POSTGRES_DB: pagamento-db
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
+      RECIBO_URL: http://api-pagamento:8080/api-pagamento/
+      ESTACIONAMENTO_URL: http://api-estacionamento:8080/api-estacionamento/
     ports:
       - "5433:5432"
     volumes:
@@ -68,6 +71,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://pagamento-db:5432/pagamento-db
       SPRING_DATASOURCE_USERNAME: pagamento
       SPRING_DATASOURCE_PASSWORD: pass-pagamento
+      ESTACIONAMENTO_URL: http://api-estacionamento:8080/api-estacionamento/
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/  
+      PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/
 
   api-tarifa:
     container_name: api-tarifa
@@ -92,6 +98,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://cadastro-db:5432/cadastro-db
       SPRING_DATASOURCE_USERNAME: cadastro
       SPRING_DATASOURCE_PASSWORD: pass-cadastro
+      PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/      
 
   api-notificacao:
     container_name: api-notificacao
@@ -104,6 +111,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://notificacao-db:5432/notificacao-db
       SPRING_DATASOURCE_USERNAME: notificacao
       SPRING_DATASOURCE_PASSWORD: pass-notificacao
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
 
   api-estacionamento:
     container_name: api-estacionamento
@@ -111,12 +119,13 @@ services:
     ports:
       - "8085:8080"
     depends_on:
-      - mongodb
+      - estacionamento-db
     environment:
       SPRING_MONGODB_URL: estacionamento-db
       SPRING_MONGODB_PORT: 27017
       TARIFA_URL: http://api-tarifa:8080/api-tarifa/
       NOTIFICACAO_URL: http://api-notificacao:8080/api-notificacao/  
+      PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/
 
   adminer:
     image: adminer

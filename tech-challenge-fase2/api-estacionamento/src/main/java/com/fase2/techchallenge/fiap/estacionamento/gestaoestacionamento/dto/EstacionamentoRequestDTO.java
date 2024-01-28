@@ -24,9 +24,6 @@ public class EstacionamentoRequestDTO {
 
     private String tipo;
 
-    private String situacao;
-
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime dataHoraInicio;
 
     private LocalDateTime  dataHoraVencimento;
@@ -42,7 +39,7 @@ public class EstacionamentoRequestDTO {
                 this.idMeioPagamento,
                 null,
                 this.tipo,
-                this.situacao,
+                "ATIVO",
                 this.dataHoraInicio,
                 this.dataHoraVencimento,
                 null,

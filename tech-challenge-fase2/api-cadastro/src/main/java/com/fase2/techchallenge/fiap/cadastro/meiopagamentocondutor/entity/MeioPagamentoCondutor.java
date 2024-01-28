@@ -26,10 +26,8 @@ public class MeioPagamentoCondutor {
     @NotNull(message = "O Tipo de meio de pagamento é obrigatório")
     private String tipoMeioPagamento;
 
-    @NotNull(message = "O número do cartão é obrigatório")
     private Long numeroCartao;
 
-    @NotNull(message = "A validade do cartão é obrigatória")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validadeCartao;
@@ -37,13 +35,16 @@ public class MeioPagamentoCondutor {
     @ManyToOne
     private Condutor condutor;
 
+    private boolean favorito;
+
     public MeioPagamentoCondutorResponseDTO toMeioPagamentoCondutorResponseDTO(){
         return new MeioPagamentoCondutorResponseDTO(
                 this.id,
                 this.tipoMeioPagamento,
                 this.numeroCartao,
                 this.validadeCartao,
-                this.condutor.getEmail()
+                this.condutor.getEmail(),
+                this.favorito
         );
     }
 }

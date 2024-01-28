@@ -12,11 +12,12 @@ import java.util.List;
 @Repository
 public interface EstacionamentoRepository extends MongoRepository<Estacionamento, String> {
 
-    @Query("{  $and: [{'dataHoraVencimento' : {  $lte: ?0, $gte: ?1}}, { 'notificadoVencimento' : { $eq: ?2 }}, { 'renovacaoAutomatica' : { $eq: ?3 }}]}")
-    List<Estacionamento> findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimentoAndRenovacaoAutomatica
-            (LocalDateTime dataHoraLTE, LocalDateTime dataHoraGTE, Boolean notificacaoVencimento, Boolean renovacaoAutomatica);
+    @Query("{  $and: [{'dataHoraVencimento' : {  $lte: ?0, $gte: ?1}}, { 'notificadoVencimento' : { $eq: ?2 }}, { 'renovacaoAutomatica' : { $eq: ?3 }}, { 'situacao' : { $eq: ?3 }}]}")
+    List<Estacionamento> findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimentoAndRenovacaoAutomaticaAndSituacao
+            (LocalDateTime dataHoraLTE, LocalDateTime dataHoraGTE, Boolean notificacaoVencimento, Boolean renovacaoAutomatica, String situacao);
 
-    @Query("{  $and: [{'dataHoraVencimento' : {  $lte: ?0, $gte: ?1}}, { 'notificadoVencimento' : { $eq: ?2 }}]}")
-    List<Estacionamento> findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimento
-            (LocalDateTime dataHoraLTE, LocalDateTime dataHoraGTE, Boolean notificacaoVencimento);
+    @Query("{  $and: [{'dataHoraVencimento' : { $lte: ?0}}, { 'renovacaoAutomatica' : { $eq: ?1 }}, { 'tipo' : { $eq: ?2 }}, { 'situacao' : { $eq: ?3 }}]}")
+    List<Estacionamento> findEstacionamentoBydataHoraVencimentoLowerThanAndRenovacaoAutomaticaAndTipoAndSituacao
+            (LocalDateTime dataHoraLTE, Boolean renovacaoAutomatica, String tipo, String situacao);
+
 }
