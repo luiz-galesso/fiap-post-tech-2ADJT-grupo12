@@ -30,7 +30,7 @@ public class Pagamento {
     @NotNull(message = "O valor é obrigatório")
     @DecimalMin(value = "0", inclusive = false, message = "O valor deve ser maior do que zero")
     private Double valor;
-    private Long idEstacionamento;
+    private String idEstacionamento;
     @NotNull(message = "A situação do Pagamento é obrigatória")
     private PagamentoSituacao pagamentoSituacao;
     @NotNull(message = "A data do Pagamento é obrigatória")
@@ -41,7 +41,7 @@ public class Pagamento {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraEstorno;
 
-    public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, Long idEstacionamento) {
+    public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, String idEstacionamento) {
         this.idVeiculo = idVeiculo;
         this.idCondutor = idCondutor;
         this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;

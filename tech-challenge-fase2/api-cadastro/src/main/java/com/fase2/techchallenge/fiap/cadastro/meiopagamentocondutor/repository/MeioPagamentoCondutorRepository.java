@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface MeioPagamentoCondutorRepository extends JpaRepository<MeioPagamentoCondutor, Long> {
     List<MeioPagamentoCondutor> findByCondutor(Condutor condutor);
+    MeioPagamentoCondutor findMeioPagamentoCondutorById(Long id);
 }
