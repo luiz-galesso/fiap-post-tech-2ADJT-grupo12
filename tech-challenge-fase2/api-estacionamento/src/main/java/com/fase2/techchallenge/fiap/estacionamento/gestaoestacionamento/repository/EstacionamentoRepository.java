@@ -12,6 +12,10 @@ import java.util.List;
 @Repository
 public interface EstacionamentoRepository extends MongoRepository<Estacionamento, String> {
 
+    @Query("{  $and: [{'dataHoraVencimento' : {  $lte: ?0, $gte: ?1}}, { 'notificadoVencimento' : { $eq: ?2 }}, { 'renovacaoAutomatica' : { $eq: ?3 }}]}")
+    List<Estacionamento> findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimentoAndRenovacaoAutomatica
+            (LocalDateTime dataHoraLTE, LocalDateTime dataHoraGTE, Boolean notificacaoVencimento, Boolean renovacaoAutomatica);
+
     @Query("{  $and: [{'dataHoraVencimento' : {  $lte: ?0, $gte: ?1}}, { 'notificadoVencimento' : { $eq: ?2 }}]}")
     List<Estacionamento> findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimento
             (LocalDateTime dataHoraLTE, LocalDateTime dataHoraGTE, Boolean notificacaoVencimento);

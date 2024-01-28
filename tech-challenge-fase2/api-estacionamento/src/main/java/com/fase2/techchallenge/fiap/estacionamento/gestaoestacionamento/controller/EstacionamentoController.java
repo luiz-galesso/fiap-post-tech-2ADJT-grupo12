@@ -18,17 +18,9 @@ import org.springframework.web.bind.annotation.*;
 public class EstacionamentoController {
 
     @Autowired
-    TarifaService tarifaService;
-
-    @Autowired
     EstacionamentoService estacionamentoService;
 
-    @PostMapping(path="/inicializacao")
-    public TarifaDTO iniciaParquimetro(){
-        return tarifaService.getTarifa();
-    }
-
-    @PostMapping(path="/inicializacao2")
+    @PostMapping
     public ResponseEntity<?> iniciaParquimetro2(@RequestBody EstacionamentoRequestDTO estacionamentoRequestDTO){
         return new ResponseEntity<>(estacionamentoService.inserir(estacionamentoRequestDTO), HttpStatus.OK);
     }
@@ -41,25 +33,6 @@ public class EstacionamentoController {
     @GetMapping
     public ResponseEntity<?> getParaVencer() {
         return new ResponseEntity<>(estacionamentoService.getParaVencerNaoNotificado(), HttpStatus.OK);
-    }
-    @GetMapping
-    public TarifaDTO update() {
-        return tarifaService.getTarifa();
-
-
-
-
-       /*TarifaService tarifaService = ServiceGenerator.createService(TarifaService.class);
-        Call<Object> callSync = tarifaService.getTarifa();
-
-        try {
-            Response<Object> response = callSync.execute();
-            Object tarifa = response.body();
-            System.out.println(tarifa.toString());
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }*/
-
     }
 
 }
