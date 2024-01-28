@@ -30,7 +30,7 @@ public class PagamentoController {
     }
 
     @Operation(summary = "Estornar um Pagamento"
-            , description = "Serviço utilizado para atualizar um condutor.")
+            , description = "Serviço utilizado para estornar um pagamento.")
     @PutMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<RetornoPagamentoDTO> estornarPagamento(@PathVariable Long id, @RequestBody EstornarPagamentoDTO estornarPagamentoDTO) {
         RetornoPagamentoDTO retornoPagamentoDTO = pagamentoService.estornarPagamento(id, estornarPagamentoDTO);

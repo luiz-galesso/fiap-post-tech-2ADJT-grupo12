@@ -2,7 +2,7 @@ package com.fase2.techchallenge.fiap.pagamento.gestaopagamento.service;
 
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.EntityFoundException;
-import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.dto.SolicitacaoReciboDTO;
+import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.dto.MeioPagamentoDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.MeioPagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.repository.MeioPagamentoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,18 +18,18 @@ public class MeioPagamentoService {
     @Autowired
     private MeioPagamentoRepository meioPagamentoRepository;
 
-    public SolicitacaoReciboDTO save(SolicitacaoReciboDTO solicitacaoReciboDTO) {
-        MeioPagamento meioPagamento = toEntity(solicitacaoReciboDTO);
+    public MeioPagamentoDTO save(MeioPagamentoDTO meioPagamentoDTO) {
+        MeioPagamento meioPagamento = toEntity(meioPagamentoDTO);
         meioPagamentoExistente(meioPagamento);
         meioPagamento = meioPagamentoRepository.save(meioPagamento);
         return toMeioPagamentoDTO(meioPagamento);
     }
 
-    public SolicitacaoReciboDTO update(String id, SolicitacaoReciboDTO solicitacaoReciboDTO) {
+    public MeioPagamentoDTO update(String id, MeioPagamentoDTO meioPagamentoDTO) {
         try {
             MeioPagamento meioPagamento = meioPagamentoRepository.getReferenceById(id);
-            meioPagamento.setDescricao(solicitacaoReciboDTO.descricao());
-            meioPagamento.setSituacao(solicitacaoReciboDTO.situacao());
+            meioPagamento.setDescricao(meioPagamentoDTO.descricao());
+            meioPagamento.setSituacao(meioPagamentoDTO.situacao());
             meioPagamento = meioPagamentoRepository.save(meioPagamento);
 
             return toMeioPagamentoDTO(meioPagamento);
@@ -47,7 +47,7 @@ public class MeioPagamentoService {
         }
     }
 
-    public SolicitacaoReciboDTO findById(String id) {
+    public MeioPagamentoDTO findById(String id) {
         try {
             return toMeioPagamentoDTO(meioPagamentoRepository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Meio de pagamento não localizado")));
         } catch (EntityNotFoundException e) {
@@ -71,16 +71,16 @@ public class MeioPagamentoService {
         }
     }
 
-    private MeioPagamento toEntity(SolicitacaoReciboDTO solicitacaoReciboDTO) {
+    private MeioPagamento toEntity(MeioPagamentoDTO meioPagamentoDTO) {
         return new MeioPagamento(
-                solicitacaoReciboDTO.id(),
-                solicitacaoReciboDTO.descricao(),
-                solicitacaoReciboDTO.situacao()
+                meioPagamentoDTO.id(),
+                meioPagamentoDTO.descricao(),
+                meioPagamentoDTO.situacao()
         );
     }
 
-    private SolicitacaoReciboDTO toMeioPagamentoDTO(MeioPagamento meioPagamento) {
-        return new SolicitacaoReciboDTO(
+    private MeioPagamentoDTO toMeioPagamentoDTO(MeioPagamento meioPagamento) {
+        return new MeioPagamentoDTO(
                 meioPagamento.getId(),
                 meioPagamento.getDescricao(),
                 meioPagamento.getSituacao()
