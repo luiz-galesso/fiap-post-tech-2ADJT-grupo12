@@ -24,13 +24,17 @@ public class EstacionamentoService {
 
     @Autowired
     TarifaService tarifaService;
+
+    @Autowired
+    NotificacaoService notificacaoService;
+
     public Estacionamento inserir(EstacionamentoRequestDTO estacionamentoRequestDTO){
         Estacionamento estacionamento = estacionamentoRequestDTO.toDocument();
         estacionamento.setValorTarifa(tarifaService.getTarifa().valor());
         return estacionamentoRepository.save(estacionamento);
     }
 
-    public void atualizaNotifidoVencimento(Estacionamento estacionamento, boolean notificadoVencimento){
+    public void atualizaNotificadoVencimento(Estacionamento estacionamento, boolean notificadoVencimento){
         estacionamento.setNotificadoVencimento(notificadoVencimento);
         Estacionamento estacionamentoLocal = estacionamentoRepository.save(estacionamento);
     }
@@ -47,10 +51,18 @@ public class EstacionamentoService {
     @Scheduled(fixedDelay = 60000)
     public void NotificaAVencer()
     {
+        System.out.println("MOBRALITE");
         List<Estacionamento> estacionamentoList = estacionamentoRepository.findEstacionamentoBydataHoraVencimentoBetweenAndNotificadoVencimento(LocalDateTime.now().plusMinutes(5), LocalDateTime.now(), false );
-        /*AQUI ELE VAI CHAMAR O SERVICO DE NOTIFICAR */
-        estacionamentoList.stream().forEach(estacionamento -> atualizaNotifidoVencimento(estacionamento,true));
-
+        estacionamentoList.stream().forEach(estacionamento ->
+            {   try {
+                System.out.println("MOBRALITE DENTRO");
+                notificacaoService.enviaNotificacao(estacionamento.getIdVeiculo(),"Seu tempo de estacionamento irá vencer em "
+                        + estacionamento.getDataHoraVencimento());
+                atualizaNotificadoVencimento(estacionamento, true);
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
 

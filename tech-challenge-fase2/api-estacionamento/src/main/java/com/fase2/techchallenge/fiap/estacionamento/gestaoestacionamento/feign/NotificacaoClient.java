@@ -1,14 +1,14 @@
 package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.feign;
 
-import com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.dto.TarifaDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.dto.NotificacaoRequestDTO;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name = "tarifa", url = "${feign.tarifa.url}")
-public interface TarifaClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/tarifa/{id}")
-    TarifaDTO getTarifa(@PathVariable(value = "id") String id);
+@FeignClient(name = "notificacao", url = "${feign.notificacao.url}")
+public interface NotificacaoClient {
+    @RequestMapping(method = RequestMethod.POST, value = "/notificacao")
+    void postNotificacao(@RequestBody NotificacaoRequestDTO notificaoRequestDTO);
 
 }
