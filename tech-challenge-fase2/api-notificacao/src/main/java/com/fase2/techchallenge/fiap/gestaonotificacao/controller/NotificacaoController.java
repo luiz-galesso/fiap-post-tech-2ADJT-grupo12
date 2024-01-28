@@ -64,4 +64,11 @@ public class NotificacaoController {
         NotificacaoResponseDTO notificacaoResponse = notificacaoService.update(id, notificacaoRequestDTO);
         return ResponseEntity.ok(notificacaoResponse);
     }
+
+    @Operation(summary = "Finaliza a notificação", description = "Serviço utilizado para finalizar a notificação.")
+    @PutMapping(value = "/finaliza-notificacao/{id}", produces = "application/json")
+    public ResponseEntity<NotificacaoResponseDTO> finalizaNotificacao(@PathVariable Long id, @RequestBody NotificacaoRequestDTO notificacaoRequestDTO) {
+        NotificacaoResponseDTO notificacaoResponse = notificacaoService.finaliza(id, notificacaoRequestDTO);
+        return ResponseEntity.ok(notificacaoResponse);
+    }
 }
