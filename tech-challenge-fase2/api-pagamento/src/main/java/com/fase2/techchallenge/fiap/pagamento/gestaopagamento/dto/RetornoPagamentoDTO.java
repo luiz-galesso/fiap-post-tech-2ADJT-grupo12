@@ -13,7 +13,7 @@ public record RetornoPagamentoDTO(
         String idCondutor,
         Long idMeioPagamentoCondutor,
         Double valor,
-        Long idEstacionamento,
+        String idEstacionamento,
         Long idRecibo,
         String motivoEstorno,
         Date dataHoraEstorno
