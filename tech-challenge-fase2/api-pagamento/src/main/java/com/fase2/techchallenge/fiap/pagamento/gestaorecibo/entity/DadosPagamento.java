@@ -12,7 +12,7 @@ public class DadosPagamento {
     @NotNull(message = "O código do pagamento do qual o recibo é referente, é obrigatório.")
     private Long idPagamento;
     private Double valor;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraPagamento;
     private String meioPagamento;
 

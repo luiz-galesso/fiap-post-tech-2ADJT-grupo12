@@ -1,17 +1,18 @@
 package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.service;
 
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.EntityFoundException;
-
 import com.fase2.techchallenge.fiap.cadastro.condutor.service.CondutorService;
-import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorDTO;
+import com.fase2.techchallenge.fiap.cadastro.exception.ControllerNotFoundException;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorRequestDTO;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorResponseDTO;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorUpdateDTO;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity.MeioPagamentoCondutor;
 import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.repository.MeioPagamentoCondutorRepository;
+import io.micrometer.observation.ObservationFilter;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MeioPagamentoCondutorService {
@@ -22,71 +23,84 @@ public class MeioPagamentoCondutorService {
     @Autowired
     private CondutorService condutorService;
 
-    public MeioPagamentoCondutorDTO save(MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
-        MeioPagamentoCondutor meioPagamentoCondutor = toEntity(meioPagamentoCondutorDTO);
-        condutorNaoCadastrado(meioPagamentoCondutorDTO);
-        metodoJaCadastrado(meioPagamentoCondutor.getEmailCondutor());
+    @Autowired
+    private MeioPagamentoService meioPagamentoService;
+
+    public MeioPagamentoCondutor save(MeioPagamentoCondutorRequestDTO meioPagamentoCondutorRequestDTO) {
+        MeioPagamentoCondutor meioPagamentoCondutor = toEntity(meioPagamentoCondutorRequestDTO);
+        meioPagamentoService.findByIdMeioPagamento(meioPagamentoCondutorRequestDTO.tipoMeioPagamento());
+        condutorNaoCadastrado(meioPagamentoCondutorRequestDTO.emailCondutor());
         meioPagamentoCondutor = meioPagamentoCondutorRepository.save(meioPagamentoCondutor);
-        return toMeioPagamentoDTO(meioPagamentoCondutor);
+        return meioPagamentoCondutor;
     }
 
-
-    public MeioPagamentoCondutorDTO update(String id, MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
+    public MeioPagamentoCondutor update(Long id, MeioPagamentoCondutorUpdateDTO meioPagamentoCondutorUpdateDTO) {
         try {
-            MeioPagamentoCondutor meioPagamentoCondutor = meioPagamentoCondutorRepository.findByEmailCondutor(id);
-            condutorNaoExistente(meioPagamentoCondutor);
-            meioPagamentoCondutor.setMeioPagamentoFavorito(meioPagamentoCondutorDTO.meioPagamento());
-            meioPagamentoCondutor = meioPagamentoCondutorRepository.save(meioPagamentoCondutor);
-            return toMeioPagamentoDTO(meioPagamentoCondutor);
+            MeioPagamentoCondutor meioPagamentoCondutor = meioPagamentoCondutorRepository.getReferenceById(id);
+            meioPagamentoService.findByIdMeioPagamento(meioPagamentoCondutorUpdateDTO.tipoMeioPagamento());
+            meioPagamentoCondutor.setTipoMeioPagamento(meioPagamentoCondutorUpdateDTO.tipoMeioPagamento());
+            meioPagamentoCondutor.setNumeroCartao(meioPagamentoCondutorUpdateDTO.numeroCartao());
+            meioPagamentoCondutor.setValidadeCartao(meioPagamentoCondutorUpdateDTO.validadeCartao());
+            return meioPagamentoCondutorRepository.save(meioPagamentoCondutor);
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Condutor não localizado");
         }
     }
 
-    public MeioPagamentoCondutorDTO findByEmailCondutor(String id) {
+    public void deleteById(Long id) {
         try {
+            meioPagamentoCondutorRepository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ControllerNotFoundException("Meio de Pagamento não localizada");
+        }
+    }
 
-            MeioPagamentoCondutor meioPagamentoCondutor =
-                    meioPagamentoCondutorRepository.findByEmailCondutor(id);
-            condutorNaoExistente(meioPagamentoCondutor);
-            return toMeioPagamentoDTO(
-                    meioPagamentoCondutor);
+    public List<MeioPagamentoCondutor> findByEmailCondutor(String emailCondutor) {
+        try {
+            condutorNaoCadastrado(emailCondutor);
+            List<MeioPagamentoCondutor> meioPagamentoCondutorList = meioPagamentoCondutorRepository.findByCondutor(condutorService.findById(emailCondutor));
+            return meioPagamentoCondutorList;
         } catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Condutor não localizado");
         }
     }
 
-    private void metodoJaCadastrado(String emailCondutor) {
-        if ( meioPagamentoCondutorRepository.findByEmailCondutor(emailCondutor) != null) {
-            throw new EntityFoundException("Meio de Pagamento já cadastrado!");
+    private void condutorNaoCadastrado(String idCondutor) {
+        if (condutorService.findById(idCondutor) == null) {
+            throw new ControllerNotFoundException("Condutor não cadastrado no sistema!");
         }
     }
 
-    private void condutorNaoCadastrado(MeioPagamentoCondutorDTO meioPagamentoCondutorDTO){
-        if(condutorService.findById(meioPagamentoCondutorDTO.email()) == null){
-            throw new EntityFoundException("Condutor não cadastrado no sistema!");
-        }
+    public MeioPagamentoCondutor favorita(Long id) {
+        MeioPagamentoCondutor meioPagamentoCondutorFavorito = meioPagamentoCondutorRepository.getReferenceById(id);
+        List<MeioPagamentoCondutor> meioPagamentoCondutorList = meioPagamentoCondutorRepository.findByCondutor(condutorService.findById(meioPagamentoCondutorFavorito.getCondutor().getEmail()));
+        meioPagamentoCondutorList.stream().forEach(meioPagamento ->
+            {
+                meioPagamento.setFavorito(false);
+                meioPagamentoCondutorRepository.save(meioPagamento);
+            });
+        meioPagamentoCondutorFavorito.setFavorito(true);
+        return meioPagamentoCondutorRepository.save(meioPagamentoCondutorFavorito);
     }
-
-
-    private void condutorNaoExistente(MeioPagamentoCondutor meioPagamentoCondutor) {
-        if (meioPagamentoCondutor == null) {
-            throw new EntityNotFoundException("Condutor não localizado");
-        }
-    }
-
-
-    public MeioPagamentoCondutor toEntity(MeioPagamentoCondutorDTO meioPagamentoCondutorDTO) {
+    public MeioPagamentoCondutor toEntity(MeioPagamentoCondutorRequestDTO meioPagamentoCondutorRequestDTO) {
         return new MeioPagamentoCondutor(
-                meioPagamentoCondutorDTO.email(),
-                meioPagamentoCondutorDTO.meioPagamento()
+                null,
+                meioPagamentoCondutorRequestDTO.tipoMeioPagamento(),
+                meioPagamentoCondutorRequestDTO.numeroCartao(),
+                meioPagamentoCondutorRequestDTO.validadeCartao(),
+                condutorService.findById(meioPagamentoCondutorRequestDTO.emailCondutor()),
+                false
         );
     }
 
-    public MeioPagamentoCondutorDTO toMeioPagamentoDTO(MeioPagamentoCondutor meioPagamentoCondutor) {
-        return new MeioPagamentoCondutorDTO(
-                meioPagamentoCondutor.getMeioPagamentoFavorito(),
-                meioPagamentoCondutor.getEmailCondutor()
-        );
+    public MeioPagamentoCondutorResponseDTO findById(Long id) {
+        try {
+
+            return meioPagamentoCondutorRepository.findMeioPagamentoCondutorById(id).toMeioPagamentoCondutorResponseDTO();
+        } catch (RuntimeException e) {
+            throw new ControllerNotFoundException("Meio de Pagamento do Condutor não Encontrado");
+        }
     }
+
+
 }

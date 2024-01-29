@@ -1,39 +1,50 @@
 package com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.entity;
 
+import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
+import com.fase2.techchallenge.fiap.cadastro.meiopagamentocondutor.dto.MeioPagamentoCondutorResponseDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
+@Data
 @Entity
 @Table(name = "tb_meio_pagamento_condutor")
+@AllArgsConstructor
+@NoArgsConstructor
 public class MeioPagamentoCondutor {
 
-    private Long meioPagamentoFavorito;
-
-    //@OneToOne
     @Id
-    private String emailCondutor;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "meiopagamento_generator")
+    @SequenceGenerator(name = "meiopagamento_generator", sequenceName = "meiopagamento_sequence", allocationSize = 1)
+    private Long id;
 
-    public MeioPagamentoCondutor() {
-    }
+    @NotNull(message = "O Tipo de meio de pagamento é obrigatório")
+    private String tipoMeioPagamento;
 
-    public MeioPagamentoCondutor(String emailCondutor, Long meioPagamentoFavorito) {
-        this.emailCondutor = emailCondutor;
-        this.meioPagamentoFavorito = meioPagamentoFavorito;
-    }
+    private Long numeroCartao;
 
-    public Long getMeioPagamentoFavorito() {
-        return meioPagamentoFavorito;
-    }
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date validadeCartao;
 
-    public void setMeioPagamentoFavorito(Long meioPagamentoFavorito) {
-        this.meioPagamentoFavorito = meioPagamentoFavorito;
-    }
+    @ManyToOne
+    private Condutor condutor;
 
-    public String getEmailCondutor() {
-        return emailCondutor;
-    }
+    private boolean favorito;
 
-    public void setEmailCondutor(String emailCondutor) {
-        this.emailCondutor = emailCondutor;
+    public MeioPagamentoCondutorResponseDTO toMeioPagamentoCondutorResponseDTO(){
+        return new MeioPagamentoCondutorResponseDTO(
+                this.id,
+                this.tipoMeioPagamento,
+                this.numeroCartao,
+                this.validadeCartao,
+                this.condutor.getEmail(),
+                this.favorito
+        );
     }
 }

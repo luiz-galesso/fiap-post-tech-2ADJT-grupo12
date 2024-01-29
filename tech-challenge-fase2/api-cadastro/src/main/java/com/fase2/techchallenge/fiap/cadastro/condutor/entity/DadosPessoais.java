@@ -3,9 +3,15 @@ package com.fase2.techchallenge.fiap.cadastro.condutor.entity;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.DadosPessoaisDTO;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
+@Data
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class DadosPessoais {
 
 
@@ -22,43 +28,10 @@ public class DadosPessoais {
     //Precisamos ter como mandar notificação
     private String nrCelular;
 
-    public DadosPessoais() {
-    }
-
-    public DadosPessoais(String nome, String cpf, String nrCelular) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.nrCelular = nrCelular;
-    }
-
     public DadosPessoais(DadosPessoaisDTO dadosPessoaisDTO) {
         this.nome = dadosPessoaisDTO.nome();
         this.cpf = dadosPessoaisDTO.cpf();
         this.nrCelular = dadosPessoaisDTO.nrCelular();
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getNrCelular() {
-        return this.nrCelular;
-    }
-
-    public void setNrCelular(String nrCelular) {
-        this.nrCelular = nrCelular;
     }
 
     private DadosPessoais toEntity(DadosPessoaisDTO dadosPessoaisDTO) {
@@ -74,6 +47,14 @@ public class DadosPessoais {
                 dadosPessoais.getNome(),
                 dadosPessoais.getCpf(),
                 dadosPessoais.getNrCelular()
+        );
+    }
+
+    public DadosPessoaisDTO toDadosPessoaisDTO() {
+        return new DadosPessoaisDTO(
+                this.nome,
+                this.cpf,
+                this.nrCelular
         );
     }
 }

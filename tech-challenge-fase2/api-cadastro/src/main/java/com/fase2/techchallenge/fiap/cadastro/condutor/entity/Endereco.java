@@ -1,10 +1,13 @@
 package com.fase2.techchallenge.fiap.cadastro.condutor.entity;
 
+import com.fase2.techchallenge.fiap.cadastro.condutor.dto.DadosPessoaisDTO;
 import com.fase2.techchallenge.fiap.cadastro.condutor.dto.EnderecoDTO;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 @Valid
 @Embeddable
 public class Endereco {
@@ -42,54 +45,6 @@ public class Endereco {
         this.complemento = endereco.complemento();
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCEP() {
-        return CEP;
-    }
-
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
     private Endereco toEntity(EnderecoDTO enderecoDTO) {
         return new Endereco(
                 enderecoDTO.descricao(),
@@ -109,6 +64,17 @@ public class Endereco {
                 endereco.getEstado(),
                 endereco.getCEP(),
                 endereco.getComplemento()
+        );
+    }
+
+    public EnderecoDTO toEnderecoDTO() {
+        return new EnderecoDTO(
+                this.descricao,
+                this.numero,
+                this.cidade,
+                this.estado,
+                this.CEP,
+                this.complemento
         );
     }
 }

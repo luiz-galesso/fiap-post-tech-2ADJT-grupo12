@@ -1,6 +1,7 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaorecibo.feign;
 
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.CondutorDTO;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.MeioPagamentoCondutorDTO;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.VeiculoDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,4 +14,7 @@ public interface CadastroClient {
 
     @GetMapping("/veiculos/{idVeiculo}")
     VeiculoDTO getVeiculo(@PathVariable Long idVeiculo);
+
+    @GetMapping("/meioPagamentoCondutor/{idMeioPagamentoCondutor}")
+    MeioPagamentoCondutorDTO getMeioPagamentoCondutor(@PathVariable Long idMeioPagamentoCondutor);
 }

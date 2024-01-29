@@ -4,11 +4,17 @@ import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.enumeration.Pagame
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "tb_pagamento")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pagamento {
     @Id
     @NotNull(message = "O id do pagamento é obrigatório")
@@ -24,110 +30,22 @@ public class Pagamento {
     @NotNull(message = "O valor é obrigatório")
     @DecimalMin(value = "0", inclusive = false, message = "O valor deve ser maior do que zero")
     private Double valor;
-    private Long idEstacionamento;
+    private String idEstacionamento;
     @NotNull(message = "A situação do Pagamento é obrigatória")
     private PagamentoSituacao pagamentoSituacao;
     @NotNull(message = "A data do Pagamento é obrigatória")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraPagamento;
 
     private String motivoEstorno;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraEstorno;
 
-    public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, Long idEstacionamento) {
+    public Pagamento(Long idVeiculo, String idCondutor, Long idMeioPagamentoCondutor, Double valor, String idEstacionamento) {
         this.idVeiculo = idVeiculo;
         this.idCondutor = idCondutor;
         this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;
         this.valor = valor;
         this.idEstacionamento = idEstacionamento;
-    }
-
-    public Pagamento() {
-
-    }
-
-    public Pagamento(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getIdVeiculo() {
-        return idVeiculo;
-    }
-
-    public void setIdVeiculo(Long idVeiculo) {
-        this.idVeiculo = idVeiculo;
-    }
-
-    public String getIdCondutor() {
-        return idCondutor;
-    }
-
-    public void setIdCondutor(String idCondutor) {
-        this.idCondutor = idCondutor;
-    }
-
-    public Long getIdMeioPagamentoCondutor() {
-        return idMeioPagamentoCondutor;
-    }
-
-    public void setIdMeioPagamentoCondutor(Long idMeioPagamentoCondutor) {
-        this.idMeioPagamentoCondutor = idMeioPagamentoCondutor;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public Long getIdEstacionamento() {
-        return idEstacionamento;
-    }
-
-    public void setIdEstacionamento(Long idEstacionamento) {
-        this.idEstacionamento = idEstacionamento;
-    }
-
-    public PagamentoSituacao getPagamentoSituacao() {
-        return pagamentoSituacao;
-    }
-
-    public void setPagamentoSituacao(PagamentoSituacao pagamentoSituacao) {
-        this.pagamentoSituacao = pagamentoSituacao;
-    }
-
-    public Date getDataHoraPagamento() {
-        return dataHoraPagamento;
-    }
-
-    public void setDataHoraPagamento(Date dataHoraPagamento) {
-        this.dataHoraPagamento = dataHoraPagamento;
-    }
-
-    public String getMotivoEstorno() {
-        return motivoEstorno;
-    }
-
-    public void setMotivoEstorno(String motivoEstorno) {
-        this.motivoEstorno = motivoEstorno;
-    }
-
-    public Date getDataHoraEstorno() {
-        return dataHoraEstorno;
-    }
-
-    public void setDataHoraEstorno(Date dataHoraEstorno) {
-        this.dataHoraEstorno = dataHoraEstorno;
     }
 }

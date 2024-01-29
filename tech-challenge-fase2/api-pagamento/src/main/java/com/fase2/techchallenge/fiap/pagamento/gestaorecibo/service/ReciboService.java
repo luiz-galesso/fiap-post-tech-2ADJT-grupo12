@@ -1,18 +1,13 @@
 package com.fase2.techchallenge.fiap.pagamento.gestaorecibo.service;
 
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.ControllerNotFoundException;
-import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.controller.exception.EntityFoundException;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.entity.Pagamento;
 import com.fase2.techchallenge.fiap.pagamento.gestaopagamento.repository.PagamentoRepository;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.CondutorDTO;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.SolicitacaoReciboDTO;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.VeiculoDTO;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosCondutor;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosPagamento;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.DadosVeiculo;
-import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.Recibo;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.dto.*;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.entity.*;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.enumeration.ReciboSituacao;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.feign.CadastroClient;
+import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.feign.EstacionamentoClient;
 import com.fase2.techchallenge.fiap.pagamento.gestaorecibo.repository.ReciboRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -20,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 
@@ -31,12 +27,15 @@ public class ReciboService {
     PagamentoRepository pagamentoRepository;
     final
     CadastroClient cadastroClient;
+
+    final EstacionamentoClient estacionamentoClient;
     private final ReciboRepository reciboRepository;
 
-    public ReciboService(ReciboRepository reciboRepository, PagamentoRepository pagamentoRepository, CadastroClient cadastroClient) {
+    public ReciboService(ReciboRepository reciboRepository, PagamentoRepository pagamentoRepository, CadastroClient cadastroClient, EstacionamentoClient estacionamentoClient) {
         this.reciboRepository = reciboRepository;
         this.pagamentoRepository = pagamentoRepository;
         this.cadastroClient = cadastroClient;
+        this.estacionamentoClient = estacionamentoClient;
     }
 
     private Recibo toEntity(SolicitacaoReciboDTO solicitacaoReciboDTO) {
@@ -64,7 +63,7 @@ public class ReciboService {
         List<Recibo> recibos = reciboRepository.findByReciboSituacao(ReciboSituacao.SOLICITADO);
         for (Recibo recibo : recibos) {
             Pagamento pagamento = pagamentoRepository.findById(recibo.getDadosPagamento().getIdPagamento()).orElseThrow(() -> new ControllerNotFoundException("Pagamento não localizado"));
-            ;
+
             recibo.getDadosPagamento().setValor(pagamento.getValor());
             recibo.getDadosPagamento().setDataHoraPagamento(pagamento.getDataHoraPagamento());
 
@@ -76,6 +75,30 @@ public class ReciboService {
             if (recibo.getDadosVeiculo() == null) {
                 VeiculoDTO veiculoDTO = cadastroClient.getVeiculo(pagamento.getIdVeiculo());
                 recibo.setDadosVeiculo(new DadosVeiculo(veiculoDTO.placa(), veiculoDTO.nome()));
+            }
+            if (recibo.getDadosPagamento() != null) {
+                if (recibo.getDadosPagamento().getMeioPagamento() == null) {
+                    MeioPagamentoCondutorDTO meioPagamentoCondutorDTO = cadastroClient.getMeioPagamentoCondutor(pagamento.getIdMeioPagamentoCondutor());
+                    recibo.getDadosPagamento().setMeioPagamento(meioPagamentoCondutorDTO.tipoMeioPagamento());
+                }
+            }
+
+            if (recibo.getDadosEstacionamento() == null) {
+                EstacionamentoDTO estacionamentoDTO = estacionamentoClient.getEstacionamento(pagamento.getIdEstacionamento());
+                Date dataHoraInicio;
+                Date dataHoraTermino;
+                if (estacionamentoDTO.dataHoraInicio() != null){
+                    dataHoraInicio = Date.from(estacionamentoDTO.dataHoraInicio().toInstant(ZoneOffset.UTC));
+                } else {
+                    dataHoraInicio = null;
+                }
+                if (estacionamentoDTO.dataHoraTermino() != null){
+                    dataHoraTermino = Date.from(estacionamentoDTO.dataHoraTermino().toInstant(ZoneOffset.UTC));
+                } else {
+                    dataHoraTermino = null;
+                }
+
+                recibo.setDadosEstacionamento(new DadosEstacionamento(estacionamentoDTO.tipo(),dataHoraInicio , dataHoraTermino));
             }
 
 
@@ -101,6 +124,11 @@ public class ReciboService {
         }
 
     }
+
+    public List<Recibo> listarRecibos(String idCondutor) {
+        return reciboRepository.findByDadosCondutor_email(idCondutor);
+    }
+
 
     public Recibo cancelarRecibo(Long idPagamento) {
         try {

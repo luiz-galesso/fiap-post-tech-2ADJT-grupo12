@@ -17,7 +17,7 @@ public class Recibo {
     @NotNull(message = "A situação do recibo, é obrigatório.")
     @Enumerated(EnumType.STRING)
     private ReciboSituacao reciboSituacao;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataImpressaoRecibo;
     private DadosPagamento dadosPagamento;
     private DadosCondutor dadosCondutor;

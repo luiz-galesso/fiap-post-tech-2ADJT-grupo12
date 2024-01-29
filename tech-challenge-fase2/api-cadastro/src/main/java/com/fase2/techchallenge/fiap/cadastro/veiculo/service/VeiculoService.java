@@ -1,9 +1,9 @@
 package com.fase2.techchallenge.fiap.cadastro.veiculo.service;
 
-import com.fase2.techchallenge.fiap.cadastro.condutor.controller.exception.ControllerNotFoundException;
 import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
-import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoDTO;
+import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoRequestDTO;
 import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoResponseDTO;
+import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoUpdateDTO;
 import com.fase2.techchallenge.fiap.cadastro.veiculo.entity.Veiculo;
 import com.fase2.techchallenge.fiap.cadastro.veiculo.repository.VeiculoRepository;
 import org.springframework.stereotype.Service;
@@ -30,18 +30,13 @@ public class VeiculoService
         return Optional.of(this.repository.findById(id).orElseThrow());
     }
 
-    public Veiculo update(Veiculo veiculo, VeiculoDTO veiculoDTO)
-    {
-        if(!veiculoDTO.nome().isEmpty())
-            veiculo.setNome(veiculo.getNome());
+    public Veiculo update(Veiculo veiculo, VeiculoUpdateDTO veiculoUpdateDTO) {
+        if (!veiculoUpdateDTO.nome().isBlank())
+            veiculo.setNome(veiculoUpdateDTO.nome());
 
-        if(!veiculoDTO.emailCondutor().isEmpty())
-            veiculo.setCondutor(new Condutor(veiculoDTO.emailCondutor()));
-
-        if(!veiculoDTO.placa().isBlank())
-            veiculo.setPlaca(veiculoDTO.placa());
-
-        return veiculo;
+        if (!veiculoUpdateDTO.placa().isBlank())
+            veiculo.setPlaca(veiculoUpdateDTO.placa());
+        return this.repository.save(veiculo);
     }
 
     public Optional<Veiculo> findByPlaca(String placa)
@@ -67,16 +62,6 @@ public class VeiculoService
     public void delete(Integer id)
     {
         this.repository.deleteById(id);
-    }
-
-    public VeiculoResponseDTO toVeiculoResponseDTO(Veiculo veiculo)
-    {
-        return new VeiculoResponseDTO(
-                veiculo.getId(),
-                veiculo.getPlaca(),
-                veiculo.getNome(),
-                veiculo.getCondutor().getEmail()
-        );
     }
 
 }

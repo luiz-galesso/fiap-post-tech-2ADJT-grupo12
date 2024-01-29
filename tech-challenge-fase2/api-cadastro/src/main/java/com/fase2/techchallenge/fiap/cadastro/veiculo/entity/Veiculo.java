@@ -1,16 +1,24 @@
 package com.fase2.techchallenge.fiap.cadastro.veiculo.entity;
 
 import com.fase2.techchallenge.fiap.cadastro.condutor.entity.Condutor;
-import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoDTO;
+import com.fase2.techchallenge.fiap.cadastro.veiculo.dto.VeiculoResponseDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Data
 @Entity
+@Table(name = "tb_veiculo", uniqueConstraints = @UniqueConstraint(columnNames={"placa","condutor_email"}))
+@AllArgsConstructor
+@NoArgsConstructor
 public class Veiculo implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "veiculo_generator")
+    @SequenceGenerator(name = "veiculo_generator", sequenceName = "veiculo_sequence", allocationSize = 1)
     private Integer id;
 
     private String placa;
@@ -20,45 +28,13 @@ public class Veiculo implements Serializable {
     @ManyToOne
     private Condutor condutor;
 
-    public Integer getId() {
-        return id;
+    public VeiculoResponseDTO toVeiculoResponseDTO(){
+        return new VeiculoResponseDTO(
+                this.id,
+                this.placa,
+                this.nome,
+                this.condutor.getEmail()
+        );
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Condutor getCondutor() {
-        return condutor;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCondutor(Condutor condutor) {
-        this.condutor = condutor;
-    }
-
-    public Veiculo() {
-    }
-
-    public Veiculo(VeiculoDTO veiculoDTO)
-    {
-        this.placa = veiculoDTO.placa();
-        this.nome = veiculoDTO.nome();
-        this.condutor = new Condutor(veiculoDTO.emailCondutor());
-    }
 }
