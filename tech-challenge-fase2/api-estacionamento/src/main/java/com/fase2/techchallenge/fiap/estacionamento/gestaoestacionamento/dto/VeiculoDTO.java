@@ -1,13 +1,17 @@
-package com.fase2.techchallenge.fiap.fiscalizacao.gestaofiscalizacao.dto;
+package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class VeiculoDTO {
-        String id;
-        String descricao;
-        Double valor;
+
+        Long id;
+        String placa;
+        String nome;
+        String emailCondutor;
 
 }

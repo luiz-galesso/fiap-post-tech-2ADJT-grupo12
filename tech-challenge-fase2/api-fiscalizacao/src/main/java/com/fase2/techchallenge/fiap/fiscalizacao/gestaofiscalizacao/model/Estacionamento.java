@@ -1,4 +1,4 @@
-package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.model;
+package com.fase2.techchallenge.fiap.fiscalizacao.gestaofiscalizacao.model;
 
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Document("estacionamento")

@@ -128,6 +128,17 @@ services:
       PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/
       CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
 
+  api-fiscalizacao:
+    container_name: api-fiscalizacao
+    build: ../api-fiscalizacao/.
+    ports:
+      - "8086:8080"
+    depends_on:
+      - estacionamento-db
+    environment:
+      SPRING_MONGODB_URL: estacionamento-db
+      SPRING_MONGODB_PORT: 27017
+
   adminer:
     image: adminer
     container_name: adminer

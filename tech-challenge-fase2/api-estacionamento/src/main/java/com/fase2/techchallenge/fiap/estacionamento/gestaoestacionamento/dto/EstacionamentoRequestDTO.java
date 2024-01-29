@@ -41,6 +41,7 @@ public class EstacionamentoRequestDTO {
                 null,
                 this.idCondutor,
                 this.idVeiculo,
+                null,
                 this.idMeioPagamento,
                 null,
                 this.tipo,

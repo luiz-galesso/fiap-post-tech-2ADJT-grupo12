@@ -20,4 +20,10 @@ public interface EstacionamentoRepository extends MongoRepository<Estacionamento
     List<Estacionamento> findEstacionamentoBydataHoraVencimentoLowerThanAndRenovacaoAutomaticaAndTipoAndSituacao
             (LocalDateTime dataHoraLTE, Boolean renovacaoAutomatica, String tipo, String situacao);
 
+    @Query("{  $and: [{'dataHoraVencimento' : { $lte: ?0}}, { 'tipo' : { $eq: ?1 }}, { 'situacao' : { $eq: ?2 }}]}")
+    List<Estacionamento> findEstacionamentoBydataHoraVencimentoLowerThanAndTipoAndSituacao
+            (LocalDateTime dataHoraLTE, String tipo, String situacao);
+
+    List<Estacionamento> findByIdCondutor(String emailCondutor);
+
 }

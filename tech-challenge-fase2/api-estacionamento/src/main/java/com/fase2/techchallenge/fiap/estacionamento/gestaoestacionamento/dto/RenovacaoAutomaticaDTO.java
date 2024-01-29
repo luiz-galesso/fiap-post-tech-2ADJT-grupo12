@@ -9,12 +9,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificacaoRequestDTO
+public class RenovacaoAutomaticaDTO
 {
-    private Long idVeiculo;
-
-    private LocalDateTime dataHora;
-
-    private String conteudo;
+    private Boolean renovacaoAutomatica;
 
 }

@@ -41,7 +41,7 @@ public class EstacionamentoService {
         if (estacionamentoRequestDTO.getTipo().equals("VARIAVEL")) {estacionamentoRequestDTO.setQuantidadeHoras(1);}
         Estacionamento estacionamento = estacionamentoRequestDTO.toDocument();
         estacionamento.setValorTarifa(tarifaService.getTarifa().valor());
-        estacionamento = estacionamentoRepository.save(estacionamento);
+        estacionamento.setPlaca(cadastroService.getVeiculo(estacionamento.getIdVeiculo()).getPlaca());
         if (estacionamentoRequestDTO.getTipo().equals("FIXO")) {
             if (Optional.ofNullable(estacionamentoRequestDTO.getQuantidadeHoras()).orElse(0) == 0) {
                 throw new BadRequestException("Informe a quantidade de horas.");
@@ -52,6 +52,7 @@ public class EstacionamentoService {
             Long horasCheias = ChronoUnit.HOURS.between(estacionamento.getDataHoraInicio(), estacionamento.getDataHoraVencimento());
             pagamentoService.enviaPagamento(estacionamento.getIdVeiculo(), estacionamento.getIdCondutor(),estacionamento.getIdMeioPagamento(), estacionamento.getValorTarifa() * horasCheias , estacionamento.getId());
         }
+        estacionamento = estacionamentoRepository.save(estacionamento);
         return estacionamento;
     }
 
@@ -71,10 +72,15 @@ public class EstacionamentoService {
         Estacionamento estacionamentoLocal = estacionamentoRepository.save(estacionamento);
     }
 
-    public Estacionamento get(String id){
-        return estacionamentoRepository.findById(id).get();
+    public List<Estacionamento> getByEmailCondutor(String emailCondutor){
+        return estacionamentoRepository.findByIdCondutor(emailCondutor);
     }
 
+    public Estacionamento atualizaRenovacaoAutomatica(String id, Boolean renovacaoAutomatica){
+        Estacionamento estacionamento = estacionamentoRepository.findById(id).get();
+        estacionamento.setRenovacaoAutomatica(renovacaoAutomatica);
+        return estacionamentoRepository.save(estacionamento);
+    }
     @Scheduled(fixedDelay = 60000)
     public void NotificaAVencer()
     {
@@ -136,6 +142,20 @@ public class EstacionamentoService {
         });
     }
 
-    /*TODO SCHEDULER QUE FINALIZA FIXO */
+    @Scheduled(fixedDelay = 60000)
+    public void FinalizaFixo()
+    {
+        List<Estacionamento> estacionamentoList =
+                estacionamentoRepository.findEstacionamentoBydataHoraVencimentoLowerThanAndTipoAndSituacao
+                        (LocalDateTime.now().plusMinutes(1), "VARIAVEL", "ATIVO");
+        estacionamentoList.stream().forEach(estacionamento ->
+        {   try {
+                atualizaDataHoraTerminoESituacao(estacionamento, LocalDateTime.now(), "FINALIZADO");
+                notificacaoService.enviaNotificacao(estacionamento.getIdVeiculo(),"Seu tempo de permanência foi esgotado em " + estacionamento.getDataHoraVencimento());
 
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+        }
+        });
+    }
 }
