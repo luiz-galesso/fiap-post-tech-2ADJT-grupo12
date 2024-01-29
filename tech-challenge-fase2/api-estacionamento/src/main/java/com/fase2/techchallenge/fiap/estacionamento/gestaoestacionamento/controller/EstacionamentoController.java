@@ -30,4 +30,8 @@ public class EstacionamentoController {
         return new ResponseEntity<>(estacionamentoService.get(id), HttpStatus.OK);
     }
 
+    /*TODO serviço para retirar renovacao auto */
+
+    /*TODO fiscalizacao */
+
 }

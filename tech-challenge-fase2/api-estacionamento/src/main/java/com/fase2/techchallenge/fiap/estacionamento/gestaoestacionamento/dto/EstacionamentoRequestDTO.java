@@ -24,9 +24,7 @@ public class EstacionamentoRequestDTO {
 
     private String tipo;
 
-    private LocalDateTime dataHoraInicio;
-
-    private LocalDateTime  dataHoraVencimento;
+    private Integer  quantidadeHoras;
 
     private Boolean renovacaoAutomatica;
 
@@ -40,8 +38,8 @@ public class EstacionamentoRequestDTO {
                 null,
                 this.tipo,
                 "ATIVO",
-                this.dataHoraInicio,
-                this.dataHoraVencimento,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(quantidadeHoras),
                 null,
                 false,
                 this.renovacaoAutomatica);

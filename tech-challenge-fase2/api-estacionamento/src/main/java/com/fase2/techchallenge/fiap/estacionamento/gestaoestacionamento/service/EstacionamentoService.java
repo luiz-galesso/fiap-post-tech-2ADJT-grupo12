@@ -33,9 +33,15 @@ public class EstacionamentoService {
     PagamentoService pagamentoService;
 
     public Estacionamento inserir(EstacionamentoRequestDTO estacionamentoRequestDTO){
+        if (estacionamentoRequestDTO.getTipo().equals("VARIAVEL")) {estacionamentoRequestDTO.setQuantidadeHoras(1);}
         Estacionamento estacionamento = estacionamentoRequestDTO.toDocument();
         estacionamento.setValorTarifa(tarifaService.getTarifa().valor());
-        return estacionamentoRepository.save(estacionamento);
+        estacionamento = estacionamentoRepository.save(estacionamento);
+        if (estacionamentoRequestDTO.getTipo().equals("FIXO")) {
+            Long horasCheias = ChronoUnit.HOURS.between(estacionamento.getDataHoraInicio(), estacionamento.getDataHoraVencimento());
+            pagamentoService.enviaPagamento(estacionamento.getIdVeiculo(), estacionamento.getIdCondutor(),estacionamento.getIdMeioPagamento(), estacionamento.getValorTarifa() * horasCheias , estacionamento.getId());
+        }
+        return estacionamento;
     }
 
     public void atualizaNotificadoVencimento(Estacionamento estacionamento, boolean notificadoVencimento){
@@ -99,11 +105,16 @@ public class EstacionamentoService {
     {
         List<Estacionamento> estacionamentoList =
                 estacionamentoRepository.findEstacionamentoBydataHoraVencimentoLowerThanAndRenovacaoAutomaticaAndTipoAndSituacao
-                        (LocalDateTime.now().plusMinutes(2), false, "VARIAVEL", "ATIVO");
+                        (LocalDateTime.now().plusMinutes(1), false, "VARIAVEL", "ATIVO");
         estacionamentoList.stream().forEach(estacionamento ->
         {   try {
             LocalDateTime dataHoraTermino = LocalDateTime.now();
-            Double valor = estacionamento.getValorTarifa() * ChronoUnit.HOURS.between(estacionamento.getDataHoraInicio(), dataHoraTermino);
+            Long horasCheias = ChronoUnit.HOURS.between(estacionamento.getDataHoraInicio(), dataHoraTermino);
+            Long minutoParcial = (ChronoUnit.MINUTES.between(estacionamento.getDataHoraInicio(), dataHoraTermino) - (horasCheias * 60));
+            if (minutoParcial > 0) {
+                horasCheias = horasCheias + 1;
+            }
+            Double valor = estacionamento.getValorTarifa() * horasCheias;
             pagamentoService.enviaPagamento(estacionamento.getIdVeiculo(), estacionamento.getIdCondutor(),estacionamento.getIdMeioPagamento(), valor, estacionamento.getId());
             atualizaDataHoraTerminoESituacao(estacionamento, dataHoraTermino, "FINALIZADO");
             notificacaoService.enviaNotificacao(estacionamento.getIdVeiculo(),"Seu pagamento foi realizado e em instantes você receberá o recibo ");
@@ -113,5 +124,7 @@ public class EstacionamentoService {
         }
         });
     }
+
+    /*TODO SCHEDULER QUE FINALIZA FIXO */
 
 }
