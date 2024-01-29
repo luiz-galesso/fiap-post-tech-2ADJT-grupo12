@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  cadastro-db:
+    image: postgres:latest
+    container_name: cadastro-db
+    environment:
+      POSTGRES_USER: cadastro
+      POSTGRES_PASSWORD: pass-cadastro
+      POSTGRES_DB: cadastro-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - cadastro-data:/var/lib/postgresql/data
+
+  pagamento-db:
+    image: postgres:latest
+    container_name: pagamento-db
+    environment:
+      POSTGRES_USER: pagamento
+      POSTGRES_PASSWORD: pass-pagamento  
+      POSTGRES_DB: pagamento-db
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
+      RECIBO_URL: http://api-pagamento:8080/api-pagamento/
+      ESTACIONAMENTO_URL: http://api-estacionamento:8080/api-estacionamento/
+    ports:
+      - "5433:5432"
+    volumes:
+      - pagamento-data:/var/lib/postgresql/data
+
+  notificacao-db:
+    image: postgres:latest
+    container_name: notificacao-db
+    environment:
+      POSTGRES_USER: notificacao
+      POSTGRES_PASSWORD: pass-notificacao
+      POSTGRES_DB: notificacao-db
+    ports:
+      - "5434:5432"
+    volumes:
+      - notificacao-data:/var/lib/postgresql/data
+
+  tarifa-db:
+    image: postgres:latest
+    container_name: tarifa-db
+    environment:
+      POSTGRES_USER: tarifa
+      POSTGRES_PASSWORD: pass-tarifa
+      POSTGRES_DB: tarifa-db
+    ports:
+      - "5435:5432"
+    volumes:
+      - tarifa-data:/var/lib/postgresql/data
+
+  estacionamento-db:
+    image: mongo:latest
+    container_name: estacionamento-db
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  api-pagamento:
+    container_name: api-pagamento
+    build: ../api-pagamento/.
+    ports:
+      - "8081:8080"
+    depends_on:
+      - pagamento-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://pagamento-db:5432/pagamento-db
+      SPRING_DATASOURCE_USERNAME: pagamento
+      SPRING_DATASOURCE_PASSWORD: pass-pagamento
+      ESTACIONAMENTO_URL: http://api-estacionamento:8080/api-estacionamento/
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/  
+      PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/
+
+  api-tarifa:
+    container_name: api-tarifa
+    build: ../api-tarifa/.
+    ports:
+      - "8082:8080"
+    depends_on:
+      - tarifa-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tarifa-db:5432/tarifa-db
+      SPRING_DATASOURCE_USERNAME: tarifa
+      SPRING_DATASOURCE_PASSWORD: pass-tarifa
+  
+  api-cadastro:
+    container_name: api-cadastro
+    build: ../api-cadastro/.
+    ports:
+      - "8083:8080"
+    depends_on:
+      - cadastro-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cadastro-db:5432/cadastro-db
+      SPRING_DATASOURCE_USERNAME: cadastro
+      SPRING_DATASOURCE_PASSWORD: pass-cadastro
+      PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/      
+
+  api-notificacao:
+    container_name: api-notificacao
+    build: ../api-notificacao/.
+    ports:
+      - "8084:8080"
+    depends_on:
+      - notificacao-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://notificacao-db:5432/notificacao-db
+      SPRING_DATASOURCE_USERNAME: notificacao
+      SPRING_DATASOURCE_PASSWORD: pass-notificacao
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
+
+  api-estacionamento:
+    container_name: api-estacionamento
+    build: ../api-estacionamento/.
+    ports:
+      - "8085:8080"
+    depends_on:
+      - estacionamento-db
+    environment:
+      SPRING_MONGODB_URL: estacionamento-db
+      SPRING_MONGODB_PORT: 27017
+      TARIFA_URL: http://api-tarifa:8080/api-tarifa/
+      NOTIFICACAO_URL: http://api-notificacao:8080/api-notificacao/  
+      PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
+
+  api-fiscalizacao:
+    container_name: api-fiscalizacao
+    build: ../api-fiscalizacao/.
+    ports:
+      - "8086:8080"
+    depends_on:
+      - estacionamento-db
+    environment:
+      SPRING_MONGODB_URL: estacionamento-db
+      SPRING_MONGODB_PORT: 27017
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8090:8080
+
+volumes:
+  cadastro-data:
+  tarifa-data:
+  pagamento-data:
+  notificacao-data:
+  mongo-data:
