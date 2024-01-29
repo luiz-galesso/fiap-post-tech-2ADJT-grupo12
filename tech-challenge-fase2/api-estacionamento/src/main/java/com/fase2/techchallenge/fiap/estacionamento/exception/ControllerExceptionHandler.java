@@ -26,6 +26,18 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(this.logError);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<LogError> badRequest(
+    BadRequestException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        logError.setTimestamp(Instant.now());
+        logError.setStatus(status.value());
+        logError.setError(e.getMessage());
+        logError.setPath(request.getRequestURI());
+        return ResponseEntity.status(status).body(this.logError);
+    }
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest httpServletRequest) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;

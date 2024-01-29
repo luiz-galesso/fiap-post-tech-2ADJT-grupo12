@@ -2,17 +2,15 @@ package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.dto;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.model.Estacionamento;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class EstacionamentoRequestDTO {
 
@@ -24,9 +22,18 @@ public class EstacionamentoRequestDTO {
 
     private String tipo;
 
-    private Integer  quantidadeHoras;
+    private Integer  quantidadeHoras = 0;
 
     private Boolean renovacaoAutomatica;
+
+    public EstacionamentoRequestDTO(String idCondutor, Long idVeiculo, Long idMeioPagamento, String tipo, Integer quantidadeHoras, Boolean renovacaoAutomatica) {
+        this.idCondutor = idCondutor;
+        this.idVeiculo = idVeiculo;
+        this.idMeioPagamento = idMeioPagamento;
+        this.tipo = tipo;
+        this.quantidadeHoras = Optional.ofNullable(quantidadeHoras).orElse(0);
+        this.renovacaoAutomatica = renovacaoAutomatica;
+    }
 
     public Estacionamento toDocument(){
 
@@ -39,9 +46,10 @@ public class EstacionamentoRequestDTO {
                 this.tipo,
                 "ATIVO",
                 LocalDateTime.now(),
-                LocalDateTime.now().plusHours(quantidadeHoras),
+                LocalDateTime.now().plusHours(Optional.ofNullable(quantidadeHoras).orElse(0)),
                 null,
                 false,
                 this.renovacaoAutomatica);
     }
+
 }

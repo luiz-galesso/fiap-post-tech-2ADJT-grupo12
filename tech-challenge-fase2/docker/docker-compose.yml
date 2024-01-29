@@ -126,6 +126,7 @@ services:
       TARIFA_URL: http://api-tarifa:8080/api-tarifa/
       NOTIFICACAO_URL: http://api-notificacao:8080/api-notificacao/  
       PAGAMENTO_URL: http://api-pagamento:8080/api-pagamento/
+      CADASTRO_URL: http://api-cadastro:8080/api-cadastro/
 
   adminer:
     image: adminer

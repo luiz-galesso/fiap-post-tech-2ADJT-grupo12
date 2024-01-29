@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.service;
 
+import com.fase2.techchallenge.fiap.estacionamento.exception.BadRequestException;
 import com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.dto.EstacionamentoRequestDTO;
 import com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.model.Estacionamento;
 import com.fase2.techchallenge.fiap.estacionamento.gestaoestacionamento.repository.EstacionamentoRepository;
@@ -15,6 +16,7 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @EnableScheduling
@@ -32,12 +34,21 @@ public class EstacionamentoService {
     @Autowired
     PagamentoService pagamentoService;
 
+    @Autowired
+    CadastroService cadastroService;
+
     public Estacionamento inserir(EstacionamentoRequestDTO estacionamentoRequestDTO){
         if (estacionamentoRequestDTO.getTipo().equals("VARIAVEL")) {estacionamentoRequestDTO.setQuantidadeHoras(1);}
         Estacionamento estacionamento = estacionamentoRequestDTO.toDocument();
         estacionamento.setValorTarifa(tarifaService.getTarifa().valor());
         estacionamento = estacionamentoRepository.save(estacionamento);
         if (estacionamentoRequestDTO.getTipo().equals("FIXO")) {
+            if (Optional.ofNullable(estacionamentoRequestDTO.getQuantidadeHoras()).orElse(0) == 0) {
+                throw new BadRequestException("Informe a quantidade de horas.");
+            }
+            if (!cadastroService.getMeioPagamentoCondutor(estacionamentoRequestDTO.getIdMeioPagamento()).tipoMeioPagamento().equals("PIX")) {
+                throw new BadRequestException("Estacionamento do tipo FIXO só permite pagamento via PIX");
+            }
             Long horasCheias = ChronoUnit.HOURS.between(estacionamento.getDataHoraInicio(), estacionamento.getDataHoraVencimento());
             pagamentoService.enviaPagamento(estacionamento.getIdVeiculo(), estacionamento.getIdCondutor(),estacionamento.getIdMeioPagamento(), estacionamento.getValorTarifa() * horasCheias , estacionamento.getId());
         }
