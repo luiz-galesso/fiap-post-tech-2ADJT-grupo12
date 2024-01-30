@@ -1,4 +1,4 @@
-# fiap-post-tech-2ADJT-grupo1
+# fiap-post-tech-2ADJT-grupo12
 
 Larissa Giovana Alaminos - RM352072
 
