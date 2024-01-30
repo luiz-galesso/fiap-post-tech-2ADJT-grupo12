@@ -1,0 +1,673 @@
+{
+	"info": {
+		"_postman_id": "6f99e271-b6fb-409a-bd6d-87c3858ad550",
+		"name": "APIS-PARQUIMETRO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "8354759"
+	},
+	"item": [
+		{
+			"name": "API-CADASTRO",
+			"item": [
+				{
+					"name": "incluirCondutor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"roberto-silva@gmail.com\",\r\n    \"dadosPessoais\": {\r\n        \"nome\": \"Roberto Silva\",\r\n        \"cpf\": \"427.447.390-22\",\r\n        \"nrCelular\": \"11999999999\"\r\n    },\r\n    \"endereco\": {\r\n        \"descricao\": \"Rua do O\",\r\n        \"numero\": \"01\",\r\n        \"cidade\": \"São Paulo\",\r\n        \"estado\": \"SP\",\r\n        \"CEP\": \"01111-011\",\r\n        \"complemento\": \"AP 01\"\r\n    },\r\n    \"ativacaoAutomatica\": \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/condutor"
+					},
+					"response": []
+				},
+				{
+					"name": "alterarCondutor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"roberto-silva@gmail.com\",\r\n    \"dadosPessoais\": {\r\n        \"nome\": \"Roberto Silva\",\r\n        \"cpf\": \"427.447.390-22\",\r\n        \"nrCelular\": \"11999999999\"\r\n    },\r\n    \"endereco\": {\r\n        \"descricao\": \"Rua do O\",\r\n        \"numero\": \"02\",\r\n        \"cidade\": \"São Paulo\",\r\n        \"estado\": \"SP\",\r\n        \"CEP\": \"01111-011\",\r\n        \"complemento\": \"Casa 01\"\r\n    },\r\n    \"ativacaoAutomatica\": \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/condutor/roberto-silva@gmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "removerCondutor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8083/api-cadastro/condutor/roberto-silva@gmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaCondutores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8083/api-cadastro/condutor"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaCondutorPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8083/api-cadastro/condutor/roberto-silva@gmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "incluirVeiculo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"placa\":\"ABC-1234\",\r\n    \"nome\":\"FUSCA\",\r\n    \"emailCondutor\":\"roberto-silva@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/veiculos"
+					},
+					"response": []
+				},
+				{
+					"name": "alterarVeiculo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"placa\": \"ABC-1234\",\r\n    \"nome\": \"HONDA CIVIC 2015\",\r\n    \"emailCondutor\": \"roberto-silva@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/veiculos/2"
+					},
+					"response": []
+				},
+				{
+					"name": "removerVeiculo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8083/api-cadastro/veiculos/3"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaVeiculos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8083/api-cadastro/veiculos"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaVeiculoPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8083/api-cadastro/veiculos/2"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaVeiculoPorIdCondutor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api-cadastro/veiculos/condutor?email=john.wick@continental.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api-cadastro",
+								"veiculos",
+								"condutor"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "john.wick@continental.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirMeioPagamentoCondutor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipoMeioPagamento\": \"DEBITO\",\r\n    \"numeroCartao\": 999999999999,\r\n    \"validadeCartao\": \"2024-01-26\",\r\n    \"emailCondutor\": \"john.wick@continental.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/meioPagamentoCondutor"
+					},
+					"response": []
+				},
+				{
+					"name": "alterarMeioPagamentoCondutor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipoMeioPagamento\": \"DEBITO\",\r\n    \"numeroCartao\": 9129194191,\r\n    \"validadeCartao\": \"2024-01-26\",\r\n    \"emailCondutor\": \"john.wick@continental.com\",\r\n    \"favorito\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/meioPagamentoCondutor/1"
+					},
+					"response": []
+				},
+				{
+					"name": "favoritarMeioPagamentoCondutor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/meioPagamentoCondutor/15/favorito"
+					},
+					"response": []
+				},
+				{
+					"name": "removerMeioPagamentoCondutor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/meioPagamentoCondutor/7"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaMeioPagamentoCondutorPorCondutor",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/meioPagamentoCondutor/condutor/roberto-silva@gmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaMeioPagamentoCondutorPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8083/api-cadastro/meioPagamentoCondutor/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API-NOTIFICACAO",
+			"item": [
+				{
+					"name": "incluirNotificacao",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idVeiculo\": 1,\r\n    \"dataHora\": \"2024-01-27T21:27:00\",\r\n    \"conteudo\": \"TEMPO PROXIMO DE EXPIRAR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8084/api-notificacao/notificacao"
+					},
+					"response": []
+				},
+				{
+					"name": "alterarNotificacao",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idVeiculo\": 1,\r\n    \"dataHora\": \"2024-01-23T21:17:00\",\r\n    \"conteudo\": \"TEMPO EXPIRADO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8084/api-notificacao/notificacao/6"
+					},
+					"response": []
+				},
+				{
+					"name": "finalizarNotificacao",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8084/api-notificacao/notificacao/finaliza-notificacao/6"
+					},
+					"response": []
+				},
+				{
+					"name": "removerNotificacaoPorId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8084/api-notificacao/notificacao/6"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaNotificacoes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8084/api-notificacao/notificacao"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaNotificacaoPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8084/api-notificacao/notificacao/5"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaNotificacaoPorIdVeiculo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8084/api-notificacao/notificacao/veiculo/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API-TARIFA",
+			"item": [
+				{
+					"name": "alterarTarifa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"TARIFA EXTRA\",\r\n    \"valor\": 35.9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8082/api-tarifa/tarifa/NORMAL"
+					},
+					"response": []
+				},
+				{
+					"name": "consultaTarifa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8082/api-tarifa/tarifa/NORMAL"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API-PAGAMENTO",
+			"item": [
+				{
+					"name": "incluirPagamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idVeiculo\": 2,\r\n    \"idCondutor\": \"john.wick@continental.com\",\r\n    \"idMeioPagamentoCondutor\": 2,\r\n    \"valor\": 20.0,\r\n    \"idEstacionamento\" : \"65b85905a1c5d031ee469811\"\r\n    \r\n}"
+						},
+						"url": "localhost:8081/api-pagamento/pagamento"
+					},
+					"response": []
+				},
+				{
+					"name": "estornarPagamento",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"motivoEstorno\": \"Cobrança indevida\"\r\n}"
+						},
+						"url": "localhost:8081/api-pagamento/pagamento/1"
+					},
+					"response": []
+				},
+				{
+					"name": "incluirMeioPagamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": \"CREDITO\",\r\n   \"descricao\": \"Cartão de Credito\",\r\n   \"situacao\": \"Ativo\"\r\n}\r\n"
+						},
+						"url": "localhost:8081/api-pagamento/meiospagamento"
+					},
+					"response": []
+				},
+				{
+					"name": "alterarMeioPagamento",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"descricao\": \"Cartão de Credito\",\r\n   \"situacao\": \"Ativo\"\r\n}\r\n"
+						},
+						"url": "localhost:8081/api-pagamento/meiospagamento/CREDITO"
+					},
+					"response": []
+				},
+				{
+					"name": "removerMeioPagamento",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "localhost:8081/api-pagamento/meiospagamento/CREDITO"
+					},
+					"response": []
+				},
+				{
+					"name": "consultarMeiosPagamento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "localhost:8081/api-pagamento/meiospagamento"
+					},
+					"response": []
+				},
+				{
+					"name": "consultarMeiosPagamentoPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "localhost:8081/api-pagamento/meiospagamento/PIX"
+					},
+					"response": []
+				},
+				{
+					"name": "incluirRecibo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"idPagamento\": 1,\r\n   \"situacaoRecibo\": \"Ativo\"\r\n}\r\n"
+						},
+						"url": "localhost:8081/api-pagamento/recibo"
+					},
+					"response": []
+				},
+				{
+					"name": "cancelarRecibo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "localhost:8081/api-pagamento/recibo/cancelar/1"
+					},
+					"response": []
+				},
+				{
+					"name": "consultarRecibo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api-pagamento/recibo/1"
+					},
+					"response": []
+				},
+				{
+					"name": "consultarReciboCondutor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api-pagamento/recibo/listar/john.wick@continental.com"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API-ESTACIONAMENTO",
+			"item": [
+				{
+					"name": "incluirEstacionamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCondutor\": \"john.wick@continental.com\",\r\n    \"idVeiculo\": 2,\r\n    \"idMeioPagamento\": 2,\r\n    \"tipo\": \"VARIAVEL\",\r\n    \"quantidadeHoras\": 4,\r\n    \"renovacaoAutomatica\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8085/api-estacionamento/estacionamento"
+					},
+					"response": []
+				},
+				{
+					"name": "atualizarRenovacaoAutomatica",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCondutor\": \"john.wick@continental.com\",\r\n    \"idVeiculo\": 1,\r\n    \"idMeioPagamento\": 1,\r\n    \"tipo\": \"FIXO\",\r\n    \"quantidadeHoras\": 4,\r\n    \"renovacaoAutomatica\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8085/api-estacionamento/estacionamento/65b83dfe43445816a4e62a23/renovacaoAutomatica"
+					},
+					"response": []
+				},
+				{
+					"name": "consultarEstacionamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8085/api-estacionamento/estacionamento/estacionamento/65b854c42ed6de1f89219d2b"
+					},
+					"response": []
+				},
+				{
+					"name": "consultarEstacionamentoPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8085/api-estacionamento/estacionamento/condutor/john.wick@continental.com"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API-FISCALIZACAO",
+			"item": [
+				{
+					"name": "consultarSituacaoVeiculo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8086/api-fiscalizacao/fiscalizacao/placa/AFG7756"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
