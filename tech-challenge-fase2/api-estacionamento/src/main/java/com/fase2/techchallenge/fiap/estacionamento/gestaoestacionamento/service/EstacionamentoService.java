@@ -76,6 +76,10 @@ public class EstacionamentoService {
         return estacionamentoRepository.findByIdCondutor(emailCondutor);
     }
 
+    public Estacionamento getById(String id){
+        return estacionamentoRepository.findById(id).get();
+    }
+
     public Estacionamento atualizaRenovacaoAutomatica(String id, Boolean renovacaoAutomatica){
         Estacionamento estacionamento = estacionamentoRepository.findById(id).get();
         estacionamento.setRenovacaoAutomatica(renovacaoAutomatica);

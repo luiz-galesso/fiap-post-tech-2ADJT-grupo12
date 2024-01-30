@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "api-pagamento", url = "${feign.pagamento.url}")
 public interface MeioPagamentoClient {
-    @GetMapping(value = "/{id}", produces = "application/json")
+    @GetMapping(value = "/meiospagamento/{id}", produces = "application/json")
     public ResponseEntity<MeioPagamentoDTO> findByIdMeioPagamento(@PathVariable("id") String id);
 }

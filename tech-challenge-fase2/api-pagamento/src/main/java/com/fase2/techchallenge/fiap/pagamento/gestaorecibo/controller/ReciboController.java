@@ -24,7 +24,7 @@ public class ReciboController {
         this.reciboService = reciboService;
     }
 
-    @GetMapping(value = "listar/{idCondutor}", produces = "application/json")
+    @GetMapping(value = "/listar/{idCondutor}", produces = "application/json")
     @Operation(summary = "Lista todos os recibos de um condutor",
             description = "Serviço utilizado para listar todos os recibos pelo email de um condutor")
     public ResponseEntity<List<Recibo>> listarRecibos(@PathVariable String idCondutor) {

@@ -33,6 +33,13 @@ public class EstacionamentoController {
         return new ResponseEntity<>(estacionamentoService.getByEmailCondutor(emailCondutor), HttpStatus.OK);
     }
 
+    @Operation( summary= "Obter um estacionamentor"
+            , description= "Serviço utilizado para consultar o estacionamentos pelo id.")
+    @GetMapping(path="/{id}")
+    public ResponseEntity<?> getById(@PathVariable String id) {
+        return new ResponseEntity<>(estacionamentoService.getById(id), HttpStatus.OK);
+    }
+
     @Operation( summary= "Atualiza a renovação automatica de um estacionamento"
             , description= "Serviço utilizado para habilitar/desabilitar a renovação automática de um estacionamento.")
     @PutMapping(path="/{id}/renovacaoAutomatica")
